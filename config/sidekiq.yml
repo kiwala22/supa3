@@ -1,0 +1,11 @@
+# Use this to start sidekiq
+# bundle exec sidekiq -e production -d -C config/sidekiq.yml -L log/sidekiq.log
+#Sidekiq::Stats.new.reset
+
+---
+:verbose: false
+:pidfile: ./tmp/pids/sidekiq.pid
+:concurrency: 50
+:queues:
+  - critical
+  - default

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  phone_number: MyString
+  probability_to_play: 9.99
+  predicted_revenue: 9.99
+  segment: MyString
+
+two:
+  phone_number: MyString
+  probability_to_play: 9.99
+  predicted_revenue: 9.99
+  segment: MyString
