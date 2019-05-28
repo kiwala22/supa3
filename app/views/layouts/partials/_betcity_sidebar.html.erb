@@ -1,0 +1,34 @@
+<div class="aside-inner">
+   <nav class="sidebar" data-sidebar-anyclick-close="">
+      <!-- START sidebar nav-->
+      <ul class="nav">
+         <!-- Iterates over all sidebar items-->
+         <li class="<%= 'active' if controller?('betcity/analytics')%>" data-step="1" >
+            <a href="<%= betcity_path %>">
+               <em class="icon-home"></em>
+               <span data-localize="sidebar.nav.DASHBOARD">Analytics</span>
+            </a>
+         </li>
+         <li class="<%= 'active' if controller?('betcity/broadcasts')%>" data-step="2" >
+            <a href="#messages" title="Layouts" data-toggle="collapse">
+               <em class="icon-envelope-open"></em>
+               <span>Broadcasts</span>
+            </a>
+            <ul id="messages" class="nav sidebar-subnav collapse">
+               <li>
+                  <a href="<%= betcity_broadcasts_new_path %>">
+                     <span>Send Broadcast</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="<%= betcity_broadcasts_path %>">
+                     <span>Sent Broadcasts</span>
+                  </a>
+               </li>
+            </ul>
+         </li>
+
+      </ul>
+
+   </nav>
+</div>

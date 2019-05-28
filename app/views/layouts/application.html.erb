@@ -1,15 +1,59 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>SupaAi</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<html lang="en">
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+   <%# <%= render partial: "layouts/meta_tags" %> %>
+   <%# <link rel="shortcut icon" href="<%= image_path("logo_real.png") %>"> %>
+   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 
-  <body>
-    <%= yield %>
-  </body>
+   <title>SkySente AI| <%= yield(:title) %></title>
+   <%= Gon::Base.render_data %>
+   <%= stylesheet_link_tag  "application", :media => "all" %>
+   <%= csrf_meta_tags %>
+</head>
+
+<body>
+   <!--   <div id="takeTour">
+      <a href="#" class="btn btn-primary" id="tour"  title="Take tour">Take tour</a></br>
+      <a href="#" id="neverTakeTour" ><font size="2" color="#AEB6BF">Skip tour</font></a>
+      <input type="hidden" name="user_id" id="user_id" value="<%= current_user.id%>">
+      <input type="hidden" name="user_help" id="user_help_status" value="<%= current_user.help%>">
+   </div> -->
+   <div class="wrapper">
+      <!-- top navbar-->
+      <header class="topnavbar-wrapper">
+         <%= render partial: "layouts/partials/topnavbar" %>
+      </header>
+      <!-- sidebar-->
+      <aside class="aside">
+         <%= render partial: "layouts/partials/sidebar" %>
+      </aside>
+
+      <!-- Main section-->
+      <section>
+         <!-- Page content-->
+         <div class="content-wrapper">
+            <%= render partial: "layouts/partials/flash" %>
+            <%= yield %>
+         </div>
+      </section>
+      <!-- Page footer-->
+      <footer>
+         <%= render partial: "layouts/partials/footer" %>
+      </footer>
+      <%= render 'layouts/partials/adroll' %>
+   </div>
+   <!-- =============== APP SCRIPTS ===============-->
+   <%= javascript_include_tag 'application' %>
+   <%= javascript_include_tag 'echarts.min' %>
+   <%= javascript_include_tag 'messages-chart' %>
+   <%= render 'layouts/partials/zoppim' %>
+   <%= render 'layouts/partials/facebook' %>
+   <%= render 'layouts/partials/linkedin' %>
+   <%= yield :body_area %>
+
+</body>
+
 </html>

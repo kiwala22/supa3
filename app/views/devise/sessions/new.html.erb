@@ -1,0 +1,31 @@
+<%= provide(:title, 'Sign In') %>
+
+<div class="block-center mt-xl wd-xxl">
+  <!-- START panel-->
+  <div class="panel panel-dark panel-flat">
+    <div class="panel-body">
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {"data-parsley-validate" => '' , class: "mb-lg"}) do |f| %>
+      <!-- Email -->
+      <div class="form-group has-feedback">
+        <%= f.label :email,"Email", class: "text-muted" %>
+        <%= f.text_field :email, class: "form-control", autofocus: true, required: "true", placeholder: "Email" %>
+        <span class="error_desc"><%= resource.errors[:email].first if resource.errors[:email].present? %> </span>
+      </div>
+      <!-- Password -->
+      <div class="form-group has-feedback">
+        <%= f.label :password,"Password", class: "text-muted" %>
+        <%= f.password_field :password, class: "form-control", placeholder: "Password", autocomplete:"off", required:"true" %>
+        <span class="error_desc"><%= resource.errors[:password].first if resource.errors[:password].present? %></span>
+      </div>
+      <!--Remember Me  -->
+      <% if devise_mapping.rememberable? -%>
+      <%= f.check_box :remember_me,as: :boolean %>
+      <%= f.label :remember_me, "Remember me", class: "text-muted" %>
+      <% end -%>
+      <!-- Submit -->
+      <%= f.submit "Login" , class: "btn btn-block btn-primary mt-lg" %>
+      <% end %>
+    </div>
+  </div>
+  <!-- END panel-->
+</div>
