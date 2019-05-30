@@ -63,17 +63,12 @@ ActiveRecord::Schema.define(version: 2019_05_18_183940) do
   end
 
   create_table "segments", force: :cascade do |t|
-    t.string "a"
-    t.string "b"
-    t.string "c"
-    t.string "d"
-    t.string "e"
-    t.string "f"
-    t.string "g"
-    t.string "h"
-    t.string "i"
-    t.string "j"
-    t.string "churn"
+    t.integer "a"
+    t.integer "b"
+    t.integer "c"
+    t.integer "d"
+    t.integer "e"
+    t.integer "f"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

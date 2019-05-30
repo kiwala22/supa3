@@ -1,19 +1,21 @@
 Rails.application.routes.draw do
-   get 'gamers/index'
-   get 'tickets/index'
-   get 'tickets/new'
-   get 'broadcasts/index'
-   get 'broadcasts/new'
-   get 'broadcasts/edit'
-   get 'broadcasts/uodate'
-   get 'broadcasts/delete'
-   get 'analytics/index'
+
+
+   resources :broadcasts, only: [:index, :new, :create]
+   resources :gamers, only: [:new, :index, :create]
+   resources :tickets, only: [:index, :new, :create]
+   match 'analytics' => "analytics#index", via: [:get]
 
    devise_for :admin_users, ActiveAdmin::Devise.config
    ActiveAdmin.routes(self)
    devise_for :users
    devise_scope :user do
-      root to: "devise/sessions#new"
+      authenticated :user do
+         root :to => 'analytics#index', as: :authenticated_root
+      end
+      unauthenticated :user do
+         root to: "devise/sessions#new"
+      end
    end
    authenticate :user do
       require 'sidekiq/web'

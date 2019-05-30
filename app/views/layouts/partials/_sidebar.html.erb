@@ -1,162 +1,58 @@
-<!-- START Sidebar (left)-->
 <div class="aside-inner">
    <nav class="sidebar" data-sidebar-anyclick-close="">
       <!-- START sidebar nav-->
       <ul class="nav">
          <!-- Iterates over all sidebar items-->
-         <li class="<%= 'active' if controller?('landing')%>" data-step="1" data-intro=" Get a summary of your account activity, view </br> - Accont balance
-                                                                                                                                     </br> - Sent out messages report
-                                                                                                                                     </br> - Number of created lists
-                                                                                                                                     </br> - Number of contacts
-                                                                                                                                     </br> For more information, use the live chat at the bottom right of the screen">
-            <a href="<%= root_path %>">
+         <li class="<%= 'active' if controller.controller_name == 'analytics' %>" data-step="1" >
+            <a href="<%= analytics_path %>">
                <em class="icon-home"></em>
-               <span data-localize="sidebar.nav.DASHBOARD"><%= I18n.t('.dashboard_link') %></span>
+               <span data-localize="sidebar.nav.DASHBOARD">Analytics</span>
             </a>
          </li>
-         <li class="<%= 'active' if controller?('messages')%>" data-step="2" data-intro=" Create a messgae
-                                                                                         <br> - Send out bulk messages
-                                                                                         <br> - Schedule messages to be sent out at a leter date
-                                                                                         <br> - View your sent messeges
-                                                                                         <br> - View your received messages">
-            <a href="#messages" title="Layouts" data-toggle="collapse">
+         <li class="<%= 'active' if controller.controller_name == 'gamers' %>" data-step="1" >
+            <a href="<%= gamers_path %>">
+               <em class="icon-home"></em>
+               <span data-localize="sidebar.nav.DASHBOARD">Gamers</span>
+            </a>
+         </li>
+         <li class="<%= 'active' if controller.controller_name == 'broadcasts' %>" data-step="2" >
+            <a href="#ai_tickets" title="Layouts" data-toggle="collapse">
                <em class="icon-envelope-open"></em>
-               <span><%= I18n.t('.messages_link') %></span>
+               <span>Tickets</span>
             </a>
-            <ul id="messages" class="nav sidebar-subnav collapse">
+            <ul id="ai_tickets" class="nav sidebar-subnav collapse">
                <li>
-                  <a href="<%= new_message_path %>">
-                     <span><%= I18n.t('.send_link') %></span>
+                  <a href="<%= tickets_path %>">
+                     <span>View Tickets</span>
                   </a>
                </li>
                <li>
-                  <a href="<%= sent_messages_path %>">
-                     <span><%= I18n.t('.outbox_link') %></span>
-                  </a>
-               </li>
-               <li>
-                  <a href="<%= received_messages_path %>">
-                     <span><%= I18n.t('.inbox_link') %></span>
-                  </a>
-               </li>
-               <li>
-                  <a href="<%= new_bulk_schedule_path %>">
-                     <span><%= I18n.t('.bulk_link') %></span>
-                  </a>
-               </li>
-               <li>
-                  <a href="<%= bulk_schedules_path %>">
-                     <span>Bulk Scheduled Messages </span>
+                  <a href="<%= new_ticket_path %>">
+                     <span>Upload Tickets</span>
                   </a>
                </li>
             </ul>
          </li>
-         <li class="<%= 'active' if controller?('contacts')%>" data-step="3" data-intro="Create contact lists
-                                                                                         </br> - Create a contact list
-                                                                                         </br> - Edit a contact list
-                                                                                         </br> - View created lists">
-            <a href="#contacts" title="Layouts" data-toggle="collapse">
-               <em class="icon-notebook"></em>
-               <span><%= I18n.t('.contacts_link') %></span>
+         <li class="<%= 'active' if controller.controller_name == 'broadcasts' %>" data-step="2" >
+            <a href="#ai_broadcasts" title="Layouts" data-toggle="collapse">
+               <em class="icon-envelope-open"></em>
+               <span>Broadcasts</span>
             </a>
-            <ul id="contacts" class="nav sidebar-subnav collapse">
+            <ul id="ai_broadcasts" class="nav sidebar-subnav collapse">
                <li>
-                  <a href="<%= new_list_path %>" >
-                     <span><%= I18n.t('.create_list_link') %></span>
+                  <a href="<%= new_broadcast_path %>">
+                     <span>Send Broadcast</span>
                   </a>
                </li>
                <li>
-                  <a href="<%= lists_path %>">
-                     <span><%= I18n.t('.lists_link') %></span>
+                  <a href="<%= broadcasts_path %>">
+                     <span>Sent Broadcasts</span>
                   </a>
                </li>
             </ul>
          </li>
-         <li class="<%= 'active' if controller?('transactions')%>" data-step="4" data-intro="Top up your account
-                                                                                            </br> - Deposit money onto your account
-                                                                                            </br> - View your transaciton history">
-            <a href="#transactions" title="Layouts" data-toggle="collapse">
-               <em class="icon-directions"></em>
-               <span><%= I18n.t('.transactions_link') %></span>
-            </a>
-            <ul id="transactions" class="nav sidebar-subnav collapse">
-               <li>
-                  <a href="<%= new_transaction_path %>" >
-                     <span><%= I18n.t('.deposit_link') %></span>
-                  </a>
-               </li>
-               <li>
-                  <a href="<%= transactions_path %>" >
-                     <span><%= I18n.t('.deposit_history_link') %></span>
-                  </a>
-               </li>
-            </ul>
-         </li>
-         <li class="<%= 'active' if controller?('prices')%>" data-step="5" data-intro="View the current praices for our SMS service">
-            <a href="<%= prices_index_path %>" title="Layouts" >
-               <em class=" fa fa-dollar"></em>
-               <span><%= I18n.t('.prices_link') %></span>
-            </a>
-         </li>
-         <li class="<%= 'active' if controller?('delivery_urls')%>" data-step="6" data-intro="Integration
-                                                                                             </br>- Get your API credentials
-                                                                                             </br>- Get our Developer API documentation
-                                                                                             </br>- Set your delivery URL, to receive notificaiton of the status of messages sent out">
-            <a href="#developer" title="Layouts" data-toggle="collapse" >
-               <em class="fa fa-mobile"></em>
-               <span><%= I18n.t('.developer_link') %></span>
-            </a>
-            <ul id="developer" class="nav sidebar-subnav collapse">
-               <li>
-                  <a href="<%= api_key_path(current_user.api_key) %>">
-                     <span><%= I18n.t('.api_key_link') %></span>
-                  </a>
-               </li>
-               <li>
-                  <a href="<%= documentation_api_keys_path %>">
-                     <span><%= I18n.t('.api_documentation_link') %></span>
-                  </a>
-               </li>
-               <li>
-                  <a href="<%= current_user.delivery_url.blank? ? new_delivery_url_path : delivery_url_path(current_user.delivery_url.id) %>">
-                     <span><%= I18n.t('.delivery_url_link') %></span>
-                  </a>
-               </li>
-            </ul>
-         </li>
-         <li class="<%= 'active' if controller?('keywords'||'short_code_forms')%>" data-step="7" data-intro="Use our short code 7575
-                                                                                                             </div>- Apply for a key word
-                                                                                                             </div>- Manage your key word">
-            <a href="#shortcode" data-toggle="collapse">
-               <em class="fa fa-mobile"></em>
-               <span><%= I18n.t('.shortcode_link') %></span>
-            </a>
-            <ul id="shortcode" class="nav sidebar-subnav collapse">
-               <li>
-                  <a href="<%= keywords_path %>">
-                     <span><%= I18n.t('.manage_shortcode_link') %></span>
-                  </a>
-               </li>
-               <li>
-                  <a href="<%= new_short_code_form_path %>">
-                     <span><%= I18n.t('.apply_shortcode_link') %></span>
-                  </a>
-               </li>
-            </ul>
-         </li>
-          <li>
-	      <a href="<%= frequently_asked_questions_path  %>" title="Layouts" >
-    		<em class=" fa fa-question"></em>
-    		<span>Help</span>
-   	      </a>
-	 </li>
 
-       <!--
-         <li>
-            <a id = "tour" class= "btn btn-primary">Take tour</a>
-         </li> -->
       </ul>
-      <!-- END sidebar nav-->
-    </nav>
+
+   </nav>
 </div>
-<!-- END Sidebar (left)-->

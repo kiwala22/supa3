@@ -80,6 +80,7 @@ GEM
     bindex (0.7.0)
     bootsnap (1.4.4)
       msgpack (~> 1.0)
+    bower-rails (0.11.0)
     builder (3.2.3)
     byebug (11.0.1)
     cancancan (3.0.1)
@@ -296,6 +297,7 @@ PLATFORMS
 DEPENDENCIES
   activeadmin
   bootsnap (>= 1.1.0)
+  bower-rails (~> 0.11.0)
   byebug
   cancancan
   capybara (>= 2.15)
@@ -306,6 +308,7 @@ DEPENDENCIES
   draper
   gon
   jbuilder (~> 2.5)
+  kaminari
   listen (>= 3.0.5, < 3.2)
   pg
   puma (~> 3.11)

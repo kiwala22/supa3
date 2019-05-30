@@ -16,6 +16,12 @@ module SupaAi
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
+     # fonts
+     config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+     # images
+     config.assets.precompile << /\.(?:png|jpg)$/
+
     config.time_zone = 'Africa/Nairobi'
   end
 end

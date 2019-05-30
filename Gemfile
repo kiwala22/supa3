@@ -70,5 +70,6 @@ gem 'cancancan'
 gem 'draper'
 gem 'pundit'
 gem 'ransack', github: 'activerecord-hackery/ransack', branch: '8daa87a0389d380f7c9fd7ea9cb5bda634d5dc7d'
-gem 'cancancan'
 gem 'gon'
+gem 'kaminari'
+gem "bower-rails", "~> 0.11.0"

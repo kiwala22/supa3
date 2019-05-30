@@ -1,2 +1,45 @@
-<h1>Analytics#index</h1>
-<p>Find me in app/views/analytics/index.html.erb</p>
+<%= provide(:title, "Broadcast Messages") %>
+<h3>
+   <%= "User Analytics" %>
+   <small><%= "User Segment Distribution" %></small>
+</h3>
+
+<div class="row">
+   <div class="col-sm-12">
+      <div class="col-sm-12 col-centered">
+         <!-- START bar chart-->
+         <div id="panelChart3" class="panel panel-info">
+            <div class="panel-heading">
+               <div class="panel-title">User Segments</div>
+            </div>
+            <div collapse="panelChart3" class="panel-wrapper">
+               <div class="panel-body" >
+                  <div id="user_segment_graph" style=" min-height: 400px; width: 100%; "></div>
+               </div>
+            </div>
+         </div>
+         <!-- END bar chart-->
+      </div>
+
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-sm-12">
+      <div class="col-sm-12 col-centered">
+         <!-- START bar chart-->
+         <div id="panelChart3" class="panel panel-info">
+            <div class="panel-heading">
+               <div class="panel-title">User Segments Trends</div>
+            </div>
+            <div collapse="panelChart3" class="panel-wrapper">
+               <div class="panel-body" >
+                  <div id="segment_trends_graph" style=" min-height: 400px; width: 100%; "></div>
+               </div>
+            </div>
+         </div>
+         <!-- END bar chart-->
+      </div>
+
+   </div>
+</div>

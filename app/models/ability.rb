@@ -4,7 +4,10 @@ class Ability
    include CanCan::Ability
 
    def initialize(user)
-      # can :manage Broadcast
+      can :manage, Broadcast
+      can :manage, Ticket
+      can :manage, Gamer
+
       # can :read Gamer
       # Define abilities for the passed in user here. For example:
       #

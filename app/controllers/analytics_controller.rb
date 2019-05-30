@@ -1,16 +1,18 @@
 class AnalyticsController < ApplicationController
-  before_action :authenticate_user!
-  
-  def index
-     @gamers = Gamer.all.order("created_at DESC").page params[:page]
-     labels = (0.0..1.0).step(0.1).to_a.map!{|f| f.round(1)}
-     game_counts = []
-     labels.each do |f|
-       people_count = Gamer.where('probability >= ? AND probability <= ?', f, (f+0.09)).count()
-       game_counts << people_count
-     end
+   before_action :authenticate_user!
 
-     gon.labels = labels
-     gon.game_counts = game_counts
-  end
+   def index
+      gamers = Gamer.group(:segment).count()
+      gon.labels = gamers.keys
+      gon.counts = gamers.values
+
+      segment_labels = Segment.column_names
+      segment_labels = segment_labels.delete_if{ |i| ["id", "created_at", "updated_at"].include?(i)}
+      segment_labels = sements_labels.map(&:upcase)
+
+      segments = Segment.order("created_at DESC").first(14)
+
+
+   end
+
 end

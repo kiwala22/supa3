@@ -4,10 +4,10 @@
    <div class="navbar-header">
       <a href="#/" class="navbar-brand">
          <div class="brand-logo">
-            <img src="<%= image_path('logo_small.png') %>" alt="App Logo" class="img-responsive" />
+            <img src="" alt="App Logo" class="img-responsive" />
          </div>
          <div class="brand-logo-collapsed">
-            <img src="<%= image_path('logo_small.png') %>" alt="App Logo" class="img-responsive" />
+            <img src="" alt="App Logo" class="img-responsive" />
          </div>
       </a>
    </div>
@@ -32,11 +32,7 @@
       <ul class="nav navbar-nav navbar-right">
          <!-- START Alert menu-->
          <li id="translation">
-           <%= form_tag user_home_path, class: 'locale' do %>
-           <%= select_tag 'set_locale', options_for_select(LANGUAGES, locale.to_s), onchange: 'this.form.submit()', class: "form-control m-b" %>
-           <%= submit_tag 'submit', id: "locale_submit" %>
-           <%= javascript_tag "$('#locale_submit').hide()" %>
-           <% end %>
+
          </li>
          <li class="dropdown dropdown-list">
             <a href="#" data-toggle="dropdown">
@@ -54,23 +50,12 @@
                               <em class="icon-user"></em>
                            </div>
                            <div class="media-box-body clearfix">
-                              <p class="m0"><%= current_user.name %></p>
+                              <p class="m0"><%= current_user.first_name %></p>
                            </div>
                         </div>
                      </a>
 
-                     <!-- list item-->
-                     <a href="<%= edit_user_registration_path %>" class="list-group-item">
-                        <div class="media-box">
-                           <div class="pull-left">
-                              <em class="icon-settings"></em>
-                           </div>
-                           <div class="media-box-body clearfix">
-                              <p class="m0"><%= I18n.t('.settings_link') %></p>
-
-                           </div>
-                        </div>
-                     </a>
+                     
                      <!-- list item-->
                      <%= link_to destroy_user_session_path, :method => :get, class:"list-group-item" do %>
                         <div class="media-box">
