@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
 
-   resources :broadcasts, only: [:index, :new, :create]
+   resources :broadcasts
    resources :gamers, only: [:new, :index, :create]
    resources :tickets, only: [:index, :new, :create]
    match 'analytics' => "analytics#index", via: [:get]

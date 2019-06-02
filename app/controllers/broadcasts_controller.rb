@@ -3,11 +3,8 @@ class BroadcastsController < ApplicationController
    load_and_authorize_resource
 
    def index
-      @broadcasts = current_user.broadcasts.order("created_at DESC").page params[:page]
-      respond_to do |format|
-        format.html
-        format.csv  { render csv: @broadcasts.to_csv, filename: "Broadcasts #{Date.today}" }
-      end
+      @broadcasts = Broadcast.all.order("created_at DESC").page params[:page]
+
    end
 
    def new
@@ -15,20 +12,63 @@ class BroadcastsController < ApplicationController
    end
 
    def create
-      @broadcast = Broadcast.new(message: broadcast_params['message'], lower_perc: broadcast_params['lower_perc'], upper_perc: broadcast_params['upper_perc'] ,status: "PENDING", user_id: current_user.id)
+      p broadcast_params[:execution_time]
+      @broadcast = Broadcast.new(
+         message: broadcast_params['message'],
+         execution_time: DateTime.strptime(broadcast_params[:execution_time],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S"),
+         segment: broadcast_params['segment'],
+         status: "PENDING",
+         user_id: current_user.id)
       if @broadcast.save
          #trigger worker & return route to reset_index
-         BroadcastWorker.perform_async(@broadcast.id)
-         redirect_to action: "index", notice: 'Broadcast Successful. Processing.....'
+         #BroadcastWorker.perform_async(@broadcast.id)
+         flash[:notice] = 'Broadcast Successful. Processing.....'
+         redirect_to action: "index"
       else
          #show to error notice and show index
+         flash.now[:alert] = @broadcast.errors.first
          render action: "new"
-         flash[:error] = "Broadcast Failed"
+      end
+   end
+   def edit
+   end
+
+   def update
+      if @broadcast.update(broadcast_params)
+         redirect_to  broadcasts_path, notice: 'Broadcast was successfully updated.'
+      else
+         render :edit
       end
    end
 
+   def destroy
+      @broadcast.destroy
+      flash[:notice] = 'Broadcast was successfully deleted.'
+      redirect_to action: "index"
+
+   end
+
+   # def process_broadcasts
+   #    #find the broadcasts with a status of "PENDING"
+   #    jobs = Broadcast.where('status = ? AND execution_time <= ?', "PENDING", Time.now)
+   #    if !jobs.empty?
+   #       jobs.each do |job|
+   #          #first update the status of the message and then push it to the worker
+   #          job.update_attribute(:status, "PROCESSING")
+   #          BroadcastWorker.perform_async(job.id)
+   #       end
+   #    end
+   #    render nothing: true, status: 200
+   # end
+
+   def set_broadcast
+      @broadcast = Broadcast.find(params[:id])
+   end
+
+
    private
+
    def broadcast_params
-      params.require(:broadcast).permit(:message, :lower_perc, :upper_perc)
+      params.require(:broadcast).permit(:message, :execution_time, :segment, :status)
    end
 end

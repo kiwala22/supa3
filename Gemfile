@@ -73,3 +73,4 @@ gem 'ransack', github: 'activerecord-hackery/ransack', branch: '8daa87a0389d380f
 gem 'gon'
 gem 'kaminari'
 gem "bower-rails", "~> 0.11.0"
+gem 'jquery-rails', '~> 4.3', '>= 4.3.1'

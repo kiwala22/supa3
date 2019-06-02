@@ -1,2 +1,8 @@
-<h1>Broadcasts#new</h1>
-<p>Find me in app/views/broadcasts/new.html.erb</p>
+<%= provide(:title, "Create New Broadcast") %>
+<h3>
+   <%= "Broadcasts" %>
+   <small><%= "Create New Broadcast" %></small>
+</h3>
+</h3>
+
+<%= render 'form', broadcast: @broadcast %>

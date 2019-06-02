@@ -1,2 +1,8 @@
-<h1>Broadcasts#edit</h1>
-<p>Find me in app/views/broadcasts/edit.html.erb</p>
+<%= provide(:title, "Broadcast Messages") %>
+<h3>
+	<%= "Scheduled Broadcasts" %>
+<small><%= "Edit Broadcasts" %></small>
+</h3>
+</h3>
+
+<%= render 'form', broadcast: @broadcast %>
