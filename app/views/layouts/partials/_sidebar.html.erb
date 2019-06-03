@@ -5,19 +5,19 @@
          <!-- Iterates over all sidebar items-->
          <li class="<%= 'active' if controller.controller_name == 'analytics' %>" data-step="1" >
             <a href="<%= analytics_path %>">
-               <em class="icon-home"></em>
+               <em class="icon-graph"></em>
                <span data-localize="sidebar.nav.DASHBOARD">Analytics</span>
             </a>
          </li>
          <li class="<%= 'active' if controller.controller_name == 'gamers' %>" data-step="1" >
             <a href="<%= gamers_path %>">
-               <em class="icon-home"></em>
+               <em class="icon-user"></em>
                <span data-localize="sidebar.nav.DASHBOARD">Gamers</span>
             </a>
          </li>
          <li class="<%= 'active' if controller.controller_name == 'broadcasts' %>" data-step="2" >
             <a href="#ai_tickets" title="Layouts" data-toggle="collapse">
-               <em class="icon-envelope-open"></em>
+               <em class="icon-wallet"></em>
                <span>Tickets</span>
             </a>
             <ul id="ai_tickets" class="nav sidebar-subnav collapse">

@@ -22,3 +22,7 @@
 every 1.minute do
   runner "Broadcast.process_broadcasts"
 end
+
+every 1.day, at: '00:05 am' do
+  runner "Gamer.run_predictions"
+end

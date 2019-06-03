@@ -11,5 +11,10 @@
  *= require fonts
  *= require vendor.assets
  *= require time_picker
+ *= require base
  *
  */
+
+.navbar-header > a {
+   color: #ffff
+}
