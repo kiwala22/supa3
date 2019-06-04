@@ -10,7 +10,7 @@ class AnalyticsController < ApplicationController
       segment_labels = segment_labels.delete_if{ |i| ["id", "created_at", "updated_at"].include?(i)}
       gon.segment_labels = segment_labels.map(&:upcase)
 
-      segments = Segment.order("created_at DESC").first(30)
+      segments = Segment.order("created_at ASC").last(30)
 
       series = []
       segment_labels.each do |label|

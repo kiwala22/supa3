@@ -31,6 +31,8 @@ class SegmentPredictionWorker
          return "D"
       when result < 0.2
          return "E"
+      else
+         return "F"
       end
    end
 end

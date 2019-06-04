@@ -26,3 +26,7 @@ end
 every 1.day, at: '00:05 am' do
   runner "Gamer.run_predictions"
 end
+
+every 1.day, at: '08:05 am' do
+  runner "Segment.update_segments"
+end
