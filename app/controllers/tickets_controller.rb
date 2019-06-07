@@ -5,13 +5,20 @@ class TicketsController < ApplicationController
   def index
      @q = Ticket.all.ransack(params[:q])
      @tickets = @q.result(distinct: true).order("created_at DESC").page params[:page]
-     
+
   end
 
   def new
+
   end
 
   def create
 
+
+  end
+
+  private
+  def tickets_params
+     
   end
 end
