@@ -4,7 +4,7 @@ module SendSMS
    require "cgi"
    require "httparty"
 
-   def self.process_sms_now(receiver:, content:, sender_id: nil, args = {})
+   def self.process_sms_now(receiver:, content:, sender_id: nil, args: {})
 
       if args[:append_to].present?
          content = content + args[:append_to]
