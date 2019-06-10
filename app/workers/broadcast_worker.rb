@@ -3,7 +3,8 @@ class BroadcastWorker
    sidekiq_options queue: "default"
    sidekiq_options retry: false
 
-   include SendSMS
+   #include SendSMS
+   require '../lib/send_sms.rb'
 
    def perform(broadcast_id)
       @broadcast = Broadcast.find(broadcast_id)
