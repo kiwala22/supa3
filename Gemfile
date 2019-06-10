@@ -30,8 +30,10 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+group :development do
+  gem "capistrano", "~> 3.10", require: false
+  gem "capistrano-rails", "~> 1.3", require: false
+end
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -75,3 +77,8 @@ gem 'kaminari'
 gem "bower-rails", "~> 0.11.0"
 gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
 gem 'httparty', '~> 0.13.7'
+gem 'capistrano-ext'
+gem 'capistrano-passenger'
+gem 'capistrano-rvm'
+gem 'capistrano-bundler'
+
