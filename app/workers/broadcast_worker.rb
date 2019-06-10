@@ -4,7 +4,7 @@ class BroadcastWorker
    sidekiq_options retry: false
 
    #include SendSMS
-   require_relative '/lib/send_sms.rb'
+   require_relative '../lib/send_sms.rb'
 
    def perform(broadcast_id)
       @broadcast = Broadcast.find(broadcast_id)
