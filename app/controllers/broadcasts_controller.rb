@@ -1,5 +1,5 @@
 class BroadcastsController < ApplicationController
-   before_action :authenticate_user!
+   before_action :authenticate_user!, except: [:process_broadcasts]
    load_and_authorize_resource
 
    def index
@@ -46,6 +46,11 @@ class BroadcastsController < ApplicationController
       flash[:notice] = 'Broadcast was successfully deleted.'
       redirect_to action: "index"
 
+   end
+
+   def process_broadcasts
+      Broadcast.process_broadcasts
+      render body: nil
    end
 
    # def process_broadcasts

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
    resources :gamers, only: [:new, :index, :create]
    resources :tickets, only: [:index, :new, :create]
    match 'analytics' => "analytics#index", via: [:get]
+   match 'process_broadcasts' => "broadcasts#process_broadcasts", via: [:get]
 
    devise_for :admin_users, ActiveAdmin::Devise.config
    ActiveAdmin.routes(self)
