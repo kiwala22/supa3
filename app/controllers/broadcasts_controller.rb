@@ -21,7 +21,7 @@ class BroadcastsController < ApplicationController
          user_id: current_user.id)
       if @broadcast.save
          #trigger worker & return route to reset_index
-         #BroadcastWorker.perform_async(@broadcast.id)
+         BroadcastWorker.perform_async(@broadcast.id)
          flash[:notice] = 'Broadcast Successful. Processing.....'
          redirect_to action: "index"
       else

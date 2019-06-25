@@ -75,3 +75,4 @@ gem 'kaminari'
 gem "bower-rails", "~> 0.11.0"
 gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
 gem 'httparty', '~> 0.13.7'
+gem 'rb-readline'
