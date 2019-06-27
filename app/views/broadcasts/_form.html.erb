@@ -9,7 +9,7 @@
         <div class="form-group">
            <div class="row">
              <%= f.label :segment, "Segment", class: "col-sm-2 control-label text-muted" %>
-             <%= f.select :segment, Segment.column_names.delete_if{ |i| ["id", "created_at", "updated_at"].include?(i)}.map(&:upcase) ,class: "form-control m-b", autofocus: true, required: "true" %>
+             <%= f.select :segment, Segment.column_names.delete_if{ |i| ["id", "created_at", "updated_at"].include?(i)}.map(&:upcase) ,class: "form-control m-b", autofocus: true, required: "true", id: "segment" %>
            </div>
         </div>
 

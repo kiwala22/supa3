@@ -14,22 +14,22 @@ class TicketsWorker
       #check if the data is purely numbers and 3 digits long
       #if not valid send invalid sms message and generate random 3 digit code
       #if valid, then create the ticket and send confirmation sms
-
+      reference = generate_ticket_reference
       if /^\d{3}$/ === data
-         ticket = gamer.tickets.new(phone_number: gamer.phone_number, reference: data, amount: amount.to_i)
+         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data, amount: amount.to_i, reference: reference)
          if ticket.save
             #Send SMS with confirmation
-            message_content = ""
+            message_content = ".Thank you for playin #Game. You have played #{data} Ticket: #{reference}"
             SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          end
 
       else
          #generate random numbers
-         random_ref = generate_random_data
-         ticket = gamer.tickets.new(phone_number: gamer.phone_number, reference: random_ref, amount: amount.to_i)
+         random_data = generate_random_data
+         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: random_data, amount: amount.to_i, reference: reference)
          if ticket.save
             #Send SMS with the confirmation and random number
-            message_content = ""
+            message_content = ".Thank you for playin #Game. Input was incorrect and we have picked #{random_data} for you. Ticket: #{reference}"
             SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          end
       end
@@ -46,11 +46,11 @@ class TicketsWorker
    end
 
    def generate_ticket_reference
-
+      begin
+         ref = rand(36**8).to_s(36).upcase
+      end while Ticket.where(reference: ref).exists?
+      return ref
    end
 
 
 end
-
-
-#create another column instead of reference to store the played numbers
