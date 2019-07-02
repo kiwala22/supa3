@@ -1,4 +1,5 @@
 class TicketsController < ApplicationController
+   skip_before_action :verify_authenticity_token
 
    def index
       @q = Ticket.all.ransack(params[:q])
@@ -20,13 +21,13 @@ class TicketsController < ApplicationController
          TicketWorker.perform_async(phone_number: phone_number, data: data, amount: amount)
          respond_to do |format|
             format.html { render body: nil }
-            format.json { render status: 200, :json => "Success"}
+            format.json { render status: 200}
             format.xml  { render status: 200, :xml => "<?xml version='1.0' encoding='utf-8'?>"}
          end
       else
          respond_to do |format|
             format.html { render body: nil }
-            format.json { render status: 400, :json => "Failed"}
+            format.json { render status: 400}
             format.xml  { render status: 400, :xml => "<?xml version='1.0' encoding='utf-8'?><"}
          end
       end
