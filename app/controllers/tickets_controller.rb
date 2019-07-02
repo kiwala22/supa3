@@ -1,6 +1,4 @@
 class TicketsController < ApplicationController
-   before_action :authenticate_user!
-   load_and_authorize_resource
 
    def index
       @q = Ticket.all.ransack(params[:q])
@@ -21,13 +19,15 @@ class TicketsController < ApplicationController
          amount = tickets_params[:amount]
          TicketWorker.perform_async(phone_number: phone_number, data: data, amount: amount)
          respond_to do |format|
-            format.json { render status: 200}
-            format.xml {render status: 200, :xml => "<?xml version='1.0' encoding='utf-8'?>"}
+            format.html { render body: nil }
+            format.json { render status: 200, :json => "Success"}
+            format.xml  { render status: 200, :xml => "<?xml version='1.0' encoding='utf-8'?>"}
          end
       else
          respond_to do |format|
-            format.json { render status: 400}
-            format.xml {render status: 400, :xml => "<?xml version='1.0' encoding='utf-8'?><"}
+            format.html { render body: nil }
+            format.json { render status: 400, :json => "Failed"}
+            format.xml  { render status: 400, :xml => "<?xml version='1.0' encoding='utf-8'?><"}
          end
       end
 
