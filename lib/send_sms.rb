@@ -20,7 +20,7 @@ module SendSMS
 
       message_params = parameters.join("&")
 
-      message_url = ENV['SMS_BASE_URL']+message_params
+      message_url = ENV['SMS_BASE_URL'] + message_params
 
       response = HTTParty.get(message_url)
 

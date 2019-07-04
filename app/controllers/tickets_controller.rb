@@ -1,5 +1,6 @@
 class TicketsController < ApplicationController
-   skip_before_action :verify_authenticity_token
+   before_action :authenticate_user! except: [:create]
+   load_and_authorize_resource
 
    def index
       @q = Ticket.all.ransack(params[:q])
@@ -14,21 +15,19 @@ class TicketsController < ApplicationController
 
    def create
       #pick api data and respond, push the data to library through a worker
-      if tickets_params[:phone_number].present? & tickets_params[:data].present? & tickets_params[:amount].present?
-         phone_number = tickets_params[:phone_number]
-         data = tickets_params[:data]
-         amount = tickets_params[:amount]
-         TicketWorker.perform_async(phone_number: phone_number, data: data, amount: amount)
+      if params[:phone_number].present? & params[:data].present? & params[:amount].present?
+         args = [phone_number: params[:phone_number], data: params[:data], amount: params[:amount]]
+         TicketWorker.perform_async(args)
          respond_to do |format|
-            format.html { render body: nil }
+            format.html {render body: nil}
             format.json { render status: 200}
-            format.xml  { render status: 200, :xml => "<?xml version='1.0' encoding='utf-8'?>"}
+            format.xml {render status: 200, :xml => "<?xml version='1.0' encoding='utf-8'?>"}
          end
       else
          respond_to do |format|
-            format.html { render body: nil }
+            format.html {render body: nil}
             format.json { render status: 400}
-            format.xml  { render status: 400, :xml => "<?xml version='1.0' encoding='utf-8'?><"}
+            format.xml {render status: 400, :xml => "<?xml version='1.0' encoding='utf-8'?><"}
          end
       end
 
@@ -36,11 +35,5 @@ class TicketsController < ApplicationController
 
    def import
 
-   end
-
-   private
-
-   def tickets_params
-      params.permit(:phone_number, :data, :amount)
    end
 end

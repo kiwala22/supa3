@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_27_120355) do
+ActiveRecord::Schema.define(version: 2019_07_04_043601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,19 @@ ActiveRecord::Schema.define(version: 2019_06_27_120355) do
     t.index ["user_id"], name: "index_broadcasts_on_user_id"
   end
 
+  create_table "draws", force: :cascade do |t|
+    t.datetime "draw_time"
+    t.decimal "revenue", precision: 12, scale: 2
+    t.decimal "payout", precision: 12, scale: 2
+    t.integer "two_match"
+    t.string "three_match"
+    t.integer "one_match"
+    t.integer "no_match"
+    t.integer "ticket_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "gamers", force: :cascade do |t|
     t.string "phone_number"
     t.decimal "probability_to_play", precision: 5, scale: 2
@@ -84,6 +97,9 @@ ActiveRecord::Schema.define(version: 2019_06_27_120355) do
     t.datetime "updated_at", null: false
     t.bigint "gamer_id"
     t.string "data"
+    t.bigint "draw_id"
+    t.decimal "win_amount", precision: 10, scale: 2
+    t.index ["draw_id"], name: "index_tickets_on_draw_id"
     t.index ["gamer_id"], name: "index_tickets_on_gamer_id"
     t.index ["reference"], name: "index_tickets_on_reference"
   end
@@ -108,5 +124,6 @@ ActiveRecord::Schema.define(version: 2019_06_27_120355) do
   end
 
   add_foreign_key "broadcasts", "users"
+  add_foreign_key "tickets", "draws"
   add_foreign_key "tickets", "gamers"
 end
