@@ -3,7 +3,7 @@ class TicketsWorker
    require "send_sms"
 
    def perform(*args)
-      draw_time = ((Time.now - (Time.now.min % 10).minutes).beginning_of_minute + 10.minutes).strftime("%I:%M %p" )
+      draw_time = ((Time.now - (Time.now.min % 10).minutes).beginning_of_minute + 10.minutes).strftime("%I:%M %p")
       #extract the parameters
       phone_number = args[:phone_number]
       amount = args[:amount]

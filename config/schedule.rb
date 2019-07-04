@@ -30,3 +30,7 @@ end
 every 1.day, at: '08:05 am' do
   runner "Segment.update_segments"
 end
+
+every '0,10,20,30,40,50 * * * *' do
+  runner "Ticket.run_draws"
+end
