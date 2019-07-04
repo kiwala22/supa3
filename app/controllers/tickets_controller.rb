@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-   before_action :authenticate_user! except: [:create]
+   before_action :authenticate_user!, except: [:create]
    load_and_authorize_resource
 
    def index
