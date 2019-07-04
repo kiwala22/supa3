@@ -1,4 +1,4 @@
-class TicketsWorker
+class TicketWorker
    include Sidekiq::Worker
    require "send_sms"
 

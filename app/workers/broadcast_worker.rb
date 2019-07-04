@@ -3,6 +3,7 @@ class BroadcastWorker
    sidekiq_options queue: "default"
    sidekiq_options retry: false
 
+   #include SendSMS
    require 'send_sms'
 
    def perform(broadcast_id)

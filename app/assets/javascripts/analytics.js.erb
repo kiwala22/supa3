@@ -89,7 +89,11 @@ $(document).ready(function(){
 // require 'walden'
 $(document).ready(function(){
     var myChart = echarts.init(document.getElementById('segment_trends_graph'), 'walden');
-
+    var array = [];
+    for (var i = 0; i < gon.series.length; i++){
+       array += gon.series[i].data;
+    }
+    var array_arr = JSON.parse("[" + array + "]");
     var title = 'Segment Trends';
     var option = {
        title : {
@@ -122,6 +126,8 @@ $(document).ready(function(){
        yAxis : [
            {
                type : 'value',
+               scale : true,
+               min : (Math.min.apply(Math, array_arr) - 1000),
                axisLabel : {
                    formatter: '{value} Users'
                }
