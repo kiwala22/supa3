@@ -36,7 +36,7 @@ class DrawWorker
             win = ticket.amount * 2
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: False)
             #send confirmation message
-            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win.} Thank you for playing #{ENV['GAME']}"
+            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
             SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
             #process the payment
@@ -44,7 +44,7 @@ class DrawWorker
             win = ticket.amount * 200
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: False)
             #send confirmation message
-            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win.} Thank you for playing #{ENV['GAME']}"
+            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
             SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
             #process the payment
