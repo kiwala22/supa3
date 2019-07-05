@@ -1,5 +1,6 @@
 class TicketWorker
    include Sidekiq::Worker
+   sidekiq_options retry: false
    require "send_sms"
 
    def perform(phone_number, data, amount)
@@ -15,7 +16,7 @@ class TicketWorker
          ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data, amount: amount.to_i, reference: reference)
          if ticket.save
             #Send SMS with confirmation
-            message_content = ".Thank you for playin #Game. You have played #{data} entered in to #{draw_time} draw. Ticket: #{reference}"
+            message_content = "Thank you for playing #Game. You have played #{data} entered in to #{draw_time} draw. Ticket: #{reference}"
             SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          end
 
@@ -25,7 +26,7 @@ class TicketWorker
          ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: random_data, amount: amount.to_i, reference: reference)
          if ticket.save
             #Send SMS with the confirmation and random number
-            message_content = ".Thank you for playin #Game. Input was incorrect and we have picked #{random_data} for you entered in to #{draw_time} draw. Ticket: #{reference}"
+            message_content = "Thank you for playing #Game. Input was incorrect and we have picked #{random_data} for you entered in to #{draw_time} draw. Ticket: #{reference}"
             SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          end
       end
