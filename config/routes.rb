@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
    resources :broadcasts
    resources :gamers, only: [:new, :index, :create]
-   resources :tickets, only: [:index, :new, :create]
+   resources :tickets, only: [:index, :new]
+   match 'tickets' => "tickets#create", via: [:post], :defaults => { :format => 'json' }
    match 'analytics' => "analytics#index", via: [:get]
    match 'process_broadcasts' => "broadcasts#process_broadcasts", via: [:get]
 
