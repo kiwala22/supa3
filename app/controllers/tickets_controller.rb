@@ -20,13 +20,11 @@ class TicketsController < ApplicationController
          amount = params[:amount]
          TicketWorker.perform_async(phone_number, data, amount)
          respond_to do |format|
-            format.html {render body: nil}
             format.json { render status: 200}
             format.xml {render status: 200, :xml => "<?xml version='1.0' encoding='utf-8'?>"}
          end
       else
          respond_to do |format|
-            format.html {render body: nil}
             format.json { render status: 400}
             format.xml {render status: 400, :xml => "<?xml version='1.0' encoding='utf-8'?><"}
          end
