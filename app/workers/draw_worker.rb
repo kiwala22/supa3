@@ -25,7 +25,7 @@ class DrawWorker
          win_arr = draw_numbers.split("").uniq.map(&:to_i)
          matches = (data_arr & win_arr).count()
          case matches
-            when 0 || 1
+            when 0 , 1
                win = (ticket.amount).to_i * 0
                ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
                #send confirmation message
