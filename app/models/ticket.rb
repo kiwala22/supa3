@@ -2,6 +2,8 @@ class Ticket < ApplicationRecord
    paginates_per 100
    belongs_to :gamer
 
+   require "send_sms"
+
    def self.run_draws
 
       ## Run as a worker
@@ -31,17 +33,23 @@ class Ticket < ApplicationRecord
             win = ticket.amount * 0
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: False)
             #send confirmation message
+            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers.  Thank you for playing #{ENV['GAME']}"
+            SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
          when 2
             win = ticket.amount * 2
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: False)
             #send confirmation message
+            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win.} Thank you for playing #{ENV['GAME']}"
+            SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
             #process the payment
          when 3
             win = ticket.amount * 200
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: False)
             #send confirmation message
+            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win.} Thank you for playing #{ENV['GAME']}"
+            SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
             #process the payment
          end
