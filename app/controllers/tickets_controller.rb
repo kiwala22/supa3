@@ -18,7 +18,7 @@ class TicketsController < ApplicationController
          phone_number = params[:phone_number]
          data = params[:data]
          amount = params[:amount]
-         TicketWorker.perform_async(phone_number: phone_number, data: data, amount: amount)
+         TicketWorker.perform_async(phone_number, data, amount)
          respond_to do |format|
             format.html {render body: nil}
             format.json { render status: 200}

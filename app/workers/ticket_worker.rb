@@ -2,12 +2,8 @@ class TicketWorker
    include Sidekiq::Worker
    require "send_sms"
 
-   def perform(args = {})
+   def perform(phone_number, data, amount)
       draw_time = ((Time.now - (Time.now.min % 10).minutes).beginning_of_minute + 10.minutes).strftime("%I:%M %p")
-      #extract the parameters
-      phone_number = args[:phone_number]
-      amount = args[:amount]
-      data = args[:data]
       #Check if gamer exists or create and return gamer
       gamer = Gamer.find_or_create_by(phone_number: phone_number)
 
