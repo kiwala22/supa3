@@ -24,9 +24,9 @@ module SendSMS
       response = HTTParty.get(message_url)
 
       if response.code == 200
-         return True
+         return true
       else
-         return False
+         return false
       end
 
    end
