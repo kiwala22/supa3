@@ -47,12 +47,6 @@ class BroadcastsController < ApplicationController
       redirect_to action: "index"
 
    end
-
-   def process_broadcasts
-      Broadcast.process_broadcasts
-      render body: nil
-   end
-
    # def process_broadcasts
    #    #find the broadcasts with a status of "PENDING"
    #    jobs = Broadcast.where('status = ? AND execution_time <= ?', "PENDING", Time.now)

@@ -19,6 +19,7 @@ class TicketsController < ApplicationController
          data = params[:data]
          amount = params[:amount]
          TicketWorker.perform_async(phone_number, data, amount)
+         #going to test rendering of two different formats in the action controller
          render json: {status: "Success"}
       else
          render json: {status: "Failed"}
