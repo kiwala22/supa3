@@ -29,6 +29,7 @@ module SupaAi
      # Add the fonts path
      config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
 
-    config.time_zone = 'Africa/Nairobi'
+    config.time_zone = 'Nairobi'
+    config.active_record.default_timezone = :local
   end
 end
