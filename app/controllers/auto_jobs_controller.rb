@@ -1,7 +1,6 @@
 class AutoJobsController < ApplicationController
     before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws]
     skip_before_action :verify_authenticity_token
-    load_and_authorize_resource
 
     def process_broadcasts
         jobs = Broadcast.where('status = ? AND execution_time <= ?', "PENDING", Time.now)

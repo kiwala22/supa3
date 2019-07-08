@@ -1,2 +1,0 @@
-class AutoJob < ApplicationRecord
-end
