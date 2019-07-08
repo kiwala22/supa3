@@ -6,11 +6,11 @@ Rails.application.routes.draw do
    resources :tickets, only: [:index, :new]
    match 'tickets' => "tickets#create", via: [:post], :defaults => { :format => 'json' }
    match 'analytics' => "analytics#index", via: [:get]
-   match 'process_broadcasts' => "cron_jobs#process_broadcasts", via: [:post]
-   match 'run_predictions' => "cron_jobs#run_predictions", via: [:post]
-   match 'update_segments' => "cron_jobs#update_segments", via: [:post]
-   match 'run_draws' => "cron_jobs#run_draws", via: [:post]
-
+   match 'process_broadcasts' => "auto_jobs#process_broadcasts", via: [:post]
+   match 'run_predictions' => "auto_jobs#run_predictions", via: [:post]
+   match 'update_segments' => "auto_jobs#update_segments", via: [:post]
+   match 'run_draws' => "auto_jobs#run_draws", via: [:post]
+   
    devise_for :admin_users, ActiveAdmin::Devise.config
    ActiveAdmin.routes(self)
    devise_for :users

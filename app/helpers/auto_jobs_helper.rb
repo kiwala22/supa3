@@ -1,0 +1,2 @@
+module AutoJobsHelper
+end
