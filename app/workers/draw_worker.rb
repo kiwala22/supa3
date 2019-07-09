@@ -27,8 +27,8 @@ class DrawWorker
          #update with draw number
          ticket.update_attributes(draw_id: @draw.id)
          #check number of matches
-         data_arr = ticket.data.split("").uniq.map(&:to_i)
-         win_arr = draw_numbers.split("").uniq.map(&:to_i)
+         data_arr = ticket.data.split(",").uniq.map(&:to_i)
+         win_arr = draw_numbers.split(",").uniq.map(&:to_i)
          matches = (data_arr & win_arr).count()
          case matches
          when 0 , 1
