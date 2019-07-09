@@ -13,10 +13,10 @@ class TicketWorker
       #if valid, then create the ticket and send confirmation sms
       reference = generate_ticket_reference
       if data.split(" ").map(&:to_i).all?{|f| f.is_a?(Integer)} && data.split(" ").map(&:to_i).length == 5
-         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data.split(","), amount: amount.to_i, reference: reference)
+         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data.gsub(" ", ","), amount: amount.to_i, reference: reference)
          if ticket.save
             #Send SMS with confirmation
-            message_content = "Thank you for playing #{ENV['GAME']}. You have played #{data.split(",")} entered in to #{draw_time} draw. Ticket: #{reference}"
+            message_content = "Thank you for playing #{ENV['GAME']}. You have played #{data.gsub(" ", ",")} entered in to #{draw_time} draw. Ticket: #{reference}"
             #SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          end
 
