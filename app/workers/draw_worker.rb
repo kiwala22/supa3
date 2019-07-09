@@ -11,15 +11,15 @@ class DrawWorker
       @draw = Draw.create(draw_time: end_time)
 
       #generate random number for winnings
-      arr = []
-      while arr.length < 5
-         arr << rand(1..20)
-         arr.uniq!
-      end
+      # arr = []
+      # while arr.length < 5
+      #    arr << rand(1..20)
+      #    arr.uniq!
+      # end
       draw_numbers = arr.join(",")
-      # begin
-      #    draw_numbers = SecureRandom.hex(40).scan(/\d/).uniq.sample(5).join("")
-      # end while draw_numbers === /\d{5}$/
+      begin
+         draw_numbers = SecureRandom.hex(50).split("").uniq.map(&:hex).sample(5).join(",")
+      end while draw_numbers.split(",").map(&:to_i).length == 5
 
 
       #query all tickets between start and stop time, mark matching numbers and send appropriate messag
@@ -47,7 +47,7 @@ class DrawWorker
 
             #process the payment
          when 3
-            win = (ticket.amount).to_i * 10
+            win = (ticket.amount).to_i * 2
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
             #send confirmation message
             message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
@@ -55,7 +55,7 @@ class DrawWorker
 
             #process the payment
          when 4
-            win = (ticket.amount).to_i * 100
+            win = (ticket.amount).to_i * 10
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
             #send confirmation message
             message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
@@ -63,7 +63,7 @@ class DrawWorker
 
             #process the payment
          when 5
-            win = (ticket.amount).to_i * 1000
+            win = (ticket.amount).to_i * 250
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
             #send confirmation message
             message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
