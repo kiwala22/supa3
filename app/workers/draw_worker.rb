@@ -41,7 +41,7 @@ class DrawWorker
 
                #process the payment
             when 3
-               win = (ticket.amount).to_i * 20
+               win = (ticket.amount).to_i * 10
                ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
                #send confirmation message
                message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
@@ -49,7 +49,7 @@ class DrawWorker
 
             #process the payment
             when 4
-               win = (ticket.amount).to_i * 100
+               win = (ticket.amount).to_i * 25
                ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
                #send confirmation message
                message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
@@ -57,7 +57,7 @@ class DrawWorker
 
             #process the payment
             when 5
-               win = (ticket.amount).to_i * 1000
+               win = (ticket.amount).to_i * 100
                ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
                #send confirmation message
                message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
