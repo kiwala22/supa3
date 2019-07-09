@@ -20,7 +20,7 @@ class AutoJobsController < ApplicationController
         end
         render body: nil
     end
-    
+
     def update_segments
         segment_summary = Gamer.order('segment ASC').group(:segment).count().except!(nil)
         @segment = Segment.new(segment_summary.transform_keys!(&:downcase))
@@ -36,6 +36,7 @@ class AutoJobsController < ApplicationController
         # Pick start and stop time
         start_time = Time.now.localtime.beginning_of_minute - 10.minutes
         end_time = Time.now.localtime
+
         DrawWorker.perform_async(start_time, end_time)
         render body: nil
     end
