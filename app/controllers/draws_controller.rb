@@ -6,5 +6,6 @@ class DrawsController < ApplicationController
     def index
         @q = Draw.all.ransack(params[:q])
         @draws = @q.result(distinct: true).order("created_at DESC").page params[:page]
+        @search_params = params[:q]
     end
 end
