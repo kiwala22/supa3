@@ -12,11 +12,11 @@ class TicketWorker
       #if not valid send invalid sms message and generate random 3 digit code
       #if valid, then create the ticket and send confirmation sms
       reference = generate_ticket_reference
-      if /^\d{5}$/ === data
-         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data, amount: amount.to_i, reference: reference)
+      if data.split(" ").map(&:to_i).all?{|f| f.is_a?(Integer)} && data.split(" ").map(&:to_i).length == 5
+         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data.split(","), amount: amount.to_i, reference: reference)
          if ticket.save
             #Send SMS with confirmation
-            message_content = "Thank you for playing #{ENV['GAME']}. You have played #{data} entered in to #{draw_time} draw. Ticket: #{reference}"
+            message_content = "Thank you for playing #{ENV['GAME']}. You have played #{data.split(",")} entered in to #{draw_time} draw. Ticket: #{reference}"
             #SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          end
 
@@ -36,10 +36,10 @@ class TicketWorker
    def generate_random_data()
       arr = []
       while arr.length < 5
-        arr << rand(0..9)
+        arr << rand(1..20)
         arr.uniq!
      end
-     return arr.join("")
+     return arr.join(",")
    end
 
    def generate_ticket_reference
