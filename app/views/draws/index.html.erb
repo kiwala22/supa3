@@ -12,7 +12,7 @@
           <div class="form-group">
               <%= f.label :draw_time, class:"col-lg-2 control-label" %>
               <div class="col-sm-6">
-              <%= f.search_field :draw_time_eq, { include_blank: true, :class=>"form-control", id: "broadcast_schedule"}%>
+              <%= f.search_field :draw_time_gteq, { include_blank: true, :class=>"form-control", id: "broadcast_schedule"}%>
               </div>
           </div>
       </fieldset>

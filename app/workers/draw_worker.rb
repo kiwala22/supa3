@@ -12,8 +12,8 @@ class DrawWorker
 
       #generate random number for winnings
       begin
-         draw_numbers = SecureRandom.hex(40).scan(/\d/).uniq.sample(3).join("")
-      end while draw_numbers === /\d{3}$/
+         draw_numbers = SecureRandom.hex(40).scan(/\d/).uniq.sample(5).join("")
+      end while draw_numbers === /\d{5}$/
 
 
       #query all tickets between start and stop time, mark matching numbers and send appropriate messag
@@ -41,7 +41,23 @@ class DrawWorker
 
                #process the payment
             when 3
-               win = (ticket.amount).to_i * 200
+               win = (ticket.amount).to_i * 20
+               ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
+               #send confirmation message
+               message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
+               #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+
+            #process the payment
+            when 4
+               win = (ticket.amount).to_i * 100
+               ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
+               #send confirmation message
+               message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
+               #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+
+            #process the payment
+            when 5
+               win = (ticket.amount).to_i * 1000
                ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
                #send confirmation message
                message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
@@ -62,8 +78,10 @@ class DrawWorker
       one_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 1).count()
       two_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 2).count()
       three_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 3).count()
+      four_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 4).count()
+      five_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 5).count()
 
-      @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match, ticket_count: ticket_count)
+      @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match, four_match: four_match, five_match: five_match, ticket_count: ticket_count)
 
    end
 end
