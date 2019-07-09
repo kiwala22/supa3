@@ -17,7 +17,7 @@ class TicketWorker
          if ticket.save
             #Send SMS with confirmation
             message_content = "Thank you for playing #{ENV['GAME']}. You have played #{data} entered in to #{draw_time} draw. Ticket: #{reference}"
-            SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+            #SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          end
 
       else
@@ -27,7 +27,7 @@ class TicketWorker
          if ticket.save
             #Send SMS with the confirmation and random number
             message_content = "Thank you for playing #{ENV['GAME']}. Input was incorrect and we have picked #{random_data} for you entered in to #{draw_time} draw. Ticket: #{reference}"
-            SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+            #SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          end
       end
 

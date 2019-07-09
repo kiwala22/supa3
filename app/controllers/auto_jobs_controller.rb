@@ -20,7 +20,7 @@ class AutoJobsController < ApplicationController
         end
         render body: nil
     end
-
+    
     def update_segments
         segment_summary = Gamer.order('segment ASC').group(:segment).count().except!(nil)
         @segment = Segment.new(segment_summary.transform_keys!(&:downcase))

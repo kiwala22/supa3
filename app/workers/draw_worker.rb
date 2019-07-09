@@ -12,7 +12,7 @@ class DrawWorker
 
       #generate random number for winnings
       begin
-         draw_numbers = SecureRandom.uuid.scan(/\d/).uniq.sample(3).join("")
+         draw_numbers = SecureRandom.hex(40).scan(/\d/).uniq.sample(3).join("")
       end while draw_numbers === /\d{3}$/
 
 
@@ -30,14 +30,14 @@ class DrawWorker
                ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
                #send confirmation message
                message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers.  Thank you for playing #{ENV['GAME']}"
-               SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+               #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
             when 2
                win = (ticket.amount).to_i * 2
                ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
                #send confirmation message
                message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
-               SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+               #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
                #process the payment
             when 3
@@ -45,7 +45,7 @@ class DrawWorker
                ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
                #send confirmation message
                message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
-               SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+               #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
             #process the payment
          end

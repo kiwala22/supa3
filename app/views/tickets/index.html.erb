@@ -1,4 +1,4 @@
-<%= provide(:title, "Broadcast Messages") %>
+<%= provide(:title, "Tickets") %>
 <h3>
 	<%= "Tickets" %>
 <small><%= "All Tickets" %></small>
@@ -12,11 +12,12 @@
           <th>No</th>
           <th>Phone #</th>
           <th>Ticket ID</th>
+          <th># Played</th>
           <th>Amount</th>
           <th> # Matched</th>
+          <th>Amount Won</th>
+          <th>Paid</th>
           <th>Time</th>
-
-
         </tr>
       </thead>
       <tbody>
@@ -25,14 +26,16 @@
               <td><%= (i+1) %></td>
               <td><%= ticket.phone_number %></td>
               <td><%= ticket.reference %></td>
+              <td><%= ticket.data %></td>
               <td><%= ticket.amount %></td>
               <td><%= ticket.number_matches %></td>
-              <td><%= ticket.time %></td>
+              <td><%= ticket.win_amount %></td>
+              <td><%= ticket.paid %></td>
+              <td><%= ticket.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P") %></td>
 
             </tr>
         <% end %>
       </tbody>
   </table>
   <%= paginate @tickets %>
-
 </div>

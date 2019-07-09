@@ -26,9 +26,17 @@
                      <span>View Tickets</span>
                   </a>
                </li>
+            </ul>
+         </li>
+         <li class="<%= 'active' if controller.controller_name == 'draws' %>" data-step="2" >
+            <a href="#ai_draws" title="Layouts" data-toggle="collapse">
+               <em class="fa fa-filter"></em>
+               <span>Draws</span>
+            </a>
+            <ul id="ai_draws" class="nav sidebar-subnav collapse">
                <li>
-                  <a href="<%= new_ticket_path %>">
-                     <span>Upload Tickets</span>
+                  <a href="<%= draws_path %>">
+                     <span>View Draws</span>
                   </a>
                </li>
             </ul>

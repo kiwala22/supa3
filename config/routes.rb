@@ -4,6 +4,7 @@ Rails.application.routes.draw do
    resources :broadcasts
    resources :gamers, only: [:new, :index, :create]
    resources :tickets, only: [:index, :new]
+   resources :draws, only: [:index]
    match 'tickets' => "tickets#create", via: [:post], :defaults => { :format => 'json' }
    match 'analytics' => "analytics#index", via: [:get]
    match 'process_broadcasts' => "auto_jobs#process_broadcasts", via: [:post]
