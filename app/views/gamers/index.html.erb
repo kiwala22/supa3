@@ -31,11 +31,10 @@
   <table class="table table-striped table-bordered table-hoverlarge-12 columns large-centered">
       <thead>
         <tr>
-          <th>No</th>
-          <th>Phone #</th>
-          <th>Segment</th>
-          <th>Create Time</th>
-
+          <th><%= sort_link(@q, :No) %></th>
+          <th><%= sort_link(@q, :Phone_number) %></th>
+          <th><%= sort_link(@q, :Segment) %></th>
+          <th><%= sort_link(@q, :Create_time) %></th>
         </tr>
       </thead>
       <tbody>
