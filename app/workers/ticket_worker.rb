@@ -34,10 +34,11 @@ class TicketWorker
    end
 
    def generate_random_data()
-      begin
-         random_numbers = SecureRandom.hex(50).split("").uniq.map(&:hex).sample(5).join(",")
-      end while random_numbers.split(",").map(&:to_i).length == 5
-      return random_numbers
+      random_numbers = []
+      while random_numbers.length != 5
+           random_numbers = SecureRandom.hex(50).split("").uniq.map(&:hex).sample(5).join(",").split(",").map(&:to_i)
+      end
+      return random_numbers.join(",")
    end
 
    def generate_ticket_reference

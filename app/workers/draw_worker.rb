@@ -11,15 +11,14 @@ class DrawWorker
       @draw = Draw.create(draw_time: end_time)
 
       #generate random number for winnings
-      # arr = []
-      # while arr.length < 5
-      #    arr << rand(1..20)
-      #    arr.uniq!
-      # end
-      # draw_numbers = arr.join(",")
-      begin
-         draw_numbers = SecureRandom.hex(50).split("").uniq.map(&:hex).sample(5).join(",")
-      end while draw_numbers.split(",").map(&:to_i).length == 5
+      numbers = []
+      while random_numbers.length != 5
+           numbers = SecureRandom.hex(50).split("").uniq.map(&:hex).sample(5).join(",").split(",").map(&:to_i)
+      end
+      random_numbers = numbers.join(",")
+      # begin
+      #    draw_numbers = SecureRandom.hex(50).split("").uniq.map(&:hex).sample(5).join(",")
+      # end while draw_numbers.split(",").map(&:to_i).length == 5
 
 
       #query all tickets between start and stop time, mark matching numbers and send appropriate messag
