@@ -22,6 +22,12 @@ $(document).ready(function(){
       showMeridian: true,
       autoclose: true,
       todayBtn: true
+   }),
+   $("#broadcast_schedule_cp").datetimepicker({
+      format: "dd MM yyyy - HH:ii P",
+      showMeridian: true,
+      autoclose: true,
+      todayBtn: true
 	})
 
 });

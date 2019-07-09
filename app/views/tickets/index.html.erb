@@ -31,7 +31,7 @@
           <div class="form-group">
               <%= f.label :created_at_gteq, "Created After", class:"col-lg-2 control-label" %>
               <div class="col-sm-6">
-                <%= f.datetime_field :created_at_gteq,  class: "form-control" %>
+                <%= f.search_field :created_at_gteq,  id: "broadcast_schedule", class: "form-control" %>
               </div>
           </div>
         </div>
@@ -39,7 +39,7 @@
           <div class="form-group">
               <%= f.label :created_at_lteq, "Created Before", class:"col-lg-2 control-label" %>
               <div class="col-sm-6">
-                <%= f.datetime_field :created_at_lteq,  class: "form-control" %>
+                <%= f.search_field :created_at_lteq,  id: "broadcast_schedule_cp", class: "form-control" %>
               </div>
           </div>
         </div>
