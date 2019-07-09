@@ -33,7 +33,7 @@ class DrawWorker
                #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
             when 2
-               win = (ticket.amount).to_i * 2
+               win = (ticket.amount).to_i * 0
                ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
                #send confirmation message
                message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
@@ -41,7 +41,7 @@ class DrawWorker
 
                #process the payment
             when 3
-               win = (ticket.amount).to_i * 10
+               win = (ticket.amount).to_i * 1
                ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
                #send confirmation message
                message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
@@ -49,7 +49,7 @@ class DrawWorker
 
             #process the payment
             when 4
-               win = (ticket.amount).to_i * 25
+               win = (ticket.amount).to_i * 10
                ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
                #send confirmation message
                message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
