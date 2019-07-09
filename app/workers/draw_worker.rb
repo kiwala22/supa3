@@ -15,7 +15,7 @@ class DrawWorker
       while rand_numbers.length != 5
            rand_numbers = SecureRandom.hex(50).split("").uniq.map(&:hex).sample(5).join(",").split(",").map(&:to_i)
       end
-      random_numbers = rand_numbers.join(",")
+      draw_numbers = rand_numbers.join(",")
       # begin
       #    draw_numbers = SecureRandom.hex(50).split("").uniq.map(&:hex).sample(5).join(",")
       # end while draw_numbers.split(",").map(&:to_i).length == 5
