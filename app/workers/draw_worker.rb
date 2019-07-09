@@ -56,13 +56,14 @@ class DrawWorker
       #total number fo tickets, number of matches, total ticket amount, payouts
       sleep 10
       revenue = Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).sum(:amount)
+      ticket_count = Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).count()
       payout = Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).sum(:win_amount)
       no_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 0).count()
       one_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 1).count()
       two_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 2).count()
       three_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 3).count()
 
-      @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match)
+      @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match, ticket_count: ticket_count)
 
    end
 end
