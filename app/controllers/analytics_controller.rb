@@ -2,9 +2,9 @@ class AnalyticsController < ApplicationController
    before_action :authenticate_user!
 
    def index
-      # gamers = Gamer.order('segment ASC').group(:segment).count()
-      # gon.labels = gamers.keys
-      # gon.counts = gamers.values
+      gamers = Gamer.order('segment ASC').group(:segment).count()
+      gon.labels = gamers.keys
+      gon.counts = gamers.values
 
       segment_labels = Segment.column_names
       segment_labels = segment_labels.delete_if{ |i| ["id", "created_at", "updated_at"].include?(i)}
