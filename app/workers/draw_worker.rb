@@ -46,7 +46,7 @@ class DrawWorker
 
             #process the payment
          when 3
-            win = (ticket.amount).to_i * 1
+            win = (ticket.amount).to_i * 2
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
             #send confirmation message
             message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{matches} numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
