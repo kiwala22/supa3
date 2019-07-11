@@ -8,6 +8,6 @@
 //= require_tree ./angle/
 //= require time_picker
 //= require echarts.min
-//= require broadcasts
-//= require analytics
 //= require revenues
+//= require analytics
+//= require broadcasts
