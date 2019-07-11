@@ -1,6 +1,6 @@
 class RevenuesController < ApplicationController
     before_action :authenticate_user!
-    before_action :verify_user
+    #before_action :verify_user
 
     def index
         labels = []
@@ -20,9 +20,9 @@ class RevenuesController < ApplicationController
     end
 
     private
-    def verify_user
-      if current_user.admin != true
-        raise CanCan::AccessDenied
-      end
-    end
+    # def verify_user
+    #   if current_user.admin != true
+    #     raise CanCan::AccessDenied
+    #   end
+    # end
 end
