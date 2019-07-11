@@ -7,6 +7,7 @@ Rails.application.routes.draw do
    resources :draws, only: [:index]
    match 'tickets' => "tickets#create", via: [:post], :defaults => { :format => 'json' }
    match 'analytics' => "analytics#index", via: [:get]
+   match 'revenues' => "revenues#index", via: [:get]
    match 'process_broadcasts' => "auto_jobs#process_broadcasts", via: [:post]
    match 'run_predictions' => "auto_jobs#run_predictions", via: [:post]
    match 'update_segments' => "auto_jobs#update_segments", via: [:post]

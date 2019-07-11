@@ -10,3 +10,4 @@
 //= require echarts.min
 //= require broadcasts
 //= require analytics
+//= require revenues

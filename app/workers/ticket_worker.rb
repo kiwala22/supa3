@@ -47,6 +47,4 @@ class TicketWorker
       end while Ticket.where(reference: ref).exists?
       return ref
    end
-
-
 end

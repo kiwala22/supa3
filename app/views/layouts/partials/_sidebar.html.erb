@@ -3,11 +3,23 @@
       <!-- START sidebar nav-->
       <ul class="nav">
          <!-- Iterates over all sidebar items-->
-         <li class="<%= 'active' if controller.controller_name == 'analytics' %>" data-step="1" >
-            <a href="<%= analytics_path %>">
+         <li class="<%= 'active' if controller.controller_name == 'analytics' || controller.controller_name == 'revenues' %>" data-step="2" >
+            <a href="#ai_analytics" title="Layouts" data-toggle="collapse">
                <em class="icon-graph"></em>
-               <span data-localize="sidebar.nav.DASHBOARD">Analytics</span>
+               <span>Analytics</span>
             </a>
+            <ul id="ai_analytics" class="nav sidebar-subnav collapse">
+               <li>
+                  <a href="<%= analytics_path %>">
+                     <span>User Analytics</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="<%= revenues_path %>">
+                     <span>Revenue Analytics</span>
+                  </a>
+               </li>
+            </ul>
          </li>
          <li class="<%= 'active' if controller.controller_name == 'gamers' %>" data-step="1" >
             <a href="<%= gamers_path %>">
@@ -61,6 +73,5 @@
          </li>
 
       </ul>
-
    </nav>
 </div>
