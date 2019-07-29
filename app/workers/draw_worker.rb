@@ -11,8 +11,8 @@ class DrawWorker
       @draw = Draw.create(draw_time: end_time)
 
       #generate random number for winnings
-      rand_numbers = []
-      while rand_numbers.length != 3
+      draw_numbers = []
+      while draw_numbers.length != 3
            draw_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(3).map(&:to_i)
       end
 
@@ -28,7 +28,7 @@ class DrawWorker
             win = (ticket.amount).to_i * 200
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
             #send confirmation message
-            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{number_matches} in-line numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
+            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers.join(",")}. You matched #{number_matches} in-line numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
             #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
             #process payments
 
@@ -36,7 +36,7 @@ class DrawWorker
             win = (ticket.amount).to_i * 10
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
             #send confirmation message
-            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{number_matches}  in-line numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
+            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers.join(",")}. You matched #{number_matches}  in-line numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
             #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
             #process the payment
@@ -45,21 +45,21 @@ class DrawWorker
             win = (ticket.amount).to_i * 10
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
             #send confirmation message
-            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
+            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers.join(",")}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
             #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
             #process payment
          elsif number_matches == 2
             win = (ticket.amount).to_i * 2
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
             #send confirmation message
-            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
+            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers.join(",")}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
             #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
             #process payment
          else
             win = (ticket.amount).to_i * 0
             ticket.update_attributes(number_matches: matches, win_amount: win, paid: false)
             #send confirmation message
-            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
+            message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers.join(",")}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
             #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
             #process payment
 
