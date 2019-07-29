@@ -33,7 +33,7 @@ class DrawWorker
             #process payments
 
          elsif draw_numbers.first(2) == ticket_numbers.first(2) || draw_numbers.last(2) == ticket_numbers.last(2)
-            win = (ticket.amount).to_i * 10
+            win = (ticket.amount).to_i * 5
             ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
             #send confirmation message
             message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers.join(",")}. You matched #{number_matches}  in-line numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
@@ -42,7 +42,7 @@ class DrawWorker
             #process the payment
 
          elsif number_matches == 3
-            win = (ticket.amount).to_i * 10
+            win = (ticket.amount).to_i * 5
             ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
             #send confirmation message
             message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers.join(",")}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
