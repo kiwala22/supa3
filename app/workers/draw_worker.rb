@@ -64,7 +64,7 @@ class DrawWorker
             #process payment
 
          end
-
+      end
       #run stats for the draw and update the status
       #total number fo tickets, number of matches, total ticket amount, payouts
       sleep 10
