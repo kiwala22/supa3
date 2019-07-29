@@ -8,4 +8,9 @@ class DrawsController < ApplicationController
         @draws = @q.result(distinct: true).order("created_at DESC").page params[:page]
         @search_params = params[:q]
     end
+
+    private
+    def sent_sms_params
+        params.permit(:search_params)
+    end
 end

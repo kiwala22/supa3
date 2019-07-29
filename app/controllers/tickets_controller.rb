@@ -34,4 +34,8 @@ class TicketsController < ApplicationController
    def import
 
    end
+   private
+   def sent_sms_params
+       params.permit(:search_params)
+   end
 end
