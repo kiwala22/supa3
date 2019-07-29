@@ -24,7 +24,7 @@ class DrawWorker
          ticket_numbers = ticket.data.split(",").map(&:to_i)
          number_matches = (draw_numbers & ticket_numbers).count()
 
-         if draw_numbers == ticket_numbers
+         if number_matches == 3 && draw_numbers == ticket_numbers
             win = (ticket.amount).to_i * 200
             ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
             #send confirmation message
@@ -32,7 +32,7 @@ class DrawWorker
             #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
             #process payments
 
-         elsif draw_numbers.first(2) == ticket_numbers.first(2) || draw_numbers.last(2) == ticket_numbers.last(2)
+         elsif number_matches != 3 && (draw_numbers.first(2) == ticket_numbers.first(2) || draw_numbers.last(2) == ticket_numbers.last(2))
             win = (ticket.amount).to_i * 5
             ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
             #send confirmation message
@@ -41,14 +41,14 @@ class DrawWorker
 
             #process the payment
 
-         elsif number_matches == 3
+         elsif number_matches == 3 && draw_numbers != ticket_numbers
             win = (ticket.amount).to_i * 5
             ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
             #send confirmation message
             message_content = "Winning Numbers for draw ##{@draw.id} are #{draw_numbers.join(",")}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
             #SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
             #process payment
-         elsif number_matches == 2
+         elsif number_matches == 2 && (draw_numbers.first(2) != ticket_numbers.first(2) || draw_numbers.last(2) != ticket_numbers.last(2))
             win = (ticket.amount).to_i * 2
             ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
             #send confirmation message
