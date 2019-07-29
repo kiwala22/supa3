@@ -22,7 +22,7 @@ class DrawWorker
          ticket.update_attributes(draw_id: @draw.id)
          #check number of matches
          ticket_numbers = ticket.data.split(",").map(&:to_i)
-         number_matches = (draw_numbers & draw_numbers).count()
+         number_matches = (draw_numbers & ticket_numbers).count()
 
          if draw_numbers == ticket_numbers
             win = (ticket.amount).to_i * 200
