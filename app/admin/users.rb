@@ -1,10 +1,15 @@
 ActiveAdmin.register User do
-permit_params :email, :password, :password_confirmation, :first_name, :last_name
+permit_params :email, :password, :password_confirmation, :first_name, :last_name, :admin
 
     index do
     selectable_column
     id_column
     column :email
+    column :first_name
+    column :last_name
+    column :admin do |user|
+      user.admin ? "Yes" : "No"
+    end
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
@@ -23,6 +28,7 @@ permit_params :email, :password, :password_confirmation, :first_name, :last_name
         f.input :last_name
         f.input :password
         f.input :password_confirmation, label: 'Confirmation'
+        f.input :admin, as: :boolean
     end
     f.actions
     end

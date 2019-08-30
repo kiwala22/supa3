@@ -1,10 +1,10 @@
 // require 'walden'
-var myChart = echarts.init(document.getElementById('revenue_analytics'), 'walden');
+var myChart = echarts.init(document.getElementById('ticket_analytics'), 'walden');
 var option = {
-  title: {
-    text: 'Revenue Analytics',
-      subtext: 'Distribution of Revenues'
-      },
+    title: {
+      text: 'Ticket Analytics',
+        subtext: 'Distribution of Tickets'
+    },
     tooltip : {
         trigger: 'axis',
         axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -12,7 +12,7 @@ var option = {
         }
     },
     legend: {
-        data:['Revenues', 'Payouts']
+        data:['Tickets']
     },
     grid: {
         left: '5%',
@@ -33,16 +33,10 @@ var option = {
     ],
     series : [
         {
-            name:'Revenues',
+            name:'Tickets',
             type:'bar',
             barWidth : 12,
-            data: gon.revenues
-        },
-        {
-            name:'Payouts',
-            type:'bar',
-            barWidth : 12,
-            data: gon.payouts
+            data: gon.tickets
         }
     ]
 };

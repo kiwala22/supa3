@@ -7,7 +7,7 @@ class RevenuesController < ApplicationController
         revenues = []
         payouts = []
 
-        ((Date.today - 14) .. Date.today).each do |f|
+        ((Date.today - 21) .. Date.today).each do |f|
             labels.push(f.to_s)
             revenue = Draw.where("created_at <= ? AND created_at >= ?", f.end_of_day, f.beginning_of_day).sum(:revenue)
             revenues.push(revenue.to_i)

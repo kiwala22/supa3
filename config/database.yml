@@ -1,24 +1,16 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: supa_ai
-  password: supa_ai_development
+  username: supa
+  password: supa_development
   pool: 100
   timeout: 5000
-  
+
   host: <%= ENV['POSTGRES_HOST'] %>
 development:
   <<: *default
-  database: supa_ai
-
-production:
-  <<: *default
-  database: <%= ENV['POSTGRES_DB'] %>
-
+  database: supa_ai_development
 
 test:
   <<: *default
   database: supa_ai_test
-
-
-  
