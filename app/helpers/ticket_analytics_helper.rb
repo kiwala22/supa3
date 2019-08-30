@@ -1,0 +1,2 @@
+module TicketAnalyticsHelper
+end
