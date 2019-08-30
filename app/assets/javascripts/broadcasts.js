@@ -28,6 +28,11 @@ $(document).ready(function(){
       showMeridian: true,
       autoclose: true,
       todayBtn: true
-	})
-
+	}),
+  $('#all_user_lists').hide();
+  $("#transactionAlert").hide()
+  $('#add_user_lists').click( function(event){
+      event.stopPropagation();
+      $('#all_user_lists').toggle();
+  });
 });

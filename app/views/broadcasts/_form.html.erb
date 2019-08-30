@@ -7,10 +7,15 @@
       <div class="panel-body">
         <%= form_for( @broadcast , :html => {:"data-parsley-validate" => ''}) do |f| %>
         <div class="form-group">
-           <div class="row">
-             <%= f.label :segment, "Segment", class: "col-sm-2 control-label text-muted" %>
-             <%= f.select :segment, Segment.column_names.delete_if{ |i| ["id", "created_at", "updated_at"].include?(i)}.map(&:upcase) ,class: "form-control m-b", autofocus: true, required: "true", id: "segment" %>
-           </div>
+          <div class="large-12 columns">
+            <a id = "add_user_lists" class=" btn btn-primary fileinput-button"><i class="fa fa-fw fa-plus"></i><%= "Segments" %></a>
+          </div>
+          <div id="all_user_lists" class="large-12 columns large-centered ">
+            <%= f.collection_check_boxes :segment, ["A", "B", "C", "D", "E", "F"], :first, :first, include_hidden: false do |element| %>
+                <%= element.check_box %>
+                <%= element.label %>
+            <% end %>
+          </div>
         </div>
 
         <div class="form-group">
@@ -26,7 +31,7 @@
           </div>
           <div class="form-group">
             <%= f.label :execution_time, "Schedule", class: "text-muted" %>
-            <%= f.text_field :execution_time, id: "broadcast_schedule", autofocus: true, class: "form-control" %>
+            <%= f.text_field :execution_time, id: "broadcast_schedule", autofocus: true, required: "true", class: "form-control" %>
           </div>
           <%= f.submit "Schedule", class: "btn btn-primary" %>
           <% end %>
