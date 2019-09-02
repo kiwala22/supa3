@@ -3,19 +3,19 @@ class BroadcastWorker
    sidekiq_options queue: "default"
    sidekiq_options retry: false
 
-   #include SendSMS
    require 'send_sms'
 
    def perform(broadcast_id)
       @broadcast = Broadcast.find(broadcast_id)
       @gamers = Gamer.where(segment: @broadcast.segment.split(","))
       contacts = 0
+      sender_id = "SUPA3"
+      content = @broadcast.message
       @gamers.each do |gamer|
-         #Creating a broadcast worker so as to separate game traffic from Bulk traffic
-         #Send Marketing Message from external reusable library
-         if SendSMS.process_sms_now(receiver: gamer.phone_number, content: @broadcast.message, sender_id: ENV['DEFAULT_SENDER_ID'])
-            contacts = (contacts + 1)
-         end
+         #send the message to BulkApiWorker to process the messages
+         phone_number = gamer.phone_number
+         BulkApiWorker.perform_async(sender_id, phone_number, content)
+         contacts = (contacts + 1)
       end
       @broadcast.update_attributes(contacts: contacts, status: "SUCCESS")
    end
