@@ -12,10 +12,10 @@ class BroadcastWorker
       sender_id = "SUPA3"
       content = @broadcast.message
       @gamers.each do |gamer|
-         #send the message to BulkApiWorker to process the messages
-         phone_number = gamer.phone_number
-         BulkApiWorker.perform_async(sender_id, phone_number, content)
-         contacts = (contacts + 1)
+         #send the message to message library
+         if SendSMS.process_sms_now(transaction: false, receiver: gamer.phone_number, content: @broadcast.message, sender_id: sender_id)
+            contacts = (contacts + 1)
+         end
       end
       @broadcast.update_attributes(contacts: contacts, status: "SUCCESS")
    end

@@ -10,7 +10,7 @@ class SegmentPredictionWorker
        time_limit = (Time.now - 90.days)
        segment_check_time = (Time.now - 30.days)
        tickets = Ticket.select("phone_number, amount, time").where("phone_number = ? and time >= ?", user.phone_number, time_limit).order(time: :desc) # do not use select, just pull all of them, and simply remove unwanted columns
-       results = BetcityResult.select("phone_number, matches, time").where("phone_number = ? and time >= ?", user.phone_number, time_limit).order(time: :desc) # same as above since not indexed
+       results = Result.select("phone_number, matches, time").where("phone_number = ? and time >= ?", user.phone_number, time_limit).order(time: :desc) # same as above since not indexed
        if tickets.blank? && user.created_at < segment_check_time
          user.update_attributes(segment: "F")
        else

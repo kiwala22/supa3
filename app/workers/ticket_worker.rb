@@ -1,5 +1,6 @@
 class TicketWorker
    include Sidekiq::Worker
+   sidekiq_options queue: "high"
    sidekiq_options retry: false
    require "send_sms"
 
