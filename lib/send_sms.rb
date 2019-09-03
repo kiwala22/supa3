@@ -15,16 +15,17 @@ module SendSMS
       parameters << "to=#{receiver}" if receiver.present?
       parameters << "message=#{content}" if content.present?
       parameters << "from=#{sender_id}" if sender_id.present?
-      parameters << "token=#{ENV['SMS_API_TOKEN']}"
-
-      message_params = parameters.join("&")
 
       if transaction = true
+        parameters << "token=#{ENV['GAME_SMS_API_TOKEN']}"
+        message_params = parameters.join("&")
         message_url = "#{ENV['SMS_BASE_URL']}"+"#{message_params}"
         #save message as a game message
         Message.create(to: receiver, from: sender_id, message: content, type: "Game")
       end
       if transaction = false
+        parameters << "token=#{ENV['BULK_SMS_API_TOKEN']}"
+        message_params = parameters.join("&")
         message_url = "#{ENV['SMS_BULK_URL']}"+"#{message_params}"
         #save message as a broadcast message
         Message.create(to: receiver, from: sender_id, message: content, type: "Broadcast")
