@@ -9,11 +9,9 @@ class BroadcastWorker
       @broadcast = Broadcast.find(broadcast_id)
       @gamers = Gamer.where(segment: @broadcast.segment.downcase.split(","))
       contacts = 0
-      sender_id = "SUPA3"
-      content = @broadcast.message
       @gamers.each do |gamer|
          #send the message to message library
-         if SendSMS.process_sms_now(transaction: false, receiver: gamer.phone_number, content: @broadcast.message, sender_id: sender_id)
+         if SendSMS.process_sms_now(transaction: false, receiver: gamer.phone_number, content: @broadcast.message, sender_id: ENV['DEFAULT_SENDER_ID'])
             contacts = (contacts + 1)
          end
       end
