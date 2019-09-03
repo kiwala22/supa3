@@ -7,7 +7,7 @@ class BroadcastWorker
 
    def perform(broadcast_id)
       @broadcast = Broadcast.find(broadcast_id)
-      @gamers = Gamer.where(segment: @broadcast.segment.split(","))
+      @gamers = Gamer.where(segment: @broadcast.segment.downcase.split(","))
       contacts = 0
       sender_id = "SUPA3"
       content = @broadcast.message

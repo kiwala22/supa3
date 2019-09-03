@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_02_135219) do
+ActiveRecord::Schema.define(version: 2019_09_03_095702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,13 +80,13 @@ ActiveRecord::Schema.define(version: 2019_09_02_135219) do
     t.string "to"
     t.string "from"
     t.text "message"
-    t.string "type"
+    t.string "sms_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["from"], name: "index_messages_on_from"
     t.index ["message"], name: "index_messages_on_message"
+    t.index ["sms_type"], name: "index_messages_on_sms_type"
     t.index ["to"], name: "index_messages_on_to"
-    t.index ["type"], name: "index_messages_on_type"
   end
 
   create_table "results", force: :cascade do |t|
