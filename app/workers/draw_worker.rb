@@ -1,6 +1,6 @@
 class DrawWorker
    include Sidekiq::Worker
-   sidekiq_options queue: "default"
+   sidekiq_options queue: "high"
    sidekiq_options retry: false
 
    require 'send_sms'
