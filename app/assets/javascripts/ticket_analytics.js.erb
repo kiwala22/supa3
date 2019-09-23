@@ -1,5 +1,16 @@
 // require 'walden'
 var myChart = echarts.init(document.getElementById('ticket_analytics'), 'walden');
+var itemStyle = {
+    normal: {
+    },
+    emphasis: {
+        barBorderWidth: 1,
+        shadowBlur: 10,
+        shadowOffsetX: 0,
+        shadowOffsetY: 0,
+        shadowColor: 'rgba(0,0,0,0.5)'
+    }
+};
 var option = {
     title: {
       text: 'Ticket Analytics',
@@ -33,10 +44,25 @@ var option = {
     ],
     series : [
         {
-            name:'Tickets',
+            name:'MTN Tickets',
             type:'bar',
-            barWidth : 12,
-            data: gon.tickets
+            stack: 'two',
+            itemStyle: itemStyle,
+            data: gon.mtn
+        },
+        {
+            name:'Airtel Tickets',
+            type:'bar',
+            stack: 'two',
+            itemStyle: itemStyle,
+            data: gon.airtel
+        },
+        {
+            name:'UNDEF Tickets',
+            type:'bar',
+            stack: 'two',
+            itemStyle: itemStyle,
+            data: gon.undef
         }
     ]
 };
