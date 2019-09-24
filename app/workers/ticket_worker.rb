@@ -6,9 +6,8 @@ class TicketWorker
 
    def perform(phone_number, data, amount)
       draw_time = ((Time.now - (Time.now.min % 10).minutes).beginning_of_minute + 10.minutes).strftime("%I:%M %p")
-      #Check if gamer exists or create and return gamer
-      gamer = Gamer.find_or_create_by(phone_number: phone_number)
-
+      #Check if gamer exists or create with segment A and return gamer
+      gamer = Gamer.create_with(segment: 'A').find_or_create_by(phone_number: phone_number)
       #check if the data is purely numbers and 3 digits long
       #if not valid send invalid sms message and generate random 3 digit code
       #if valid, then create the ticket and send confirmation sms
@@ -19,7 +18,9 @@ class TicketWorker
          if ticket.save
             #Send SMS with confirmation
             message_content = "Thank you for playing #{ENV['GAME']}. You have played #{data.gsub(" ", ",")} entered in to #{draw_time} draw. Ticket: #{reference}"
-            #SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+            # if SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
+            #   ticket.update_attributes(confirmation: true)
+            # end
          end
 
       else
@@ -29,7 +30,9 @@ class TicketWorker
          if ticket.save
             #Send SMS with the confirmation and random number
             message_content = "Thank you for playing #{ENV['GAME']}. Input was incorrect and we have picked #{random_data} for you entered in to #{draw_time} draw. Ticket: #{reference}"
-            #SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+            # if SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
+            #   ticket.update_attributes(confirmation: true)
+            # end
          end
       end
 

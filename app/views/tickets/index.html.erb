@@ -68,6 +68,7 @@
           <th><%= sort_link(@q, :amount_Won) %></th>
           <th><%= sort_link(@q, :paid) %></th>
           <th><%= sort_link(@q, :time) %></th>
+					<th><%= sort_link(@q, :confirmation) %></th>
         </tr>
       </thead>
       <tbody>
@@ -82,6 +83,7 @@
               <td><%= ticket.win_amount %></td>
               <td><%= ticket.paid %></td>
               <td><%= ticket.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P") %></td>
+							<td><%= ticket.confirmation %></td>
 
             </tr>
         <% end %>
