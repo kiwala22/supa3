@@ -37,9 +37,10 @@
           <th><%= sort_link(@q, :matched_1) %></th>
           <th><%= sort_link(@q, :matched_2) %></th>
           <th><%= sort_link(@q, :matched_3) %></th>
+          <th><%= sort_link(@q, :ticket_count) %></th>
           <th><%= sort_link(@q, :payout) %></th>
           <th><%= sort_link(@q, :revenue) %></th>
-          <th><%= sort_link(@q, :ticket_count) %></th>
+          <th>RTP</th>
         </tr>
       </thead>
       <tbody>
@@ -51,9 +52,10 @@
               <td><%= draw.one_match %></td>
               <td><%= draw.two_match %></td>
               <td><%= draw.three_match %></td>
+              <td><%= draw.ticket_count %></td>
               <td><%= draw.payout %></td>
               <td><%= draw.revenue %></td>
-              <td><%= draw.ticket_count %></td>
+              <td><%= number_to_percentage((draw.payout / draw.revenue), precision: 2)  %></td>
             </tr>
         <% end %>
       </tbody>
