@@ -1,8 +1,8 @@
 class RevenuesController < ApplicationController
     before_action :authenticate_user!
-    before_action :verify_user
 
     def index
+      authorize! :index, :revenue, :message => "You are not allowed to view this page..."
         labels = []
         revenues = []
         payouts = []
@@ -17,12 +17,5 @@ class RevenuesController < ApplicationController
         gon.labels = labels
         gon.revenues = revenues
         gon.payouts = payouts
-    end
-
-    private
-    def verify_user
-      if current_user.admin != true
-        raise CanCan::AccessDenied
-      end
     end
 end

@@ -55,7 +55,11 @@
               <td><%= draw.ticket_count %></td>
               <td><%= draw.payout %></td>
               <td><%= draw.revenue %></td>
-              <td><%= number_to_percentage((draw.payout / draw.revenue), precision: 2)  %></td>
+							<td>
+                <% if !draw.revenue.nil? %>
+                	<%= number_to_percentage((draw.payout / draw.revenue), precision: 2)  %>
+                <% end %>
+              </td>
             </tr>
         <% end %>
       </tbody>
