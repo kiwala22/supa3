@@ -38,6 +38,9 @@
           <th><%= sort_link(@q, :matched_2) %></th>
           <th><%= sort_link(@q, :matched_3) %></th>
           <th><%= sort_link(@q, :ticket_count) %></th>
+					<th><%= sort_link(@q, :mtn_tickets) %></th>
+					<th><%= sort_link(@q, :airtel_tickets) %></th>
+					<th>Unique users</th>
           <th><%= sort_link(@q, :payout) %></th>
           <th><%= sort_link(@q, :revenue) %></th>
           <th>RTP</th>
@@ -53,13 +56,12 @@
               <td><%= draw.two_match %></td>
               <td><%= draw.three_match %></td>
               <td><%= draw.ticket_count %></td>
+							<td><%= draw.mtn_tickets %></td>
+							<td><%= draw.airtel_tickets %></td>
+							<td><%= draw.users %></td>
               <td><%= draw.payout %></td>
               <td><%= draw.revenue %></td>
-							<td>
-                <% if !draw.revenue.nil? %>
-                	<%= number_to_percentage((draw.payout / draw.revenue), precision: 2)  %>
-                <% end %>
-              </td>
+							<td><%= number_to_percentage(draw.rtp, precision: 2)  %></td>
             </tr>
         <% end %>
       </tbody>

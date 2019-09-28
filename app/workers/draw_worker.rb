@@ -57,19 +57,26 @@ class DrawWorker
          end
       end
       #run stats for the draw and update the status
+      #network definations
+      mtn = "MTN Uganda"
+      airtel = "Airtel Uganda"
+      other = "UNDEFINED"
       #total number fo tickets, number of matches, total ticket amount, payouts
       sleep 10
       revenue = Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).sum(:amount)
       ticket_count = Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).count()
       payout = Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).sum(:win_amount)
+      mtn_tickets = Ticket.where("network = ? AND created_at >= ? AND created_at <= ?", mtn, start_time, end_time).count()
+      airtel_tickets = Ticket.where("network = ? AND created_at >= ? AND created_at <= ?", airtel, start_time, end_time).count()
+      rtp = (payout / revenue)
+      unique_users = Ticket.where("created_at >= ? and created_at <= ?", start_time, end_time).pluck(:gamer_id).uniq.count()
       no_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 0).count()
       one_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 1).count()
       two_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 2).count()
       three_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 3).count()
-      # four_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 4).count()
-      # five_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 5).count()
 
-      @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match, ticket_count: ticket_count)
+      @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match, ticket_count: ticket_count, mtn_tickets: mtn_tickets,
+      airtel_tickets: airtel_tickets, users: unique_users, rtp: rtp)
 
    end
 end
