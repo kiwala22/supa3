@@ -69,7 +69,7 @@ class DrawWorker
       mtn_tickets = Ticket.where("network = ? AND created_at >= ? AND created_at <= ?", mtn, start_time, end_time).count()
       airtel_tickets = Ticket.where("network = ? AND created_at >= ? AND created_at <= ?", airtel, start_time, end_time).count()
       rtp = (payout / revenue)
-      unique_users = Ticket.where("created_at >= ? and created_at <= ?", start_time, end_time).pluck(:gamer_id).uniq.count()
+      unique_users = Ticket.where("created_at >= ? and created_at <= ?", start_time, end_time).select('DISTINCT gamer_id').count()
       no_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 0).count()
       one_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 1).count()
       two_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 2).count()

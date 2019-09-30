@@ -2,13 +2,18 @@ class ComparisonsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @reference = Draw.where("draw_time > ? AND draw_time <= ?", Date.today.to_time, Time.now).sum(:ticket_count)
-    ((Date.today - 30)..Date.today).each do |date|
-      @date = date
-      @draw = Draw.where("draw_time > ? AND draw_time <= ?", date.beginning_of_day, date.end_of_day)
-      @tickets = @draw.sum(:ticket_count)
-      @users = @draw.sum(:users)
-      @ticket_change = @tickets - @reference
+    @series = []
+    reference = Draw.where("draw_time > ? AND draw_time <= ?", Date.today.to_time, Time.now).sum(:ticket_count)
+    time_reference = Time.now
+    (0..30).each do |f|
+      date = Date.today - f.days
+      date_now = time_reference - f.days
+      draws = Draw.where("draw_time > ? AND draw_time <= ?", date.beginning_of_day, date_now)
+      ticket_sum = draws.sum(:ticket_count)
+      users = draws.sum(:users)
+      ticket_change = ticket_sum - reference
+      obj = {date: date, tickets: ticket_sum, users: users, ticket_change: ticket_change}
+      @series.push(obj)
     end
   end
 end

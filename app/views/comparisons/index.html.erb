@@ -12,16 +12,20 @@
           <th>Date</th>
           <th>Tickets</th>
           <th>Users</th>
+					<th>RTP Change</th>
           <th>Ticket Change</th>
         </tr>
       </thead>
       <tbody>
+				<% @series.each do |f| %>
             <tr>
-              <td><%= @date %></td>
-              <td><%= @tickets %></td>
-              <td><%= @users %></td>
-              <td><%= @ticket_change %></td>
+              <td><%= f[:date] %></td>
+							<td><%= f[:tickets] %></td>
+							<td><%= f[:users] %></td>
+							<td><%= number_to_percentage(f[:rtp_change], precision: 2) %></td>
+							<td><%= f[:ticket_change] %>
             </tr>
+				<% end %>
       </tbody>
   </table>
 </div>
