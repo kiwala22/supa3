@@ -8,6 +8,7 @@ Rails.application.routes.draw do
    match 'tickets' => "tickets#create", via: [:post], :defaults => { :format => 'json' }
    match 'analytics' => "analytics#index", via: [:get]
    match 'revenues' => "revenues#index", via: [:get]
+   match 'comparisons' => "comparisons#index", via: [:get]
    match 'ticket_analytics' => "ticket_analytics#index", via: [:get]
    match 'process_broadcasts' => "auto_jobs#process_broadcasts", via: [:post]
    match 'run_predictions' => "auto_jobs#run_predictions", via: [:post]

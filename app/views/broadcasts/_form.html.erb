@@ -12,7 +12,7 @@
           </div>
           <div id="all_user_lists" class="large-12 columns large-centered ">
             <%= f.collection_check_boxes :segment, ["A", "B", "C", "D", "E", "F"], :first, :first, include_hidden: false do |element| %>
-                <%= element.check_box %>
+                <%= element.check_box({required: true}) %>
                 <%= element.label %>
             <% end %>
           </div>

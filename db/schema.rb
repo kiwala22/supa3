@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_23_110939) do
+ActiveRecord::Schema.define(version: 2019_09_28_083138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,10 @@ ActiveRecord::Schema.define(version: 2019_09_23_110939) do
     t.integer "ticket_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "rtp"
+    t.integer "mtn_tickets"
+    t.integer "airtel_tickets"
+    t.integer "users"
   end
 
   create_table "gamers", force: :cascade do |t|
@@ -125,6 +129,7 @@ ActiveRecord::Schema.define(version: 2019_09_23_110939) do
     t.decimal "win_amount", precision: 10, scale: 2
     t.boolean "paid", default: false
     t.string "network"
+    t.boolean "confirmation", default: false
     t.index ["amount"], name: "index_tickets_on_amount"
     t.index ["data"], name: "index_tickets_on_data"
     t.index ["draw_id"], name: "index_tickets_on_draw_id"
