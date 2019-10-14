@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_28_083138) do
+ActiveRecord::Schema.define(version: 2019_10_14_173247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,16 @@ ActiveRecord::Schema.define(version: 2019_09_28_083138) do
     t.datetime "updated_at", null: false
     t.datetime "execution_time"
     t.index ["user_id"], name: "index_broadcasts_on_user_id"
+  end
+
+  create_table "draw_offers", force: :cascade do |t|
+    t.integer "multiplier_one"
+    t.integer "multiplier_two"
+    t.integer "multiplier_three"
+    t.datetime "expiry_time"
+    t.string "segment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "draws", force: :cascade do |t|
