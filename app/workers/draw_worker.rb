@@ -14,6 +14,8 @@ class DrawWorker
       #create the draw and later update with ticket stats
       @draw = Draw.create(draw_time: end_time)
 
+      #extract draw id
+      draw_id = @draw.id
       #generate random number for winnings
       draw_numbers = []
       while draw_numbers.length != 3
@@ -28,15 +30,15 @@ class DrawWorker
             gamer_segment = Gamer.find(ticket.gamer_id).segment
             segment_offers = DrawOffer.where("expiry_time > ? AND segment = ? ",Time.now,gamer_segment)
             if segment_offers.present?
-               #load new multipliers and execute 
+               #load new multipliers and execute
                process_ticket(draw_id, draw_numbers, ticket, matchedThree, matchedTwo, matchedOne)
-               
+
             else
-              #execute the draw 
+              #execute the draw
               process_ticket(draw_id, draw_numbers, ticket, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
-              
+
             end
-            
+
          end
 
       else
@@ -44,7 +46,7 @@ class DrawWorker
          Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).find_each(batch_size: 1000) do |ticket|
             #execute the draw
             process_ticket(draw_id, draw_numbers, ticket, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
-                  
+
          end
 
       end

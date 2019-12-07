@@ -1,0 +1,2 @@
+class DrawOffer < ApplicationRecord
+end
