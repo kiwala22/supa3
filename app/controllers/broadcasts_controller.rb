@@ -1,5 +1,6 @@
 class BroadcastsController < ApplicationController
    before_action :authenticate_user!, except: [:process_broadcasts]
+   before_action :set_broadcast, only: [:destroy]
    load_and_authorize_resource
 
    def index
@@ -12,20 +13,31 @@ class BroadcastsController < ApplicationController
    end
 
    def create
-      p broadcast_params[:execution_time]
-      @broadcast = Broadcast.new(
-         message: broadcast_params['message'],
-         execution_time: DateTime.strptime(broadcast_params[:execution_time],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S"),
-         segment: broadcast_params['segment'].join(","),
-         status: "PENDING",
-         user_id: current_user.id)
+      if broadcast_params[:method] == "PredictedRevenue"
+        @broadcast = Broadcast.new(
+           message: broadcast_params['message'],
+           execution_time: DateTime.strptime(broadcast_params[:execution_time],"%m/%d/%Y %H:%M %p %z").to_datetime.strftime("%Y-%m-%d %H:%M:%S"),
+           predicted_revenue_lower: broadcast_params['predicted_revenue_lower'],
+           predicted_revenue_upper: broadcast_params['predicted_revenue_upper'],
+           status: "PENDING",
+           method:  broadcast_params['method'],
+           user_id: current_user.id)
+       end
+       if broadcast_params[:method] == "Segments"
+         @broadcast = Broadcast.new(
+            message: broadcast_params['message'],
+            execution_time: DateTime.strptime(broadcast_params[:execution_time],"%m/%d/%Y %H:%M %p %z").to_datetime.strftime("%Y-%m-%d %H:%M:%S"),
+            segment: broadcast_params['segment'].join(","),
+            status: "PENDING",
+            method:  broadcast_params['method'],
+            user_id: current_user.id)
+       end
       if @broadcast.save
-         #return route to reset_index
          flash[:notice] = 'Broadcast Successful. Processing.....'
          redirect_to action: "index"
       else
          #show to error notice and show index
-         flash.now[:alert] = @broadcast.errors.first
+         flash.now[:alert] = @broadcast.errors
          render action: "new"
       end
    end
@@ -34,9 +46,10 @@ class BroadcastsController < ApplicationController
       @broadcast.destroy
       flash[:notice] = 'Broadcast was successfully deleted.'
       redirect_to action: "index"
+
    end
+
    def process_broadcasts
-      #find the broadcasts with a status of "PENDING"
       jobs = Broadcast.where('status = ? AND execution_time <= ?', "PENDING", Time.now)
       if !jobs.empty?
          jobs.each do |job|
@@ -54,8 +67,8 @@ class BroadcastsController < ApplicationController
 
 
    private
-
    def broadcast_params
-      params.require(:broadcast).permit(:message, :execution_time, :status, :segment => [])
+      params.require(:broadcast).permit(:message, :execution_time, :status, :predicted_revenue_lower,
+        :predicted_revenue_upper, :method, :segment => [])
    end
 end

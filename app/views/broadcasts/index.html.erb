@@ -12,7 +12,7 @@
           <th>No</th>
           <th># Contacts</th>
           <th>Message</th>
-          <th>Segments</th>
+          <th>Segments/Predicted Revenue</th>
           <th>Status</th>
           <th>Create Time</th>
           <th>Excecution Time</th>
@@ -25,7 +25,12 @@
               <td><%= (i+1) %></td>
               <td><%= broadcast.contacts %></td>
               <td><%= broadcast.message %></td>
-              <td><%= broadcast.segment %></td>
+							<% if !broadcast.segment.nil? %>
+							<td><%= broadcast.segment %></td>
+						<% elsif !broadcast.predicted_revenue_lower.nil? %>
+							<td><%= broadcast.predicted_revenue_lower %>,
+							<%= broadcast.predicted_revenue_upper %></td>
+						<% end %>
               <td><%= broadcast.status %></td>
               <td><%= broadcast.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P") %></td>
               <td><%= broadcast.execution_time.to_datetime.strftime("%b %d, %Y %I:%M%P") %></td>

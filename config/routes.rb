@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  resources :bulks
    resources :broadcasts
    resources :gamers, only: [:new, :index, :create]
    resources :tickets, only: [:index, :new]

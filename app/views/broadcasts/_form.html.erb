@@ -7,6 +7,13 @@
       <div class="panel-body">
         <%= form_for( @broadcast , :html => {:"data-parsley-validate" => ''}) do |f| %>
         <div class="form-group">
+          <%= f.label :method, "Select Broadcast Method", class: "text-muted" %>
+          <div>
+            <%= f.select :method, options_for_select([["Segments", "Segments"], ["Predicted Revenue", "PredictedRevenue"]]),
+            {:prompt => "Select One"},{:id => "selector", required: true} %>
+          </div>
+        </div>
+        <div class="colors form-group", id="Segments">
           <a id = "add_user_lists" class=" btn btn-primary fileinput-button">
             <i class="fa fa-fw fa-plus"></i><%= "Segments" %>
           </a>
@@ -16,6 +23,16 @@
                 <%= element.check_box({required: true, class: "checkbox checkbox-inline" })%>
               <% end %>
             </div>
+        </div>
+        <div class="row colors" id="PredictedRevenue">
+          <div class="form-group col-md-6">
+            <%= f.label :predicted_revenue_lower, "Predicted Revenue Lower", class: "text-muted" %>
+            <%= f.number_field :predicted_revenue_lower, class: "form-control", id: "data1", required: true%>
+          </div>
+          <div class="form-group col-md-6">
+            <%= f.label :predicted_revenue_upper, "Predicted Revenue Upper", class: "text-muted" %>
+            <%= f.number_field :predicted_revenue_upper, class: "form-control", id: "data2"%>
+          </div>
         </div>
 
         <div class="form-group">
