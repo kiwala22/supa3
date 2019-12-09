@@ -57,7 +57,7 @@ $(function(){
    }else {
      $('#data1').prop('disabled', true).prop('required', false);
      $('#data2').prop('disabled', true);
-     $('#all_user_lists').children().prop('disabled', false).prop('required', true);
+     //$('#all_user_lists').children().prop('disabled', false).prop('required', true);
    }
    $('#' + selected).show();
  });

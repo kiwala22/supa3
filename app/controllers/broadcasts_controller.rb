@@ -16,7 +16,7 @@ class BroadcastsController < ApplicationController
       if broadcast_params[:method] == "PredictedRevenue"
         @broadcast = Broadcast.new(
            message: broadcast_params['message'],
-           execution_time: DateTime.strptime(broadcast_params[:execution_time],"%m/%d/%Y %H:%M %p %z").to_datetime.strftime("%Y-%m-%d %H:%M:%S"),
+           execution_time: DateTime.strptime(broadcast_params[:execution_time],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S"),
            predicted_revenue_lower: broadcast_params['predicted_revenue_lower'],
            predicted_revenue_upper: broadcast_params['predicted_revenue_upper'],
            status: "PENDING",
@@ -26,7 +26,7 @@ class BroadcastsController < ApplicationController
        if broadcast_params[:method] == "Segments"
          @broadcast = Broadcast.new(
             message: broadcast_params['message'],
-            execution_time: DateTime.strptime(broadcast_params[:execution_time],"%m/%d/%Y %H:%M %p %z").to_datetime.strftime("%Y-%m-%d %H:%M:%S"),
+            execution_time: DateTime.strptime(broadcast_params[:execution_time],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S"),
             segment: broadcast_params['segment'].join(","),
             status: "PENDING",
             method:  broadcast_params['method'],

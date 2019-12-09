@@ -14,15 +14,15 @@
           </div>
         </div>
         <div class="colors form-group", id="Segments">
-          <a id = "add_user_lists" class=" btn btn-primary fileinput-button">
-            <i class="fa fa-fw fa-plus"></i><%= "Segments" %>
-          </a>
+          <div class="large-12 columns">
+            <a id = "add_user_lists" class=" btn btn-primary fileinput-button"><i class="fa fa-fw fa-plus"></i><%= "Segments" %></a>
+          </div>
           <div id="all_user_lists" class="col-sm-12 form-group">
-              <%= f.collection_check_boxes :segment, ("A".."F"), :first, :first, include_hidden: false do |element| %>
+              <%= f.collection_check_boxes :segment, ('A'..'F').to_a, :first, :first, include_hidden: false do |element| %>
                 <%= element.label class: "checkbox-inline" %>
                 <%= element.check_box({required: true, class: "checkbox checkbox-inline" })%>
               <% end %>
-            </div>
+          </div>
         </div>
         <div class="row colors" id="PredictedRevenue">
           <div class="form-group col-md-6">
