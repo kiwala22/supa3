@@ -7,7 +7,18 @@ class BroadcastWorker
 
    def perform(broadcast_id)
       @broadcast = Broadcast.find(broadcast_id)
-      @gamers = Gamer.where(segment: @broadcast.segment.downcase.split(","))
+      if !@broadcast.segment.nil?
+        @gamers = Gamer.where(segment: @broadcast.segment.downcase.split(","))
+      end
+      if !@broadcast.predicted_revenue_lower.nil? && @broadcast.predicted_revenue_upper.nil?
+        lower = @broadcast.predicted_revenue_lower
+        @gamers = Gamer.where("predicted_revenue >= ?",lower)
+      end
+      if !@broadcast.predicted_revenue_lower.nil? && !@broadcast.predicted_revenue_upper.nil?
+        lower = @broadcast.predicted_revenue_lower
+        upper = @broadcast.predicted_revenue_upper
+        @gamers = Gamer.where("predicted_revenue >= ? and predicted_revenue <= ?",lower, upper)
+      end
       contacts = 0
       @gamers.each do |gamer|
          #send the message to message library

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_14_173247) do
+ActiveRecord::Schema.define(version: 2019_12_09_110337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,17 @@ ActiveRecord::Schema.define(version: 2019_10_14_173247) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "execution_time"
+    t.decimal "predicted_revenue_lower", precision: 8, scale: 2
+    t.decimal "predicted_revenue_upper", precision: 8, scale: 2
+    t.string "method"
     t.index ["user_id"], name: "index_broadcasts_on_user_id"
+  end
+
+  create_table "bulks", force: :cascade do |t|
+    t.string "phone_number"
+    t.datetime "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "draw_offers", force: :cascade do |t|

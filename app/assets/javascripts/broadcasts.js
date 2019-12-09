@@ -36,3 +36,29 @@ $(document).ready(function(){
       $('#all_user_lists').toggle();
   });
 });
+
+$(function(){
+ $('#selector').change(function(){
+   $('.colors').hide();
+   var items = [];
+   var children = $(this).children();
+   try{
+     for(child in children){
+       var value = $(children[child]).val();
+       if (value != "") items.push(value);
+     }
+   }catch(e){};
+   var selected = $(this).val();
+   var matched = items.indexOf(selected);
+   if (matched != 0){
+     $('#all_user_lists').children().prop('disabled', true).prop('required', false);
+     $('#data1').prop('disabled', false).prop('required', true);
+     $('#data2').prop('disabled', false);
+   }else {
+     $('#data1').prop('disabled', true).prop('required', false);
+     $('#data2').prop('disabled', true);
+     //$('#all_user_lists').children().prop('disabled', false).prop('required', true);
+   }
+   $('#' + selected).show();
+ });
+});

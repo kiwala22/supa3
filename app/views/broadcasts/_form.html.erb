@@ -7,15 +7,32 @@
       <div class="panel-body">
         <%= form_for( @broadcast , :html => {:"data-parsley-validate" => ''}) do |f| %>
         <div class="form-group">
-          <a id = "add_user_lists" class=" btn btn-primary fileinput-button">
-            <i class="fa fa-fw fa-plus"></i><%= "Segments" %>
-          </a>
+          <%= f.label :method, "Select Broadcast Method", class: "text-muted" %>
+          <div>
+            <%= f.select :method, options_for_select([["Segments", "Segments"], ["Predicted Revenue", "PredictedRevenue"]]),
+            {:prompt => "Select One"},{:id => "selector", required: true} %>
+          </div>
+        </div>
+        <div class="colors form-group", id="Segments">
+          <div class="large-12 columns">
+            <a id = "add_user_lists" class=" btn btn-primary fileinput-button"><i class="fa fa-fw fa-plus"></i><%= "Segments" %></a>
+          </div>
           <div id="all_user_lists" class="col-sm-12 form-group">
-              <%= f.collection_check_boxes :segment, ("A".."F"), :first, :first, include_hidden: false do |element| %>
+              <%= f.collection_check_boxes :segment, ('A'..'F').to_a, :first, :first, include_hidden: false do |element| %>
                 <%= element.label class: "checkbox-inline" %>
                 <%= element.check_box({ class: "checkbox checkbox-inline" })%>
               <% end %>
-            </div>
+          </div>
+        </div>
+        <div class="row colors" id="PredictedRevenue">
+          <div class="form-group col-md-6">
+            <%= f.label :predicted_revenue_lower, "Predicted Revenue Lower", class: "text-muted" %>
+            <%= f.number_field :predicted_revenue_lower, class: "form-control", id: "data1", required: true%>
+          </div>
+          <div class="form-group col-md-6">
+            <%= f.label :predicted_revenue_upper, "Predicted Revenue Upper", class: "text-muted" %>
+            <%= f.number_field :predicted_revenue_upper, class: "form-control", id: "data2"%>
+          </div>
         </div>
 
         <div class="form-group">
