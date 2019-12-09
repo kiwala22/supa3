@@ -11,9 +11,13 @@ class TicketWorker
       #check if the data is purely numbers and 3 digits long
       #if not valid send invalid sms message and generate random 3 digit code
       #if valid, then create the ticket and send confirmation sms
+
+      #remove all spaces, leading, trailing and between spaces
+      data = data.gsub(/\s+/, '')
+
       reference = generate_ticket_reference
       network = ticket_network(gamer.phone_number)
-      if data.split(" ").map(&:to_i).all?{|f| f.is_a?(Integer)} && data.split(" ").map(&:to_i).length == 3 #should also check that its below 10
+      if (data.split("").all?{|f| f.match(/\d/)} && data.split("").length == 3) #should also check that its below 10
          ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data.gsub(" ", ","), amount: amount.to_i, reference: reference, network: network)
          if ticket.save
             #Send SMS with confirmation
