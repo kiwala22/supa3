@@ -4,13 +4,13 @@ class DrawsController < ApplicationController
 
 
     def index
-        @q = Draw.all.ransack(params[:q])
+        @q = Draw.limit(10000).ransack(params[:q])
         @draws = @q.result(distinct: true).order("created_at DESC").page params[:page]
         @search_params = params[:q]
     end
 
-    private
-    def sent_sms_params
-        params.permit(:search_params)
-    end
+    # private
+    # def sent_sms_params
+    #     params.permit(:search_params)
+    # end
 end
