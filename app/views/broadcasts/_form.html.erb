@@ -13,7 +13,7 @@
           <div id="all_user_lists" class="col-sm-12 form-group">
               <%= f.collection_check_boxes :segment, ("A".."F"), :first, :first, include_hidden: false do |element| %>
                 <%= element.label class: "checkbox-inline" %>
-                <%= element.check_box({required: true, class: "checkbox checkbox-inline" })%>
+                <%= element.check_box({ class: "checkbox checkbox-inline" })%>
               <% end %>
             </div>
         </div>
