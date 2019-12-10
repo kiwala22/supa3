@@ -62,12 +62,12 @@
           <th>No</th>
           <th>Phone Number</th>
           <th>Ticket ID</th>
-          <th>Played</th>
+          <th>Selection</th>
           <th>Amount Played</th>
           <th>Matched</th>
           <th>Amount Won</th>
           <th>Paid</th>
-          <th><%= sort_link(@q, :time, 'Time') %></th>
+          <th><%= sort_link(@q, :created_at, 'Time') %></th>
 					<th>Confirmation</th>
         </tr>
       </thead>
@@ -81,10 +81,35 @@
               <td><%= ticket.amount %></td>
               <td><%= ticket.number_matches %></td>
               <td><%= ticket.win_amount %></td>
-              <td><%= ticket.paid %></td>
+							<% if ticket.paid == true %>
+								<td>
+									<div class="rtp_green">
+										<%= ticket.paid.humanize %>
+									</div>
+								</td>
+							<% end %>
+							<% if ticket.paid == false %>
+								<td>
+									<div class="rtp_red">
+										<%= ticket.paid.humanize %>
+									</div>
+								</td>
+							<% end %>
               <td><%= ticket.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P") %></td>
-							<td><%= ticket.confirmation %></td>
-
+							<% if ticket.confirmation == true %>
+								<td>
+									<div class="rtp_green">
+										<%= ticket.confirmation.humanize %>
+									</div>
+								</td>
+							<% end %>
+							<% if ticket.confirmation == false %>
+								<td>
+									<div class="rtp_red">
+										<%= ticket.confirmation.humanize %>
+									</div>
+								</td>
+							<% end %>
             </tr>
         <% end %>
       </tbody>

@@ -32,6 +32,8 @@
       <thead>
         <tr>
           <th>No</th>
+					<th>First Name</th>
+					<th>Last Name</th>
           <th>Phone Number</th>
           <th>Segment</th>
 					<th>Predicted Revenue</th>
@@ -42,6 +44,8 @@
         <% @gamers.each_with_index do |gamer, i| %>
             <tr>
               <td><%= (i+1) %></td>
+							<td><%= gamer.first_name %></td>
+							<td><%= gamer.last_name %></td>
               <td><%= gamer.phone_number %></td>
               <td><%= gamer.segment %></td>
 							<td><%= gamer.predicted_revenue %></td>
