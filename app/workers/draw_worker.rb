@@ -22,6 +22,10 @@ class DrawWorker
            draw_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(3).map(&:to_i)
       end
 
+      #update with draw ID
+      Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).all(draw_id: draw_id)
+
+
       # check if the there is an existing offer or bonus
       if DrawOffer.where("expiry_time > ? ",Time.now).exists?
          #run special bonus draws
@@ -58,17 +62,17 @@ class DrawWorker
       other = "UNDEFINED"
       #total number fo tickets, number of matches, total ticket amount, payouts
       sleep 10
-      revenue = Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).sum(:amount)
-      ticket_count = Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).count()
-      payout = Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).sum(:win_amount)
-      mtn_tickets = Ticket.where("network = ? AND created_at >= ? AND created_at <= ?", mtn, start_time, end_time).count()
-      airtel_tickets = Ticket.where("network = ? AND created_at >= ? AND created_at <= ?", airtel, start_time, end_time).count()
+      revenue = Ticket.where(draw_id: draw_id).sum(:amount)
+      ticket_count = Ticket.where(draw_id: draw_id).count()
+      payout = Ticket.where(draw_id: draw_id).sum(:win_amount)
+      mtn_tickets = Ticket.where("network = ? AND draw_id = ?", mtn, draw_id).count()
+      airtel_tickets = Ticket.where("network = ? AND draw_id = ?", airtel, draw_id).count()
       rtp = (payout / revenue) * 100
-      unique_users = Ticket.where("created_at >= ? and created_at <= ?", start_time, end_time).select('DISTINCT gamer_id').count()
-      no_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 0).count()
-      one_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 1).count()
-      two_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 2).count()
-      three_match = Ticket.where("created_at <= ? AND created_at >= ? AND number_matches = ?", end_time, start_time, 3).count()
+      unique_users = Ticket.where(draw_id: draw_id).select('DISTINCT gamer_id').count()
+      no_match = Ticket.where(draw_id: draw_id, number_matches: 0).count()
+      one_match = Ticket.where(draw_id: draw_id, number_matches: 1).count()
+      two_match = Ticket.where(draw_id: draw_id, number_matches: 2).count()
+      three_match = Ticket.where(draw_id: draw_id, number_matches: 3).count()
 
       @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match, ticket_count: ticket_count, mtn_tickets: mtn_tickets,
       airtel_tickets: airtel_tickets, users: unique_users, rtp: rtp)
@@ -76,9 +80,7 @@ class DrawWorker
    end
 
    def process_ticket(draw_id, draw_numbers, ticket, matched_three, matched_two, matched_one)
-      #update with draw number
-      ticket.update_attributes(draw_id: draw_id)
-
+      
       #check number of matches
       ticket_numbers = ticket.data.split(",").map(&:to_i)
       number_matches = (draw_numbers & ticket_numbers).count()
