@@ -10,6 +10,11 @@
             </a>
             <ul id="ai_analytics" class="nav sidebar-subnav collapse">
                <li>
+                 <a href="<%= comparisons_path %>">
+                   <span>Daily Analytics</span>
+                 </a>
+               </li>
+               <li>
                   <a href="<%= analytics_path %>">
                      <span>User Analytics</span>
                   </a>
@@ -24,11 +29,7 @@
                      <span>Revenue Analytics</span>
                   </a>
                </li>
-               <li>
-                 <a href="<%= comparisons_path %>">
-                   <span>Comparisons</span>
-                 </a>
-               </li>
+               
             </ul>
          </li>
          <li class="<%= 'active' if controller.controller_name == 'gamers' %>" data-step="1" >
