@@ -3,10 +3,10 @@ class ComparisonsController < ApplicationController
 
   def index
     @series = []
-    reference = Draw.where("draw_time > ? AND draw_time <= ?", Date.today.to_time, Time.now).sum(:ticket_count)
-    payout_ref = Draw.where("draw_time > ? AND draw_time <= ?", Date.today.to_time, Time.now).sum(:payout)
-    revenue_ref = Draw.where("draw_time > ? AND draw_time <= ?", Date.today.to_time, Time.now).sum(:revenue)
-    rtp_ref = payout_ref / revenue_ref
+    # reference = Draw.where("draw_time > ? AND draw_time <= ?", Date.today.to_time, Time.now).sum(:ticket_count)
+    # payout_ref = Draw.where("draw_time > ? AND draw_time <= ?", Date.today.to_time, Time.now).sum(:payout)
+    # revenue_ref = Draw.where("draw_time > ? AND draw_time <= ?", Date.today.to_time, Time.now).sum(:revenue)
+    # rtp_ref = payout_ref / revenue_ref
 
     time_now = Time.now
     (0..30).each do |f|
@@ -26,7 +26,7 @@ class ComparisonsController < ApplicationController
       gross_revenue = (ticket_revenue - ticket_payout)
       rtp = (ticket_payout / ticket_revenue)* 100
       users = tickets.select('DISTINCT gamer_id').count()
-      new_users = Gamer.where("created_at <= ? AND created_at >= ?", time_ref, time_ref.beginning_of_day)
+      new_users = Gamer.where("created_at <= ? AND created_at >= ?", time_ref, time_ref.beginning_of_day).count
 
       # draws = Draw.where("draw_time > ? AND draw_time <= ?", date.beginning_of_day, date_now)
       # ticket_sum = draws.sum(:ticket_count)
