@@ -84,14 +84,14 @@
 							<% if ticket.paid == true %>
 								<td>
 									<div class="rtp_green">
-										<%= ticket.paid.humanize %>
+										<%= ticket.paid.to_s.humanize %>
 									</div>
 								</td>
 							<% end %>
 							<% if ticket.paid == false %>
 								<td>
 									<div class="rtp_red">
-										<%= ticket.paid.humanize %>
+										<%= ticket.paid.to_s.humanize %>
 									</div>
 								</td>
 							<% end %>
@@ -99,14 +99,14 @@
 							<% if ticket.confirmation == true %>
 								<td>
 									<div class="rtp_green">
-										<%= ticket.confirmation.humanize %>
+										<%= ticket.confirmation.to_s.humanize %>
 									</div>
 								</td>
 							<% end %>
 							<% if ticket.confirmation == false %>
 								<td>
 									<div class="rtp_red">
-										<%= ticket.confirmation.humanize %>
+										<%= ticket.confirmation.to_s.humanize %>
 									</div>
 								</td>
 							<% end %>
