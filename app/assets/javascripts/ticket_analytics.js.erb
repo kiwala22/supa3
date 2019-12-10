@@ -23,7 +23,7 @@ var option = {
         }
     },
     legend: {
-        data:['Tickets']
+        data:['MTN Tickets', 'Airtel Tickets', 'UNDEF Tickets']
     },
     grid: {
         left: '5%',
@@ -46,22 +46,22 @@ var option = {
         {
             name:'MTN Tickets',
             type:'bar',
-            stack: 'two',
-            itemStyle: itemStyle,
+            barWidth: 12,
+            itemStyle: {color: '#ca8622'},
             data: gon.mtn
         },
         {
             name:'Airtel Tickets',
             type:'bar',
-            stack: 'two',
-            itemStyle: itemStyle,
+            barWidth: 12,
+            itemStyle: {color: '#c23531'},
             data: gon.airtel
         },
         {
             name:'UNDEF Tickets',
             type:'bar',
-            stack: 'two',
-            itemStyle: itemStyle,
+            barWidth: 12,
+            itemStyle: {color: '#c4ccd3'},
             data: gon.undef
         }
     ]

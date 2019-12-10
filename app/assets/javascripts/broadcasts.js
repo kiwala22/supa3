@@ -50,6 +50,7 @@ $(function(){
    }catch(e){};
    var selected = $(this).val();
    var matched = items.indexOf(selected);
+   var checkbox_required = $('input[type="checkbox"]');
    if (matched != 0){
      $('#all_user_lists').children().prop('disabled', true).prop('required', false);
      $('#data1').prop('disabled', false).prop('required', true);
@@ -57,7 +58,20 @@ $(function(){
    }else {
      $('#data1').prop('disabled', true).prop('required', false);
      $('#data2').prop('disabled', true);
-     //$('#all_user_lists').children().prop('disabled', false).prop('required', true);
+     // if ($('.checkbox-line').prop('checked', true).length > 0){
+     //   $('#all_user_lists').children().prop('disabled', false).prop('required', false)
+     // }else {
+     //   $('#all_user_lists').children().prop('disabled', false).prop('required', true);
+     // }
+     checkbox_required.prop('disabled', false).prop('required', true);
+
+     checkbox_required.on('click', function(){
+         if (checkbox_required.is(':checked')) {
+             checkbox_required.prop('disabled', false).prop('required', false);
+         } else {
+             checkbox_required.prop('disabled', false).prop('required', true);
+         }
+     });
    }
    $('#' + selected).show();
  });

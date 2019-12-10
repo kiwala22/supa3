@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_09_110337) do
+ActiveRecord::Schema.define(version: 2019_12_10_131324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 2019_12_09_110337) do
     t.string "segment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
     t.index ["phone_number"], name: "index_gamers_on_phone_number", unique: true
   end
 
@@ -146,7 +148,7 @@ ActiveRecord::Schema.define(version: 2019_12_09_110337) do
     t.bigint "gamer_id"
     t.string "data"
     t.bigint "draw_id"
-    t.decimal "win_amount", precision: 10, scale: 2
+    t.decimal "win_amount", precision: 10, scale: 2, default: "0.0"
     t.boolean "paid", default: false
     t.string "network"
     t.boolean "confirmation", default: false

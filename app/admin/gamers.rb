@@ -11,5 +11,10 @@ ActiveAdmin.register Gamer do
 #   permitted << :other if params[:action] == 'create' && current_user.admin?
 #   permitted
 # end
-
+filter :phone_number
+#filter :probability, as: :numeric_range
+filter :segment
+filter :predicted_revenue, as: :numeric_range
+filter :created_at
+filter :updated_at
 end

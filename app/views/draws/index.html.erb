@@ -32,7 +32,7 @@
       <thead>
         <tr>
           <th>No</th>
-          <th><%= sort_link(@q, :draw_time) %></th>
+          <th><%= sort_link(@q, :draw_time, 'Draw Time') %></th>
           <th>No Match</th>
           <th>Matched 1</th>
           <th>Matched 2</th>
@@ -41,9 +41,9 @@
 					<th>MTN Tickets</th>
 					<th>Airtel Tickets</th>
 					<th>Unique users</th>
-          <th><%= sort_link(@q, :payout) %></th>
-          <th><%= sort_link(@q, :revenue) %></th>
-          <th><%= sort_link(@q, :rtp)%></th>
+          <th><%= sort_link(@q, :payout, 'Payout') %></th>
+          <th><%= sort_link(@q, :revenue, 'Revenue') %></th>
+          <th><%= sort_link(@q, :rtp, 'RTP')%></th>
         </tr>
       </thead>
       <tbody>
@@ -61,7 +61,20 @@
 							<td><%= draw.users %></td>
               <td><%= draw.payout %></td>
               <td><%= draw.revenue %></td>
-							<td><%= number_to_percentage(draw.rtp, precision: 2)  %></td>
+							<% if draw.rtp > 100 %>
+								<td>
+									<div class="rtp_red">
+										<%= number_to_percentage(draw.rtp, precision: 2)  %>
+									</div>
+								</td>
+							<% end %>
+							<% if draw.rtp <= 100 %>
+								<td>
+									<div class="rtp_green">
+										<%= number_to_percentage(draw.rtp, precision: 2)  %>
+									</div>
+								</td>
+							<% end %>
             </tr>
         <% end %>
       </tbody>
