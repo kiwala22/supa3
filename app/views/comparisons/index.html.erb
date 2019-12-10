@@ -11,21 +11,35 @@
         <tr>
           <th>Date</th>
           <th>Tickets</th>
+          <th>MTN Tickets</th>
+					<th>Airtel Tickets </th>
           <th>Users</th>
-					<th>RTP Change</th>
-          <th>Ticket Change</th>
+          <th>New Users</th>
+          <th>Ticket Revenue</th>
+          <th>Ticket Payout</th>
+          <th>Gross Revenue</th>
+          <th>RTP</th>
         </tr>
       </thead>
       <tbody>
 				<% @series.each do |f| %>
             <tr>
               <td><%= f[:date] %></td>
-							<td><%= f[:tickets] %></td>
-							<td><%= f[:users] %></td>
-							<td><%= number_to_percentage(f[:rtp_change], precision: 2) %></td>
-							<td><%= f[:ticket_change] %>
+							<td><%= f[:ticket_count] %></td>
+							<td><%= f[:mtn_count] %></td>
+              <td><%= f[:airtel_count] %></td>
+              <td><%= f[:users] %></td>
+              <td><%= f[:new_users] %></td>
+              <td><%= f[:ticket_revenue] %></td>
+              <td><%= f[:ticket_payout] %></td>
+              <td><%= f[:gross_revenue] %></td>
+              <td><%= number_to_percentage(f[:rtp], precision: 2) %></td>
+            
+					
             </tr>
 				<% end %>
       </tbody>
   </table>
 </div>
+
+
