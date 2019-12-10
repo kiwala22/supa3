@@ -14,9 +14,9 @@
           </div>
         </div>
         <div class="colors form-group", id="Segments">
-          <div class="large-12 columns">
-            <a id = "add_user_lists" class=" btn btn-primary fileinput-button"><i class="fa fa-fw fa-plus"></i><%= "Segments" %></a>
-          </div>
+            <a id = "add_user_lists" class=" btn btn-primary fileinput-button">
+              <i class="fa fa-fw fa-plus"></i><%= "Segments" %>
+            </a>
           <div id="all_user_lists" class="col-sm-12 form-group">
               <%= f.collection_check_boxes :segment, ('A'..'F').to_a, :first, :first, include_hidden: false do |element| %>
                 <%= element.label class: "checkbox-inline" %>

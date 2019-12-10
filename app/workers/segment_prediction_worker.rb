@@ -13,7 +13,7 @@ class SegmentPredictionWorker
        results = Result.select("phone_number, matches, time").where("phone_number = ? and time >= ?", user.phone_number, time_limit).order(time: :desc) # same as above since not indexed
        bulk = Bulk.select("phone_number, time").where("phone_number = ? and time >= ?", user.phone_number, time_limit).order(time: :desc)
        if tickets.blank? && user.created_at < segment_check_time
-         user.update_attributes(segment: "F")
+         user.update_attributes(segment: "F", predicted_revenue: 0)
        else
          #convert tickets and results to json
          payload = {'tickets' => tickets, 'results' => results, 'bulk' => bulk}.to_json(:except => :id)
