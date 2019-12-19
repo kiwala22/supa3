@@ -73,6 +73,7 @@ class DrawWorker
       one_match = Ticket.where(draw_id: draw_id, number_matches: 1).count()
       two_match = Ticket.where(draw_id: draw_id, number_matches: 2).count()
       three_match = Ticket.where(draw_id: draw_id, number_matches: 3).count()
+      new_users = Gamer.where("created_at <= ? AND created_at >= ?", end_time, start_time).count()
 
       @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match, ticket_count: ticket_count, mtn_tickets: mtn_tickets,
       airtel_tickets: airtel_tickets, users: unique_users, rtp: rtp)

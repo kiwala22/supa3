@@ -17,24 +17,18 @@ class ComparisonsController < ApplicationController
       time_ref = time_now - f.days
       #tickets
       #pull all the tickets at once
-      tickets = Ticket.where("created_at <= ? AND created_at >= ?", time_ref, time_ref.beginning_of_day )
-      ticket_count = tickets.count
-      mtn_count = tickets.where(network: "MTN Uganda").count
-      airtel_count = tickets.where(network: "Airtel Uganda").count
-      ticket_revenue = tickets.sum(:amount)
-      ticket_payout = tickets.sum(:win_amount)
+      draws = Draw.where("draw_time >= ? AND draw_time <= ?", time_ref.beginning_of_day, time_ref)
+      ticket_count = draws.sum(:ticket_count)
+      mtn_count = draws.sum(:mtn_tickets)
+      airtel_count = draws.sum(:airtel_tickets)
+      ticket_revenue = draws.sum(:revenue)
+      ticket_payout = draws.sum(:payout)
       gross_revenue = (ticket_revenue - ticket_payout)
       rtp = (ticket_payout / ticket_revenue)* 100
-      users = tickets.select('DISTINCT gamer_id').count()
-      new_users = Gamer.where("created_at <= ? AND created_at >= ?", time_ref, time_ref.beginning_of_day).count
+      users = draws.sum(:users)
+      new_users = draws.sum(:new_users)
 
-      # draws = Draw.where("draw_time > ? AND draw_time <= ?", date.beginning_of_day, date_now)
-      # ticket_sum = draws.sum(:ticket_count)
-      # payout = draws.sum(:payout)
-      # revenue = draws.sum(:revenue)
-      # rtp = (payout / revenue)* 100
-      # users = draws.sum(:users)
-      # ticket_change = ticket_sum - reference
+
       obj = {date: date, tickets: ticket_count, mtn_count: mtn_count, airtel_count: airtel_count, 
             ticket_revenue:ticket_revenue, ticket_payout: ticket_payout, gross_revenue: gross_revenue , rtp: rtp ,users: users, new_users: new_users}
       @series.push(obj)

@@ -30,9 +30,9 @@
               <td><%= f[:airtel_count] %></td>
               <td><%= f[:users] %></td>
               <td><%= f[:new_users] %></td>
-              <td><%= f[:ticket_revenue] %></td>
-              <td><%= f[:ticket_payout] %></td>
-              <td><%= f[:gross_revenue] %></td>
+              <td><%= number_with_delimiter(f[:ticket_revenue]) %></td>
+              <td><%= number_with_delimiter(f[:ticket_payout]) %></td>
+              <td><%= number_with_delimiter(f[:gross_revenue]) %></td>
               <td><%= number_to_percentage(f[:rtp], precision: 2) %></td>
             
 					
