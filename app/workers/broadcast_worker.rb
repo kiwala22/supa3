@@ -8,7 +8,7 @@ class BroadcastWorker
    def perform(broadcast_id)
       @broadcast = Broadcast.find(broadcast_id)
       if !@broadcast.segment.nil?
-        @gamers = Gamer.where(segment: @broadcast.segment.downcase.split(","))
+        @gamers = Gamer.where(segment: @broadcast.segment.split(","))
       end
       if !@broadcast.predicted_revenue_lower.nil? && @broadcast.predicted_revenue_upper.nil?
         lower = @broadcast.predicted_revenue_lower
