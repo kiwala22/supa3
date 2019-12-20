@@ -32,6 +32,21 @@ class ComparisonsController < ApplicationController
       obj = {date: date, tickets: ticket_count, mtn_count: mtn_count, airtel_count: airtel_count, 
             ticket_revenue:ticket_revenue, ticket_payout: ticket_payout, gross_revenue: gross_revenue , rtp: rtp ,users: users, new_users: new_users}
       @series.push(obj)
+
+      #iterate all array objects, add change columns
+      ref_obj = @series[0]
+      @series.each do |f|
+        f.ticket_change = (ref_obj.tickets - f.tickets)
+        f.mtn_change = (ref_obj.mtn_count - f.mtn_count)
+        f.airtel_change = (ref_obj.airtel_count - f.airtel_count)
+        f.revenue_change = (ref_obj.ticket_revenue - f.ticket_revenue)
+        f.payout_change = (ref_obj.ticket_payout - f.ticket_payout)
+        f.gross_change = (ref_obj.gross_revenue - f.gross_revenue)
+        f.rtp_change = (ref_obj.rtp - f.rtp)
+        f.users_change = (ref_obj.users - f.users)
+        f.new_users_change = (ref_obj.new_users - f.new_users)
+      end
+      p @series
     end
   end
 end
