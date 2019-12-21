@@ -30,13 +30,12 @@ class ComparisonsController < ApplicationController
 
 
       obj = {date: date, tickets: ticket_count, mtn_count: mtn_count, airtel_count: airtel_count,
-            ticket_revenue:ticket_revenue, ticket_payout: ticket_payout, gross_revenue: gross_revenue , rtp: rtp ,users: users, new_users: new_users}
+            ticket_revenue: ticket_revenue, ticket_payout: ticket_payout, gross_revenue: gross_revenue , rtp: rtp ,users: users, new_users: new_users}
       @series.push(obj)
 
       #iterate all array objects, add change columns
       ref_obj = @series[0]
       @series.each do |f|
-        apple_stock > 1 ? :eat_apple : :buy_apple
         f[:ticket_change] = f[:tickets] > 0 ? ((ref_obj[:tickets] - f[:tickets]) /  f[:tickets]) : 0
         #f[:ticket_change] = (ref_obj[:tickets] - f[:tickets]) /  f[:tickets]
         f[:mtn_change] = f[:mtn_count] > 0 ? ((ref_obj[:mtn_count] - f[:mtn_count]) /  f[:mtn_count]) : 0
