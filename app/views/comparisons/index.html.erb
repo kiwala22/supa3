@@ -34,7 +34,7 @@
 				<% @series.each do |f| %>
             <tr>
               <td><%= f[:date] %></td>
-							<td><%= f[:ticket_count] %></td>
+							<td><%= f[:tickets] %></td>
               <td><%= f[:ticket_change] %></td>
 							<td><%= f[:mtn_count] %></td>
               <td><%= f[:mtn_change] %></td>
@@ -52,12 +52,10 @@
               <td><%= f[:gross_change] %></td>
               <td><%= number_to_percentage(f[:rtp], precision: 2) %></td>
               <td><%= f[:rtp_change] %></td>
-            
-					
+
+
             </tr>
 				<% end %>
       </tbody>
   </table>
 </div>
-
-
