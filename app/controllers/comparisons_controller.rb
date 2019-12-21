@@ -43,7 +43,7 @@ class ComparisonsController < ApplicationController
         #f[:mtn_change] = (ref_obj[:mtn_count] - f[:mtn_count]) /  f[:mtn_count]
         f[:airtel_change] = f[:airtel_count] > 0 ? ((ref_obj[:airtel_count] - f[:airtel_count]) /  f[:airtel_count]) : 0
         #f[:airtel_change] = (ref_obj[:airtel_count] - f[:airtel_count]) /  f[:airtel_count]
-        f[:revenue_change] = f[:ticket_revenue] > 0 ? (ref_obj[:ticket_revenue] - f[:ticket_revenue]) /  f[:ticket_revenue]) : 0
+        f[:revenue_change] = f[:ticket_revenue] > 0 ? ((ref_obj[:ticket_revenue] - f[:ticket_revenue]) /  f[:ticket_revenue]) : 0
         #f[:revenue_change] = (ref_obj[:ticket_revenue] - f[:ticket_revenue]) /  f[:ticket_revenue]
         f[:payout_change] = f[:ticket_payout] > 0 ? ((ref_obj[:ticket_payout] - f[:ticket_payout]) /  f[:ticket_payout]) : 0
         #f[:payout_change] = (ref_obj[:ticket_payout] - f[:ticket_payout]) /  f[:ticket_payout]
