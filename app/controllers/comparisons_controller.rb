@@ -36,15 +36,15 @@ class ComparisonsController < ApplicationController
       #iterate all array objects, add change columns
       ref_obj = @series[0]
       @series.each do |f|
-        f[:ticket_change] = (ref_obj[:tickets] - f[:tickets]) /  f[:tickets]
-        f[:mtn_change] = (ref_obj[:mtn_count] - f[:mtn_count]) /  f[:mtn_count]
-        f[:airtel_change] = (ref_obj[:airtel_count] - f[:airtel_count]) /  f[:airtel_count]
-        f[:revenue_change] = (ref_obj[:ticket_revenue] - f[:ticket_revenue]) /  f[:ticket_revenue]
-        f[:payout_change] = (ref_obj[:ticket_payout] - f[:ticket_payout]) /  f[:ticket_payout]
-        f[:gross_change] = (ref_obj[:gross_revenue] - f[:gross_revenue]) /  f[:gross_revenue]
-        f[:rtp_change] = (ref_obj[:rtp] - f[:rtp]) /  f[:rtp]
-        f[:users_change] = (ref_obj[:users] - f[:users]) /  f[:users]
-        f[:new_users_change] = (ref_obj[:new_users] - f[:new_users]) /  f[:new_users]
+        f[:ticket_change] = ((ref_obj[:tickets] - f[:tickets]) /  f[:tickets]) * 100
+        f[:mtn_change] = ((ref_obj[:mtn_count] - f[:mtn_count]) /  f[:mtn_count]) * 100
+        f[:airtel_change] = ((ref_obj[:airtel_count] - f[:airtel_count]) /  f[:airtel_count]) * 100
+        f[:revenue_change] = ((ref_obj[:ticket_revenue] - f[:ticket_revenue]) /  f[:ticket_revenue]) * 100
+        f[:payout_change] = ((ref_obj[:ticket_payout] - f[:ticket_payout]) /  f[:ticket_payout]) * 100
+        f[:gross_change] = ((ref_obj[:gross_revenue] - f[:gross_revenue]) /  f[:gross_revenue]) * 100
+        f[:rtp_change] = ((ref_obj[:rtp] - f[:rtp]) /  f[:rtp]) * 100
+        f[:users_change] = ((ref_obj[:users] - f[:users]) /  f[:users]) * 100
+        f[:new_users_change] = ((ref_obj[:new_users] - f[:new_users]) /  f[:new_users]) * 100
       end
       
     end
