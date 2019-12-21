@@ -35,23 +35,50 @@
             <tr>
               <td><%= f[:date] %></td>
 							<td><%= f[:tickets] %></td>
-              <td><%= number_to_percentage(f[:ticket_change]) %></td>
+              <td class="<%= f[:ticket_change] >= 0 ? "rtp_green" : "rtp_red" %> ">
+                <%= number_to_percentage(f[:ticket_change], precision: 0) %>
+                  
+              </td>
 							<td><%= f[:mtn_count] %></td>
-              <td><%= number_to_percentage(f[:mtn_change]) %></td>
+              <td class="<%= f[:mtn_change] >= 0 ? "rtp_green" : "rtp_red" %> ">
+                <%= number_to_percentage(f[:mtn_change], precision: 0) %>
+                  
+              </td>
               <td><%= f[:airtel_count] %></td>
-              <td><%= number_to_percentage(f[:airtel_change]) %></td>
+              <td class="<%= f[:airtel_change] >= 0 ? "rtp_green" : "rtp_red" %> " >
+                <%= number_to_percentage(f[:airtel_change], precision: 0) %>
+                  
+              </td>
               <td><%= f[:users] %></td>
-              <td><%= number_to_percentage(f[:users_change]) %></td>
+              <td class="<%= f[:users_change] >= 0 ? "rtp_green" : "rtp_red" %> " >
+                <%= number_to_percentage(f[:users_change], precision: 0) %>
+                  
+              </td>
               <td><%= f[:new_users] %></td>
-              <td><%= number_to_percentage(f[:new_users_change]) %></td>
+              <td class="<%= f[:new_users_change] >= 0 ? "rtp_green" : "rtp_red" %> " >
+                <%= number_to_percentage(f[:new_users_change], precision: 0) %>
+                  
+              </td>
               <td><%= number_with_delimiter(f[:ticket_revenue]) %></td>
-              <td><%= number_to_percentage(f[:revenue_change]) %></td>
+              <td class="<%= f[:revenue_change] >= 0 ? "rtp_green" : "rtp_red" %> " >
+                <%= number_to_percentage(f[:revenue_change], precision: 0) %>
+                  
+              </td>
               <td><%= number_with_delimiter(f[:ticket_payout]) %></td>
-              <td><%= number_to_percentage(f[:payout_change]) %></td>
+              <td class="<%= f[:payout_change] >= 0 ? "rtp_green" : "rtp_red" %> " >
+                <%= number_to_percentage(f[:payout_change], precision: 0) %>
+                  
+              </td>
               <td><%= number_with_delimiter(f[:gross_revenue]) %></td>
-              <td><%= number_to_percentage(f[:gross_change]) %></td>
+              <td class="<%= f[:gross_change] >= 0 ? "rtp_green" : "rtp_red" %> " >
+                <%= number_to_percentage(f[:gross_change], precision: 0) %>
+                  
+              </td>
               <td><%= number_to_percentage(f[:rtp], precision: 2) %></td>
-              <td><%= number_to_percentage(f[:rtp_change]) %></td>
+              <td class="<%= f[:rtp_change] >= 0 ? "rtp_green" : "rtp_red" %> ">
+                <%= number_to_percentage(f[:rtp_change], precision: 0) %>
+                  
+              </td>
 
 
             </tr>

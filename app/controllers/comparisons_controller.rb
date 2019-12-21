@@ -37,23 +37,23 @@ class ComparisonsController < ApplicationController
       ref_obj = @series[0]
       @series.each do |f|
 
-        f[:ticket_change] = f[:tickets] > 0 ? ((ref_obj[:tickets] - f[:tickets]) * 100 /  f[:tickets]) : nil
+        f[:ticket_change] = f[:tickets] > 0 ? ((ref_obj[:tickets] - f[:tickets]) * 100 /  f[:tickets]) : 0
         #f[:ticket_change] = (ref_obj[:tickets] - f[:tickets]) /  f[:tickets]
-        f[:mtn_change] = f[:mtn_count] > 0 ? ((ref_obj[:mtn_count] - f[:mtn_count]) * 100 /  f[:mtn_count]) : nil
+        f[:mtn_change] = f[:mtn_count] > 0 ? ((ref_obj[:mtn_count] - f[:mtn_count]) * 100 /  f[:mtn_count]) : 0
         #f[:mtn_change] = (ref_obj[:mtn_count] - f[:mtn_count]) /  f[:mtn_count]
-        f[:airtel_change] = f[:airtel_count] > 0 ? ((ref_obj[:airtel_count] - f[:airtel_count]) * 100 /  f[:airtel_count]) : nil
+        f[:airtel_change] = f[:airtel_count] > 0 ? ((ref_obj[:airtel_count] - f[:airtel_count]) * 100 /  f[:airtel_count]) : 0
         #f[:airtel_change] = (ref_obj[:airtel_count] - f[:airtel_count]) /  f[:airtel_count]
-        f[:revenue_change] = f[:ticket_revenue] > 0 ? ((ref_obj[:ticket_revenue] - f[:ticket_revenue]) * 100 /  f[:ticket_revenue]) : nil
+        f[:revenue_change] = f[:ticket_revenue] > 0 ? ((ref_obj[:ticket_revenue] - f[:ticket_revenue]) * 100 /  f[:ticket_revenue]) : 0
         #f[:revenue_change] = (ref_obj[:ticket_revenue] - f[:ticket_revenue]) /  f[:ticket_revenue]
-        f[:payout_change] = f[:ticket_payout] > 0 ? ((ref_obj[:ticket_payout] - f[:ticket_payout]) * 100 /  f[:ticket_payout]) : nil
+        f[:payout_change] = f[:ticket_payout] > 0 ? ((ref_obj[:ticket_payout] - f[:ticket_payout]) * 100 /  f[:ticket_payout]) : 0
         #f[:payout_change] = (ref_obj[:ticket_payout] - f[:ticket_payout]) /  f[:ticket_payout]
-        f[:gross_change] = f[:gross_revenue] > 0 ? ((ref_obj[:gross_revenue] - f[:gross_revenue]) * 100 /  f[:gross_revenue]) : nil
+        f[:gross_change] = f[:gross_revenue] > 0 ? ((ref_obj[:gross_revenue] - f[:gross_revenue]) * 100 /  f[:gross_revenue]) : 0
         #f[:gross_change] = (ref_obj[:gross_revenue] - f[:gross_revenue]) /  f[:gross_revenue]
-        f[:rtp_change] = f[:rtp] > 0 ? ((ref_obj[:rtp] - f[:rtp]) /  f[:rtp]) * 100 : nil
+        f[:rtp_change] = f[:rtp] > 0 ? ((ref_obj[:rtp] - f[:rtp]) /  f[:rtp]) * 100 : 0
         #f[:rtp_change] = (ref_obj[:rtp] - f[:rtp]) /  f[:rtp]
-        f[:users_change] = f[:users] > 0 ? ((ref_obj[:users] - f[:users]) /  f[:users]) * 100 : nil
+        f[:users_change] = f[:users] > 0 ? ((ref_obj[:users] - f[:users]) /  f[:users]) * 100 : 0
         #f[:users_change] = (ref_obj[:users] - f[:users]) /  f[:users]
-        f[:new_users_change] = f[:new_users] > 0 ? ((ref_obj[:new_users] - f[:new_users]) * 100 /  f[:new_users]) : nil
+        f[:new_users_change] = f[:new_users] > 0 ? ((ref_obj[:new_users] - f[:new_users]) * 100 /  f[:new_users]) : 0
         #f[:new_users_change] = (ref_obj[:new_users] - f[:new_users]) /  f[:new_users]
 
       end
