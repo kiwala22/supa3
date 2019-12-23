@@ -23,7 +23,7 @@ class DrawWorker
       end
 
       #update with draw ID
-      Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).all(draw_id: draw_id)
+      Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).update_all(draw_id: draw_id)
 
 
       # check if the there is an existing offer or bonus
@@ -81,9 +81,9 @@ class DrawWorker
    end
 
    def process_ticket(draw_id, draw_numbers, ticket, matched_three, matched_two, matched_one)
-      
+
       #check number of matches
-      ticket_numbers = ticket.data.split(",").map(&:to_i)
+      ticket_numbers = ticket.data.split("").map(&:to_i)
       number_matches = (draw_numbers & ticket_numbers).count()
 
       if number_matches == 3 && draw_numbers == ticket_numbers

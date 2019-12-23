@@ -37,8 +37,7 @@ module SendSMS
       # else
       #    return false
       # end
-      response = true
-      return response
+      return true
 
    end
 end
