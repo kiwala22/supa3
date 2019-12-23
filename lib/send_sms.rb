@@ -30,13 +30,15 @@ module SendSMS
         #save message as a broadcast message
         Message.create(to: receiver, from: sender_id, message: content, sms_type: "Broadcast")
       end
-      response = HTTParty.get(message_url)
+      #response = HTTParty.get(message_url)
 
-      if response.code == 200
-         return true
-      else
-         return false
-      end
+      # if response.code == 200
+      #    return true
+      # else
+      #    return false
+      # end
+      response = true
+      return response
 
    end
 end
