@@ -7,7 +7,7 @@
 
 <div class="panel panel-default">
   <div>
-    <table class="table table-bordered table-hoverlarge-12 columns large-centered">
+    <table class="table table-bordered table-hoverlarge-12 columns large-centered" style= "font-size:11px !important;">
         <thead>
           <tr>
             <th>Date</th>
@@ -32,8 +32,8 @@
           </tr>
         </thead>
         <tbody>
-  				<% @series.each do |f| %>
-              <tr>
+  				<% @series.each_with_index do |f, index| %>
+              <tr style="<%= (index.to_i % 7) == 0 ? "background-color: #f5f7fa;" : ""; %>">
                 <td><%= f[:date] %></td>
   							<td><%= f[:tickets] %></td>
                 <td class="<%= f[:ticket_change] >= 0 ? "rtp_green" : "rtp_red" %> ">
