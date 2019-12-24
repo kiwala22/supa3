@@ -49,7 +49,7 @@ class ComparisonsController < ApplicationController
         #f[:payout_change] = (ref_obj[:ticket_payout] - f[:ticket_payout]) /  f[:ticket_payout]
         f[:gross_change] = f[:gross_revenue] > 0 ? ((ref_obj[:gross_revenue] - f[:gross_revenue]) * 100 /  f[:gross_revenue]) : 0
         #f[:gross_change] = (ref_obj[:gross_revenue] - f[:gross_revenue]) /  f[:gross_revenue]
-        f[:rtp_change] = f[:rtp] > 0 ? ((ref_obj[:rtp] - f[:rtp]) /  f[:rtp]) * 100 : 0
+        f[:rtp_change] = f[:rtp] > 0 ? (( f[:rtp] - ref_obj[:rtp]) /  f[:rtp]) * 100 : 0
         #f[:rtp_change] = (ref_obj[:rtp] - f[:rtp]) /  f[:rtp]
         f[:users_change] = f[:users] > 0 ? ((ref_obj[:users] - f[:users]) /  f[:users]) * 100 : 0
         #f[:users_change] = (ref_obj[:users] - f[:users]) /  f[:users]
