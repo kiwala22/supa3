@@ -19,7 +19,7 @@ class DrawWorker
       #generate random number for winnings
       draw_numbers = []
       while draw_numbers.length != 3
-           draw_numbers = SecureRandom.hex(50).scan(/\d/).sample(3).map(&:to_i)
+           draw_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(3).map(&:to_i)
       end
 
       #update with draw ID
