@@ -6,6 +6,7 @@ Rails.application.routes.draw do
    resources :gamers, only: [:new, :index, :create]
    resources :tickets, only: [:index, :new]
    resources :draws, only: [:index]
+   match 'jackpot' => "jackpot#index", via: [:get, :post]
    match 'tickets' => "tickets#create", via: [:post], :defaults => { :format => 'json' }
    match 'analytics' => "analytics#index", via: [:get]
    match 'revenues' => "revenues#index", via: [:get]
