@@ -1,16 +1,16 @@
 // require 'walden'
 var myChart = echarts.init(document.getElementById('ticket_analytics'), 'walden');
-// var itemStyle = {
-//     normal: {
-//     },
-//     emphasis: {
-//         barBorderWidth: 1,
-//         shadowBlur: 10,
-//         shadowOffsetX: 0,
-//         shadowOffsetY: 0,
-//         shadowColor: 'rgba(0,0,0,0.5)'
-//     }
-// };
+var itemStyle = {
+    normal: {
+    },
+    emphasis: {
+        barBorderWidth: 1,
+        shadowBlur: 10,
+        shadowOffsetX: 0,
+        shadowOffsetY: 0,
+        shadowColor: 'rgba(0,0,0,0.5)'
+    }
+};
 var option = {
     title: {
       text: 'Ticket Analytics',
@@ -18,9 +18,9 @@ var option = {
     },
     tooltip : {
         trigger: 'axis',
-        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
+        // axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+        //     type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        // }
     },
     legend: {
         data:['MTN Tickets', 'Airtel Tickets', 'UNDEF Tickets']
