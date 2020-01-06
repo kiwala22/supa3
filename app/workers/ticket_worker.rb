@@ -19,7 +19,7 @@ class TicketWorker
       reference = generate_ticket_reference
       network = ticket_network(gamer.phone_number)
       if (data.split("").all?{|f| f.match(/\d/)} && data.split("").length == 3) #should also check that its below 10
-         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data.gsub(" ", ","), amount: amount.to_i, reference: reference, network: network)
+         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data.gsub(" ", ","), amount: amount.to_i, reference: reference, network: network, first_name: gamer.first_name, last_name: gamer.last_name)
          if ticket.save
             #Send SMS with confirmation
             message_content = "Thank you for playing #{ENV['GAME']}. Your lucky numbers: #{data.gsub(" ", ",")} entered in to #{draw_time} draw. You could win #{text} Ticket ID: #{reference}"

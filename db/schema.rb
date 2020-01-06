@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_19_090901) do
+ActiveRecord::Schema.define(version: 2020_01_06_130009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,6 +153,8 @@ ActiveRecord::Schema.define(version: 2019_12_19_090901) do
     t.boolean "paid", default: false
     t.string "network"
     t.boolean "confirmation", default: false
+    t.string "first_name"
+    t.string "last_name"
     t.index ["amount"], name: "index_tickets_on_amount"
     t.index ["data"], name: "index_tickets_on_data"
     t.index ["draw_id"], name: "index_tickets_on_draw_id"
