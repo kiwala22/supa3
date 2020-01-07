@@ -9,5 +9,10 @@ class JackpotController < ApplicationController
     gamers = (params[:gamers]).to_i
     @results = Ticket.where("created_at >= ?", date)
     @tickets = @results.sample(gamers)
+
+    respond_to do |format|
+      format.html
+      format.csv {send_data @tickets.to_csv, filename: "jackpot_tickets-#{Date.today}.csv" }
+    end
   end
 end
