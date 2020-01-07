@@ -32,9 +32,15 @@
 
             </ul>
          </li>
+         <li class="<%= 'active' if controller.controller_name == 'gamers' %>" data-step="1" >
+            <a href="<%= gamers_path %>">
+               <em class="icon-user"></em>
+               <span data-localize="sidebar.nav.DASHBOARD">Gamers</span>
+            </a>
+         </li>
          <li class="<%= 'active' if controller.controller_name == 'jackpot' %>" data-step="1" >
             <a href="<%= jackpot_path %>">
-               <em class="icon-user"></em>
+               <em class="fa fa-spinner"></em>
                <span data-localize="sidebar.nav.DASHBOARD">Jackpot</span>
             </a>
          </li>
