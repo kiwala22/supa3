@@ -82,6 +82,25 @@
                </li>
             </ul>
          </li>
+         <li class="<%= 'active' if controller.controller_name == 'broadcasts' %>" data-step="2" >
+            <a href="#ai_developer" title="Layouts" data-toggle="collapse">
+               <em class="fa fa-code"></em>
+               <span>Developer</span>
+            </a>
+            <ul id="ai_developer" class="nav sidebar-subnav collapse">
+               <li>
+                  <a href="<%= api_users_path %>">
+                     <span>API Users</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="<%= new_api_user_path %>">
+                     <span>Create API Users</span>
+                  </a>
+               </li>
+               
+            </ul>
+         </li>
 
       </ul>
    </nav>

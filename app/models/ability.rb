@@ -9,6 +9,7 @@ class Ability
 
       if user.admin?
         can :manage, :revenue
+        can :manage, ApiUser
       end
    end
 end
