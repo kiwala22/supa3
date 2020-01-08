@@ -6,100 +6,43 @@ module MobileMoney
 		require 'uri'
 		require 'net/http'
 
-		@@sub_key  = "12e0c6ecfb5f4a4788f44bd1fc65f81c"
+		@@collection_sub_key  = "12e0c6ecfb5f4a4788f44bd1fc65f81c"
+		@@transfer_sub_key= "53e3bdbf26a747469dde718aa722689c"
+		@@collection_user_id = ApiUser.where(user_type: "collections").last.api_id
+		@@transfer_user_id = ApiUser.where(user_type: "transfer").last.api_id
 
 		def self.request_payments(amount, ext_reference, phone_number )
-			url = "https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay" 
-			callback_url = ""
-
-			uri = URI(url)
-
-			req = Net::HTTP::Post.new(uri)
-
-			## Set the headers
-			#set transactions callback url
-			req['X-Callback-Url'""] = callback_url
-
-			#set the transaction reference
-			req['X-Reference-Id'] = ext_reference
-
-			#set Enviroment
-			req['X-Target-Environment'] = ""
-
-			#set content type
-			req['Content-Type'] = "application/json"
-
-			#set the subscription keys
-			req['Ocp-Apim-Subscription-Key'] = @@sub_key
-
-			request_body = {
-				amount: amount,
-			   currency: "UGX",
-			   externalId: ext_reference,
-			   payer: {
-			   	partyIdType: "MSISDN",
-			   	partyId: phone_number
-			  	},
-			  	payerMessage: "SUPA 3",
-			  	payeeNote: "SUPA 3"
-			}
-
-			req.body = request_body.to_json
-
-			res = Net::HTTP.start(uri.hostname, uri.port,:use_ssl => uri.scheme == 'https') do |http|
-
-			  http.request(req)
-
-			end
-
-			case res.code
-
-			when '202'
-				response = {}
-				return response
-
-			else
-				response = {}
-				return response	
-			end
-
-		end
-
-		def self.payment_status(ext_reference)
-
-			
-		end
-
-		def self.make_transfer(amount, ext_reference, phone_number )
-			token = process_token
+			token = process_request_token(@@collection_user_id)
 			if token
 				url = "https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay" 
-				sub_key  = "12e0c6ecfb5f4a4788f44bd1fc65f81c"
-				callback_url = ""
+				callback_url = "http://betcity.co.ug"
 
 				uri = URI(url)
 
 				req = Net::HTTP::Post.new(uri)
 
 				## Set the headers
+				#set token
+				req['Authorization'] = "Bearer #{token}"
+
 				#set transactions callback url
-				req['X-Callback-Url'] = callback_url
+				req['X-Callback-Url'""] = callback_url
 
 				#set the transaction reference
 				req['X-Reference-Id'] = ext_reference
 
 				#set Enviroment
-				req['X-Target-Environment'] = ""
+				req['X-Target-Environment'] = "sandbox"
 
 				#set content type
 				req['Content-Type'] = "application/json"
 
 				#set the subscription keys
-				req['Ocp-Apim-Subscription-Key'] = @@sub_key
+				req['Ocp-Apim-Subscription-Key'] = @@collection_sub_key
 
 				request_body = {
 					amount: amount,
-				   currency: "UGX",
+				   currency: "EUR",
 				   externalId: ext_reference,
 				   payer: {
 				   	partyIdType: "MSISDN",
@@ -117,16 +60,72 @@ module MobileMoney
 
 				end
 
-				case res.code
+				return res.code
+			else
+				return nil
+			end
 
-				when '202'
-					response = {}
-					return response
+		end
 
-				else
-					response = {}
-					return response	
+		def self.payment_status(ext_reference)
+
+			
+		end
+
+		def self.make_transfer(amount, ext_reference, phone_number )
+			token = process_transfer_token(@@transfer_user_id)
+			if token
+				url = "https://sandbox.momodeveloper.mtn.com/disbursement/v1_0/transfer" 
+				callback_url = "http://betcity.co.ug"
+
+				uri = URI(url)
+
+				req = Net::HTTP::Post.new(uri)
+
+				## Set the headers
+				#set token
+				req['Authorization'] = "Bearer #{token}"
+
+				#set transactions callback url
+				req['X-Callback-Url'] = callback_url
+
+				#set the transaction reference
+				req['X-Reference-Id'] = ext_reference
+
+				#set Enviroment
+				req['X-Target-Environment'] = "sandbox"
+
+				#set content type
+				req['Content-Type'] = "application/json"
+
+				#set the subscription keys
+				req['Ocp-Apim-Subscription-Key'] = @@transfer_sub_key
+
+				request_body = {
+					amount: amount,
+				   currency: "EUR",
+				   externalId: ext_reference,
+				   payer: {
+				   	partyIdType: "MSISDN",
+				   	partyId: phone_number
+				  	},
+				  	payerMessage: "SUPA 3",
+				  	payeeNote: "SUPA 3"
+				}
+
+				req.body = request_body.to_json
+
+				res = Net::HTTP.start(uri.hostname, uri.port,:use_ssl => uri.scheme == 'https') do |http|
+
+				  http.request(req)
+
 				end
+
+				return res.code
+				p res
+
+			else
+				return nil
 			end
 			
 		end
@@ -136,8 +135,8 @@ module MobileMoney
 			
 		end
 
-		def process_token
-			api_user = ApiUser.last()
+		def self.process_request_token(user_id)
+			api_user = ApiUser.find_by(api_id: user_id)
 			if api_user
 				#process the token and return the token
 				api_id = api_user.api_id
@@ -152,39 +151,82 @@ module MobileMoney
 				## Set the headers
 
 				#set Authourization
-				req['Authourization'] = Base64.strict_encode64("#{api_id}:#{api_key}")
-
+				req['Authourization'] = req.basic_auth(api_id, api_key)
+		
 				#set the subscription keys
-				req['Ocp-Apim-Subscription-Key'] = @@sub_key
-
-				request_body = {
-					
-				}
-
-				req.body = request_body.to_json
-
+				req['Ocp-Apim-Subscription-Key'] = @@collection_sub_key
+				
 				res = Net::HTTP.start(uri.hostname, uri.port,:use_ssl => uri.scheme == 'https') do |http|
 
 				  http.request(req)
 
 				end
-
+				result = JSON.parse(res.body)
+				p result
 				case res.code
 
 				when '200'
-					return res.body['access_token']
+					return result['access_token']
 
 				else
-					return ''
+					return nil
 				end
 			else
-				return ''
+				return nil
+			end
+
+		end
+
+		def self.process_transfer_token(user_id)
+			api_user = ApiUser.find_by(api_id: user_id)
+			if api_user
+				#process the token and return the token
+				api_id = api_user.api_id
+				api_key  = api_user.api_key
+
+				url = "https://sandbox.momodeveloper.mtn.com/disbursement/token/" 
+				
+				uri = URI(url)
+
+				req = Net::HTTP::Post.new(uri)
+
+				## Set the headers
+
+				#set Authourization
+				req['Authourization'] = req.basic_auth(api_id, api_key)
+		
+				#set the subscription keys
+				req['Ocp-Apim-Subscription-Key'] = @@transfer_sub_key
+				
+				res = Net::HTTP.start(uri.hostname, uri.port,:use_ssl => uri.scheme == 'https') do |http|
+
+				  http.request(req)
+
+				end
+				result = JSON.parse(res.body)
+				p result
+				case res.code
+
+				when '200'
+					return result['access_token']
+
+				else
+					return nil
+				end
+			else
+				return nil
 			end
 
 		end
 
 		def self.register_api_user(user_id)
 			api_user = ApiUser.find_by(api_id: user_id)
+			if api_user.user_type == 'collections'
+				sub_key = @@collection_sub_key
+			end
+			if api_user.user_type == 'transfer'
+				sub_key = @@transfer_sub_key
+			end
 			url = "https://sandbox.momodeveloper.mtn.com/v1_0/apiuser"
 			uri = URI(url)
 
@@ -197,7 +239,7 @@ module MobileMoney
 			req['Content-Type'] = "application/json"
 
 			#set the subscription keys
-			req['Ocp-Apim-Subscription-Key'] = @@sub_key
+			req['Ocp-Apim-Subscription-Key'] = sub_key
 
 			request_body = {
 				providerCallbackHost: "betcity.co.ug"
@@ -225,6 +267,13 @@ module MobileMoney
 
 		def self.receive_api_key(user_id)
 			api_user = ApiUser.find_by(api_id: user_id)
+			if api_user.user_type == 'collections'
+				sub_key = @@collection_sub_key
+			end
+			if api_user.user_type == 'transfer'
+				sub_key = @@transfer_sub_key
+			end
+			api_user = ApiUser.find_by(api_id: user_id)
 			url = "https://sandbox.momodeveloper.mtn.com/v1_0/apiuser/#{user_id}/apikey"
 			uri = URI(url)
 
@@ -232,7 +281,7 @@ module MobileMoney
 
 
 			#set the subscription keys
-			req['Ocp-Apim-Subscription-Key'] = @@sub_key
+			req['Ocp-Apim-Subscription-Key'] = sub_key
 
 
 			res = Net::HTTP.start(uri.hostname, uri.port,:use_ssl => uri.scheme == 'https') do |http|

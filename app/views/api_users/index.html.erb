@@ -14,6 +14,7 @@
 				<th>Last Name</th>
 				<th>API ID</th>
 				<th>API Key</th>
+				<th>User Type</th>
 				<th>Registration Status</th>>
 				<th>Create Time</th>
 			</tr>
@@ -31,8 +32,8 @@
 				<% else %>
 					<td><%= api_user.api_key %></td>
 				<% end %>
+				<td><%= api_user.user_type.capitalize %></td>
 				<td><%= api_user.registered.to_s.capitalize %></td>
-				
 				<td><%= (api_user.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P")) %></td>
 
 			</tr>

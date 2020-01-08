@@ -21,6 +21,10 @@
 						<%= f.text_field :last_name, class: "form-control" %>
 					</div>
 					<div class="form-group">
+						<%= f.label :user_type, "Action", class: "text-muted col-sm-2 control-label" %>
+						<%= f.select :user_type,options_for_select([['Collections', 'collections'], ["Disbursements", 'transfer']]), class: "form-control m-b col-sm-10" %>
+					</div>
+					<div class="form-group">
 						<%= f.submit "Submit", class: "btn btn-primary" %>
 					</div>
 				<% end %>

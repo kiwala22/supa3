@@ -53,7 +53,7 @@ class ApiUsersController < ApplicationController
 
 	private
     def api_user_params
-      params.require(:api_user).permit(:first_name, :last_name)
+      params.require(:api_user).permit(:first_name, :last_name, :user_type)
     end
 
     def generate_uuid
