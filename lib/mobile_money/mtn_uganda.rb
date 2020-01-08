@@ -105,7 +105,7 @@ module MobileMoney
 					amount: amount,
 				   currency: "EUR",
 				   externalId: ext_reference,
-				   payer: {
+				   payee: {
 				   	partyIdType: "MSISDN",
 				   	partyId: phone_number
 				  	},
