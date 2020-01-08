@@ -4,13 +4,11 @@ class Ticket < ApplicationRecord
    require "send_sms"
 
    def self.to_csv
-     attributes = %w{id first_name last_name phone_number reference created_at}
-
-     CSV.generate(headers: true) do |csv|
-       csv << attributes
-
-       all.each do |ticket|
-         csv << attributes.map{ |attr| ticket.send(attr) }
+     CSV.generate do |csv|
+       column_names = %w(id first_name last_name phone_number reference created_at)
+       csv << column_names
+       all.each do |result|
+         csv << result.attributes.values_at(*column_names)
        end
      end
    end

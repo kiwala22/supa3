@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
-
-
-  resources :bulks
+   resources :bulks
    resources :broadcasts
    resources :gamers, only: [:new, :index, :create]
    resources :tickets, only: [:index, :new]
    resources :draws, only: [:index]
    match 'jackpot' => "jackpot#index", via: [:get, :post]
    match 'jackpot_draws' => "jackpot#draws", via: [:get, :post]
+   match 'download_tickets' => "jackpot#download_tickets", via: [:get, :post]
    match 'tickets' => "tickets#create", via: [:post], :defaults => { :format => 'json' }
    match 'analytics' => "analytics#index", via: [:get]
    match 'revenues' => "revenues#index", via: [:get]
@@ -33,5 +32,4 @@ Rails.application.routes.draw do
       require 'sidekiq/web'
       mount Sidekiq::Web => '/sidekiq'
    end
-   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
