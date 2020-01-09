@@ -4,18 +4,17 @@ class Collection < ApplicationRecord
 
 	private
 	def generate_references
-		loop
+		loop do
 			transaction_id = SecureRandom.hex(10)
-			break transaction_id when collection.where(transaction_id: transaction_id).exists?
-			self.transaction_id = transaction_id
-				
+			break self.transaction_id = transaction_id unless Collection.where(transaction_id: transaction_id).exists?
+
 		end
 
-		loop
+		loop do
 
 			resource_id = SecureRandom.uuid
-			break resource_id when collection.where(resource_id: resource_id).exists?
-			self.resource_id = resource_id
+			break self.resource_id = resource_id unless Collection.where(resource_id: resource_id).exists?
+
 		end
 		
 		

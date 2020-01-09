@@ -1,5 +1,5 @@
 module MobileMoney
-	class MtnUganda
+	class MtnOpenApi
 
 		require 'openssl'
 		require 'json'
