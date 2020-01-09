@@ -7,9 +7,10 @@ class JackpotController < ApplicationController
   end
 
   def draws
-    date = DateTime.strptime(params[:start_date],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S")
+    start_date = DateTime.strptime(params[:start_date],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S")
+    end_date = DateTime.strptime(params[:end_date],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S")
     gamers = (params[:gamers]).to_i
-    $tickets = Ticket.where("created_at >= ?", date).order("RANDOM()").limit(gamers)
+    $tickets = Ticket.where("created_at >= ? and created_at <= ?", start_date, end_date).order("RANDOM()").limit(gamers)
   end
 
   def download_tickets

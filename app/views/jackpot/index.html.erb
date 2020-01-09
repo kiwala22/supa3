@@ -7,10 +7,13 @@
 		<div class="panel-body">
 			<%= form_tag(jackpot_draws_path, :method => "post") do %>
 				<%= label_tag "Start Date"%>
-				<%= text_field_tag :start_date, params[:start_date], placeholder: "Start Date", class: 'form-control', id: "broadcast_schedule"%>
+				<%= text_field_tag :start_date, params[:start_date], placeholder: "Start Date", class: 'form-control', id: "broadcast_schedule", required: true%>
+				<br>
+				<%= label_tag "End Date"%>
+				<%= text_field_tag :end_date, params[:end_date], placeholder: "End Date", class: 'form-control', id: "broadcast_schedule_cp", required: true%>
 				<br>
 				<%= label_tag "Number of Gamers"%>
-				<%= number_field_tag :gamers, params[:gamers], placeholder: "Gamers", class: 'form-control'  %>
+				<%= number_field_tag :gamers, params[:gamers], placeholder: "Gamers", class: 'form-control', required: true  %>
 				<br>
 				<br>
 				<%= submit_tag "Run Draw",class: 'btn btn-primary', :name => nil %>
