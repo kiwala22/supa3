@@ -67,9 +67,41 @@ module MobileMoney
 
 		end
 
-		def self.payment_status(ext_reference)
+		def self.check_payment_status(ext_reference)
 
 			
+		end
+
+		def self.check_collections_balance
+			token = process_request_token(@@collection_user_id)
+			if token
+				url = "https://sandbox.momodeveloper.mtn.com/collection/v1_0/account/balance" 
+
+				uri = URI(url)
+
+				req = Net::HTTP::Get.new(uri)
+
+				## Set the headers
+				#set token
+				req['Authorization'] = "Bearer #{token}"
+
+				#set Enviroment
+				req['X-Target-Environment'] = "sandbox"
+
+				#set the subscription keys
+				req['Ocp-Apim-Subscription-Key'] = @@collection_sub_key
+
+
+				res = Net::HTTP.start(uri.hostname, uri.port,:use_ssl => uri.scheme == 'https') do |http|
+
+				  http.request(req)
+
+				end
+				result = JSON.parse(res.body)
+				return result
+			else
+				return nil
+			end
 		end
 
 		def self.make_transfer(amount, ext_reference, phone_number )
@@ -130,9 +162,41 @@ module MobileMoney
 			
 		end
 
-		def self.transfer_status(ext_reference)
+		def self.check_transfer_status(ext_reference)
 
 			
+		end
+
+		def self.check_disbursement_balance
+			token = process_transfer_token(@@collection_user_id)
+			if token
+				url = "https://sandbox.momodeveloper.mtn.com/disbursement/v1_0/account/balance" 
+
+				uri = URI(url)
+
+				req = Net::HTTP::Get.new(uri)
+
+				## Set the headers
+				#set token
+				req['Authorization'] = "Bearer #{token}"
+
+				#set Enviroment
+				req['X-Target-Environment'] = "sandbox"
+
+				#set the subscription keys
+				req['Ocp-Apim-Subscription-Key'] = @@transfer_sub_key
+
+
+				res = Net::HTTP.start(uri.hostname, uri.port,:use_ssl => uri.scheme == 'https') do |http|
+
+				  http.request(req)
+
+				end
+				result = JSON.parse(res.body)
+				return result
+			else
+				return nil
+			end
 		end
 
 		def self.process_request_token(user_id)
