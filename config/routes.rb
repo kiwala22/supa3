@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
 
+  namespace :confirmation do
+    match 'mtn' => 'mtn_uganda#create', via: [:post, :get]
+    
+  end
   get '/api_user_keys/:id', to: 'api_users#generate_api_keys', as: 'user_keys'
   resources :api_users, only: [:new, :index, :create]
   resources :bulks

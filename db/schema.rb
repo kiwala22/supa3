@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_08_161952) do
+ActiveRecord::Schema.define(version: 2020_01_09_153714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,23 @@ ActiveRecord::Schema.define(version: 2020_01_08_161952) do
     t.datetime "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "collections", force: :cascade do |t|
+    t.string "ext_transaction_id"
+    t.string "transaction_id"
+    t.string "resource_id"
+    t.string "receiving_fri"
+    t.string "currency"
+    t.decimal "amount", precision: 10, scale: 2
+    t.string "phone_number"
+    t.string "status"
+    t.string "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ext_transaction_id"], name: "index_collections_on_ext_transaction_id"
+    t.index ["phone_number"], name: "index_collections_on_phone_number"
+    t.index ["transaction_id"], name: "index_collections_on_transaction_id"
   end
 
   create_table "draw_offers", force: :cascade do |t|
