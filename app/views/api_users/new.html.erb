@@ -1,0 +1,34 @@
+<%= provide(:title, "Create New API User") %>
+<h3>
+	<%= "Broadcasts" %>
+	<small><%= "Create New API User" %></small>
+</h3>
+
+<div class="row">
+
+	<div class="col-sm-6 col-centered col-md-offset-3">
+
+		<!-- START panel-->
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<%= form_for( @api_user , :html => {:"data-parsley-validate" => ''}) do |f| %>
+					<div class="form-group">
+						<%= f.label :first_name, "First Name", class: "text-muted" %>
+						<%= f.text_field :first_name, required: true, class: "form-control" %>
+					</div>
+					<div class="form-group">
+						<%= f.label :last_name, "Last Name", class: "text-muted" %>
+						<%= f.text_field :last_name, class: "form-control" %>
+					</div>
+					<div class="form-group">
+						<%= f.label :user_type, "Action", class: "text-muted col-sm-2 control-label" %>
+						<%= f.select :user_type,options_for_select([['Collections', 'collections'], ["Disbursements", 'transfer']]), class: "form-control m-b col-sm-10" %>
+					</div>
+					<div class="form-group">
+						<%= f.submit "Submit", class: "btn btn-primary" %>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

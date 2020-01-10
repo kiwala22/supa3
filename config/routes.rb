@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :confirmation do
+    match 'mtn' => 'mtn_uganda#create', via: [:post, :get]
+
+  end
+  get '/api_user_keys/:id', to: 'api_users#generate_api_keys', as: 'user_keys'
+  resources :api_users, only: [:new, :index, :create]
    resources :bulks
    resources :broadcasts
    resources :gamers, only: [:new, :index, :create]
@@ -17,19 +23,20 @@ Rails.application.routes.draw do
    match 'update_segments' => "auto_jobs#update_segments", via: [:post]
    match 'run_draws' => "auto_jobs#run_draws", via: [:post]
 
-   devise_for :admin_users, ActiveAdmin::Devise.config
-   ActiveAdmin.routes(self)
-   devise_for :users
-   devise_scope :user do
-      authenticated :user do
-         root :to => 'analytics#index', as: :authenticated_root
-      end
-      unauthenticated :user do
-         root to: "devise/sessions#new"
-      end
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+  devise_for :users
+  devise_scope :user do
+    authenticated :user do
+     root :to => 'analytics#index', as: :authenticated_root
    end
-   authenticate :user do
-      require 'sidekiq/web'
-      mount Sidekiq::Web => '/sidekiq'
+   unauthenticated :user do
+     root to: "devise/sessions#new"
    end
+ end
+ authenticate :user do
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 end
+   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+ end
