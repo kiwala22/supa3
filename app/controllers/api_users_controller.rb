@@ -2,7 +2,7 @@ class ApiUsersController < ApplicationController
 	before_action :authenticate_user!
 	load_and_authorize_resource
 
-	#require 'mobile_money/mtn_uganda'
+	require 'mobile_money/mtn_open_api'
 
 	def index
 		@api_users = ApiUser.all.order("created_at DESC")
@@ -27,16 +27,22 @@ class ApiUsersController < ApplicationController
 	def generate_api_keys
 		@api_user = ApiUser.find(params[:id])
 		if !@api_user.registered?
-			if MobileMoney::MtnUganda.register_api_user(@api_user.api_id) == true
+			if MobileMoney::MtnOpenApi.register_api_user(@api_user.api_id) == true
 				@api_user.update_attributes(registered: true)
 			end
 		end
 
 		api_key = nil
 		if @api_user.registered?
+<<<<<<< HEAD
 			api_key = MobileMoney::MtnUganda.receive_api_key(@api_user.api_id)
 
 			if api_key && @api_user.update_attributes(api_key: api_key)
+=======
+			api_key = MobileMoney::MtnOpenApi.receive_api_key(@api_user.api_id)
+
+			if api_key && @api_user.update_attributes(api_key: api_key)
+>>>>>>> 163c5765c9d503d066bca8ca8ba087db06549bd1
 
 				flash[:notice] = 'API Key Successfully Created.'
 				redirect_to action: 'index'
