@@ -2,7 +2,7 @@ class ApiUsersController < ApplicationController
 	before_action :authenticate_user!
 	load_and_authorize_resource
 
-	require 'mobile_money/mtn_uganda'
+	#require 'mobile_money/mtn_uganda'
 
 	def index
 		@api_users = ApiUser.all.order("created_at DESC")
@@ -35,8 +35,8 @@ class ApiUsersController < ApplicationController
 		api_key = nil
 		if @api_user.registered?
 			api_key = MobileMoney::MtnUganda.receive_api_key(@api_user.api_id)
-		
-			if api_key && @api_user.update_attributes(api_key: api_key) 
+
+			if api_key && @api_user.update_attributes(api_key: api_key)
 
 				flash[:notice] = 'API Key Successfully Created.'
 				redirect_to action: 'index'
@@ -48,7 +48,7 @@ class ApiUsersController < ApplicationController
 			flash[:alert] = 'Oops! Something Went Wrong. Please Try Again.'
 			redirect_to action: 'index'
 		end
-		
+
 	end
 
 	private
