@@ -11,4 +11,5 @@ class MtnCollectionWorker
     			TicketWorker.perform_async(@collection.phone_number,@collection.message, @collection.amount)
     		end
     	end
+    end
 end
