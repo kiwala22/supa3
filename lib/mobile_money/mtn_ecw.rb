@@ -5,13 +5,34 @@ module MobileMoney
 		require 'json'
 		require 'uri'
 		require 'net/http'
+		require 'logger'
+		logger = Logger.new('mobile_money.log')
+		logger.level = Logger::ERROR
 
-		def self.make_disbursement(f)
-			
+		def self.make_disbursement(first_name, last_name, phone_number, amount, transaction_id)
+			url = "https://10.156.145.219:8017/poextvip/v1/sptransfer"
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:sptransferrequest xmlns:ns0='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend'><sendingfri>#{fri}</sendingfri><receivingfri>FRI:#{phone_number}/MSISDN</receivingfri><amount><amount>#{amount}</amount><currency>UGX</currency></amount><providertransactionid>#{transaction_id}</providertransactionid><name><firstname>#{first_name}</firstname><lastname>#{last_name}</lastname></name><sendernote>Winner Payout</sendernote><receivermessage>You have received UGX #{amount} from Supa3.</receivermessage></ns0:sptransferrequest>"
+			uri = URI.parse(url)
+	        http = Net::HTTP.new(uri.host, uri.port)
+	        request = Net::HTTP::Post.new(uri.request_uri)
+	        request.content_type = 'text/xml'
+	        request.body = req_xml
+	        http.use_ssl = true
+	        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+	        res = http.request(request)
+	        result = Hash.from_xml(res.body)
+	        if result.has_key?("sptransferresponse")
+	        	return {ext_transaction_id: result['sptransferresponse']['transactionid']}
+	        else
+	        	return nil
+	        end
+
+	    rescue StandardError => e
+  			logger.error(e.message)
 		end
 
 		def self.transaction_status(ext_reference_id)
-			url = ""
+			url = "https://10.156.145.219:8017/poextvip/v1/gettransactionstatus"
 			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:gettransactionstatusrequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_1'><referenceid>#{ext_reference_id}</referenceid></ns2:gettransactionstatusrequest>"
 			uri = URI.parse(url)
 	        http = Net::HTTP.new(uri.host, uri.port)
@@ -23,14 +44,17 @@ module MobileMoney
 	        res = http.request(request)
 	        result = Hash.from_xml(res.body)
 	        if result.has_key?("gettransactionstatusresponse")
-	        	return {amount: result['getbalanceresponse']['amount'], currency: result['getbalanceresponse']['currency']}
+	        	return {amount: result['gettransactionstatusresponse']['amount'], currency: result['gettransactionstatusresponse']['currency']}
 	        else
 	        	return nil
 	        end
+
+	    rescue StandardError => e
+  			logger.error(e.message)
 		end
 
 		def self.get_account_info(phone_number)
-			url = ""
+			url = "https://10.156.145.219:8017/poextvip/v1/getaccountholderinfo"
 			req_xml = "<?xml version="1.0" encoding='UTF-8'?><ns0:getaccountholderinforequest xmlns:ns0='http://www.ericsson.com/em/emm/provisioning/v1_2'><identity>ID:#{phone_number}/MSISDN</identity></ns0:getaccountholderinforequest>"
 			uri = URI.parse(url)
 	        http = Net::HTTP.new(uri.host, uri.port)
@@ -46,11 +70,14 @@ module MobileMoney
 	        else
 	        	return nil
 	        end
+
+	    rescue StandardError => e
+  			logger.error(e.message)
 			
 		end
 
 		def self.get_balance(fri)
-			url = ""
+			url = "https://10.156.145.219:8017/poextvip/v1/getbalance"
 			fri = ""
 			req_xml = "<?xml version="1.0" encoding='UTF-8'?><ns2:getbalancerequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_0'><fri>#{fri}</fri></ns2:getbalancerequest>"
 			uri = URI.parse(url)
@@ -67,6 +94,9 @@ module MobileMoney
 	        else
 	        	return nil
 	        end
+
+	    rescue StandardError => e
+  			logger.error(e.message)
 			
 		end
 

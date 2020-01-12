@@ -1,5 +1,10 @@
 class Confirmation::MtnUgandaController < ApplicationController
 	skip_before_action :verify_authenticity_token, raise: false
+
+	require 'logger'
+		logger = Logger.new('mobile_money.log')
+		logger.level = Logger::ERROR
+
 	def create
 		request_body = Hash.from_xml(request.body.read)
 		Rails.logger.debug(request_body)
@@ -13,6 +18,7 @@ class Confirmation::MtnUgandaController < ApplicationController
 			@transaction.currency = request_body['paymentrequest']["amount"]["currency"]
 			@transaction.message = request_body['paymentrequest']["message"]
 			@transaction.status = 'PENDING'
+			@transaction.nerwork = "MTN Uganda"
 			if @transaction.save
 				#respond to the request
 				render body: "<?xml version='1.0' encoding='UTF-8'?><ns2:paymentresponse xmlns:ns2='http://www.ericsson.com/em/emm/serviceprovider /v1_0/backend'><providertransactionid>#{@transaction.transaction_id}</providertransactionid><scheduledtransactionid></scheduledtransactionid><newbalance><amount>0</amount><currency>UGX</currency></newbalance><paymenttoken /><message /><status>PENDING</status></ns2:paymentresponse>"
@@ -27,5 +33,7 @@ class Confirmation::MtnUgandaController < ApplicationController
 			render :nothing => true, :status => 200, :content_type => 'text/xml'
 
 		end
+	rescue StandardError => e
+  			logger.error(e.message)
 	end
 end

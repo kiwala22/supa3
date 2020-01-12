@@ -1,4 +1,4 @@
-class MtnCollectionWorkerWorker
+class MtnCollectionWorker
 	include Sidekiq::Worker
 	sidekiq_options queue: "high"
 	sidekiq_options retry: false
