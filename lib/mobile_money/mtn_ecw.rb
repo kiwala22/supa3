@@ -55,7 +55,7 @@ module MobileMoney
 
 		def self.get_account_info(phone_number)
 			url = "https://10.156.145.219:8017/poextvip/v1/getaccountholderinfo"
-			req_xml = "<?xml version="1.0" encoding='UTF-8'?><ns0:getaccountholderinforequest xmlns:ns0='http://www.ericsson.com/em/emm/provisioning/v1_2'><identity>ID:#{phone_number}/MSISDN</identity></ns0:getaccountholderinforequest>"
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:getaccountholderinforequest xmlns:ns0='http://www.ericsson.com/em/emm/provisioning/v1_2'><identity>ID:#{phone_number}/MSISDN</identity></ns0:getaccountholderinforequest>"
 			uri = URI.parse(url)
 	        http = Net::HTTP.new(uri.host, uri.port)
 	        request = Net::HTTP::Post.new(uri.request_uri)
@@ -66,7 +66,7 @@ module MobileMoney
 	        res = http.request(request)
 	        result = Hash.from_xml(res.body)
 	        if result.has_key?("getaccountholderinforesponse")
-	        	return {mssidn: result['getaccountholderinforesponse']['accountholderbasicinfo'['mssidn'], first_name: result['getaccountholderinforesponse']['accountholderbasicinfo'['first_name'], surname: result['getaccountholderinforesponse']['accountholderbasicinfo'['surname']}
+	        	return {mssidn: result['getaccountholderinforesponse']['accountholderbasicinfo']['mssidn'], first_name: result['getaccountholderinforesponse']['accountholderbasicinfo']['first_name'], surname: result['getaccountholderinforesponse']['accountholderbasicinfo']['surname']}
 	        else
 	        	return nil
 	        end
@@ -79,7 +79,7 @@ module MobileMoney
 		def self.get_balance(fri)
 			url = "https://10.156.145.219:8017/poextvip/v1/getbalance"
 			fri = ""
-			req_xml = "<?xml version="1.0" encoding='UTF-8'?><ns2:getbalancerequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_0'><fri>#{fri}</fri></ns2:getbalancerequest>"
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:getbalancerequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_0'><fri>#{fri}</fri></ns2:getbalancerequest>"
 			uri = URI.parse(url)
 	        http = Net::HTTP.new(uri.host, uri.port)
 	        request = Net::HTTP::Post.new(uri.request_uri)
