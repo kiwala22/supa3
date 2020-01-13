@@ -1,4 +1,4 @@
-class MtnCollectionWorkerWorker
+class MtnCollectionWorker
 	include Sidekiq::Worker
 	sidekiq_options queue: "high"
 	sidekiq_options retry: false
@@ -11,4 +11,5 @@ class MtnCollectionWorkerWorker
     			TicketWorker.perform_async(@collection.phone_number,@collection.message, @collection.amount)
     		end
     	end
+    end
 end

@@ -8,8 +8,8 @@ module MobileMoney
 
 		@@collection_sub_key  = "12e0c6ecfb5f4a4788f44bd1fc65f81c"
 		@@transfer_sub_key= "53e3bdbf26a747469dde718aa722689c"
-		@@collection_user_id = ApiUser.where(user_type: "collections").last.api_id
-		@@transfer_user_id = ApiUser.where(user_type: "transfer").last.api_id
+		@@collection_user_id =  ""#ApiUser.where(user_type: "collections").last.api_id
+		@@transfer_user_id =  ""#ApiUser.where(user_type: "transfer").last.api_id
 
 		def self.request_payments(amount, ext_reference, phone_number )
 			token = process_request_token(@@collection_user_id)
