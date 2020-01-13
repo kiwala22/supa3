@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :api_users, only: [:new, :index, :create]
    resources :bulks
    resources :broadcasts
+   resources :collections, only: [:index]
+   resources :disbursements, only: [:index]
    resources :gamers, only: [:new, :index, :create]
    resources :tickets, only: [:index, :new]
    resources :draws, only: [:index]
