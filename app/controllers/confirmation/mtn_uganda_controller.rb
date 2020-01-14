@@ -18,7 +18,7 @@ class Confirmation::MtnUgandaController < ApplicationController
 			@transaction.currency = request_body['paymentrequest']["amount"]["currency"]
 			@transaction.message = request_body['paymentrequest']["message"]
 			@transaction.status = 'PENDING'
-			@transaction.nerwork = "MTN Uganda"
+			@transaction.network = "MTN Uganda"
 			if @transaction.save
 				#respond to the request
 				render body: "<?xml version='1.0' encoding='UTF-8'?><ns2:paymentresponse xmlns:ns2='http://www.ericsson.com/em/emm/serviceprovider /v1_0/backend'><providertransactionid>#{@transaction.transaction_id}</providertransactionid><scheduledtransactionid></scheduledtransactionid><newbalance><amount>0</amount><currency>UGX</currency></newbalance><paymenttoken /><message /><status>PENDING</status></ns2:paymentresponse>"

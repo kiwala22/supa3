@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :confirmation do
     match 'mtn' => 'mtn_uganda#create', via: [:post, :get]
+    match 'airtel' => 'airtel_uganda#create', via: [:post, :get]
 
   end
   get '/api_user_keys/:id', to: 'api_users#generate_api_keys', as: 'user_keys'
@@ -34,9 +35,7 @@ Rails.application.routes.draw do
      root to: "devise/sessions#new"
    end
  end
- authenticate :user do
   require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
-end
+  mount Sidekiq::Web => '/rabbit'
    # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
  end
