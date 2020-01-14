@@ -10,7 +10,8 @@ class Confirmation::AirtelUgandaController < ApplicationController
 		Rails.logger.debug(request_body)
 		@transaction = Collection.new()
 		@transaction.ext_transaction_id = request_body['COMMAND']["MOBTXNID"]
-		@transaction.phone_number = request_body['COMMAND']["MSISDN"]
+		phone_number = request_body['COMMAND']["MSISDN"]
+		@transaction.phone_number = "256" + phone_number
 		@transaction.receiving_fri = request_body['COMMAND']["BILLERCODE"]
 		@transaction.amount = request_body['COMMAND']["AMOUNT"]
 		@transaction.currency = "UGX"
