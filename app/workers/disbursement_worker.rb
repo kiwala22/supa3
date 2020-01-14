@@ -15,14 +15,15 @@ class DisbursementWorker
     			#process mtn disbursement
     			result = MobileMoney::Ecw.make_disbursement(@gamer.first_name, @gamer.last_name, @gamer.phone_number, amount, @disbursement.transaction_id)
     			if result
-    				@disbursement.update_attributes(status: "SUCCESS", ext_transaction_id: result[:ext_transaction_id])
+						#update attributes for disbusement such as the network
+    				@disbursement.update_attributes(status: "SUCCESS", ext_transaction_id: result[:ext_transaction_id], network: "MTN Uganda")
     			end
     		when /^(25675|25670)/
     			#Airtel disbursehment
 
 
     		end
-    			
+
     	end
 	end
 end

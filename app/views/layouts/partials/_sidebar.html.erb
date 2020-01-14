@@ -32,6 +32,24 @@
 
             </ul>
          </li>
+         <li data-step="2" >
+            <a href="#ai_finances" title="Layouts" data-toggle="collapse">
+               <em class="fa fa-money" aria-hidden="true"></em>
+               <span>Finances</span>
+            </a>
+            <ul id="ai_finances" class="nav sidebar-subnav collapse">
+               <li class="<%= 'active' if controller.controller_name == 'collections' %>">
+                  <a href="<%= collections_path %>">
+                     <span>Collections</span>
+                  </a>
+               </li>
+               <li class="<%= 'active' if controller.controller_name == 'disbursements' %>">
+                  <a href="<%= disbursements_path %>">
+                     <span>Disbursements</span>
+                  </a>
+               </li>
+            </ul>
+         </li>
          <li class="<%= 'active' if controller.controller_name == 'gamers' %>" data-step="1" >
             <a href="<%= gamers_path %>">
                <em class="icon-user"></em>

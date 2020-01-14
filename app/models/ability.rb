@@ -11,6 +11,8 @@ class Ability
         can :manage, :revenue
         can :manage, :jackpot
         can :manage, ApiUser
+        can :manage, :disbursement
+        can :manage, :collection
       end
    end
 end

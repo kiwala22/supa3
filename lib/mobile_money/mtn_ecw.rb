@@ -73,7 +73,7 @@ module MobileMoney
 
 	    rescue StandardError => e
   			logger.error(e.message)
-			
+
 		end
 
 		def self.get_balance(fri)
@@ -97,7 +97,11 @@ module MobileMoney
 
 	    rescue StandardError => e
   			logger.error(e.message)
-			
+
+		end
+
+		def self.included(base)
+			base.send :helper_method, :get_balance if base.respond_to? :helper_method
 		end
 
 	end

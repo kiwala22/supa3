@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_12_083536) do
+ActiveRecord::Schema.define(version: 2020_01_13_102024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 2020_01_12_083536) do
     t.integer "airtel_tickets"
     t.integer "users"
     t.integer "new_users"
+    t.integer "undefined_tickets"
   end
 
   create_table "gamers", force: :cascade do |t|

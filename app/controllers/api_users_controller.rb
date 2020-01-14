@@ -34,10 +34,9 @@ class ApiUsersController < ApplicationController
 
 		api_key = nil
 		if @api_user.registered?
-			api_key = MobileMoney::MtnUganda.receive_api_key(@api_user.api_id)
+			api_key = MobileMoney::MtnOpenApi.receive_api_key(@api_user.api_id)
 
 			if api_key && @api_user.update_attributes(api_key: api_key)
-
 
 				flash[:notice] = 'API Key Successfully Created.'
 				redirect_to action: 'index'
