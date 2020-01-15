@@ -1,9 +1,9 @@
 <%= provide(:title, "Draw Comparisons") %>
 <h3>
 	<%= "Draw Comparisons" %>
-<small><%= "All Draws" %></small>
+	<small>All Draws</small>
+	<small class="pull-right"><%= @current_time.strftime("Refreshed at %m/%d/%Y - %I:%M:%S%p") %></small>
 </h3>
-
 
 <div class="panel panel-default">
   <div>
@@ -17,8 +17,6 @@
             <th></th>
   					<th>Airtel Tickets </th>
             <th></th>
-            <th>Users</th>
-            <th></th>
             <th>New Users</th>
             <th></th>
             <th>Ticket Revenue</th>
@@ -28,7 +26,6 @@
             <th>Gross Revenue</th>
             <th></th>
             <th>RTP</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -51,12 +48,6 @@
                 <td class="<%= f[:airtel_change] >= 0 ? "rtp_green" : "rtp_red" %> " >
                   <em class="<%= f[:airtel_change] >= 0 ? "fa fa-sort-asc" : "fa fa-sort-desc" %> "></em>
                   <%= number_to_percentage(f[:airtel_change], precision: 0) %>
-
-                </td>
-                <td><%= f[:users] %></td>
-                <td class="<%= f[:users_change] >= 0 ? "rtp_green" : "rtp_red" %> " >
-                  <em class="<%= f[:users_change] >= 0 ? "fa fa-sort-asc" : "fa fa-sort-desc" %> "></em>
-                  <%= number_to_percentage(f[:users_change], precision: 0) %>
 
                 </td>
                 <td><%= f[:new_users] %></td>
@@ -84,11 +75,6 @@
 
                 </td>
                 <td><%= number_to_percentage(f[:rtp], precision: 2) %></td>
-                <td class="<%= f[:rtp_change] >= 0 ? "rtp_green" : "rtp_red" %> ">
-                  <em class="<%= f[:rtp_change] >= 0 ? "fa fa-sort-asc" : "fa fa-sort-desc" %> "></em>
-                  <%= number_to_percentage(f[:rtp_change], precision: 0) %>
-                </td>
-
               </tr>
   				<% end %>
         </tbody>

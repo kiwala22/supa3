@@ -4,6 +4,7 @@ class DisbursementWorker
 	sidekiq_options retry: false
 
 	require "mobile_money/mtn_ecw"
+	require "mobile_money/airtel_uganda"
 
 	def perform(gamer_id, amount)
     	@gamer = Gamer.find(gamer_id)

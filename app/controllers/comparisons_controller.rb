@@ -9,6 +9,7 @@ class ComparisonsController < ApplicationController
     # rtp_ref = payout_ref / revenue_ref
 
     time_now = Time.now
+    @current_time = time_now
     (0..30).each do |f|
       #data in consideration
       date = Date.today - f.days
@@ -25,12 +26,11 @@ class ComparisonsController < ApplicationController
       ticket_payout = draws.sum(:payout)
       gross_revenue = (ticket_revenue - ticket_payout)
       rtp = (ticket_payout / ticket_revenue)* 100
-      users = draws.sum(:users)
       new_users = draws.sum(:new_users)
 
 
       obj = {date: date, tickets: ticket_count, mtn_count: mtn_count, airtel_count: airtel_count,
-            ticket_revenue: ticket_revenue, ticket_payout: ticket_payout, gross_revenue: gross_revenue , rtp: rtp ,users: users, new_users: new_users}
+            ticket_revenue: ticket_revenue, ticket_payout: ticket_payout, gross_revenue: gross_revenue , rtp: rtp ,new_users: new_users}
       @series.push(obj)
 
       #iterate all array objects, add change columns
@@ -51,8 +51,6 @@ class ComparisonsController < ApplicationController
         #f[:gross_change] = (ref_obj[:gross_revenue] - f[:gross_revenue]) /  f[:gross_revenue]
         f[:rtp_change] = f[:rtp] > 0 ? (( f[:rtp] - ref_obj[:rtp]) /  f[:rtp]) * 100 : 0
         #f[:rtp_change] = (ref_obj[:rtp] - f[:rtp]) /  f[:rtp]
-        f[:users_change] = f[:users] > 0 ? ((ref_obj[:users] - f[:users]) /  f[:users]) * 100 : 0
-        #f[:users_change] = (ref_obj[:users] - f[:users]) /  f[:users]
         f[:new_users_change] = f[:new_users] > 0 ? ((ref_obj[:new_users] - f[:new_users]) * 100 /  f[:new_users]) : 0
         #f[:new_users_change] = (ref_obj[:new_users] - f[:new_users]) /  f[:new_users]
 
