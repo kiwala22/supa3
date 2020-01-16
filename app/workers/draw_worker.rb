@@ -93,7 +93,7 @@ class DrawWorker
          message_content = "Winning Numbers for draw ##{draw_id} are #{draw_numbers.join(",")}. You matched #{number_matches} in-line numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payments
-         DisbursementWorker.perform_async(ticket.gamer_id,ticket.amount)
+         DisbursementWorker.perform_async(ticket.gamer_id, win)
 
       elsif number_matches == 3 && draw_numbers != ticket_numbers
          win = (ticket.amount).to_i * matched_two
@@ -102,7 +102,7 @@ class DrawWorker
          message_content = "Winning Numbers for draw ##{draw_id} are #{draw_numbers.join(",")}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
-         DisbursementWorker.perform_async(ticket.gamer_id,ticket.amount)
+         DisbursementWorker.perform_async(ticket.gamer_id, win)
 
       elsif number_matches == 2
          win = (ticket.amount).to_i * matched_two
@@ -111,7 +111,7 @@ class DrawWorker
          message_content = "Winning Numbers for draw ##{draw_id} are #{draw_numbers.join(",")}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
-         DisbursementWorker.perform_async(ticket.gamer_id,ticket.amount)
+         DisbursementWorker.perform_async(ticket.gamer_id, win)
 
       elsif number_matches == 1
          win = (ticket.amount).to_i * matched_one
@@ -121,7 +121,7 @@ class DrawWorker
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
          if win > 0
-            DisbursementWorker.perform_async(ticket.gamer_id,ticket.amount)
+            DisbursementWorker.perform_async(ticket.gamer_id, win)
          end
 
       else
