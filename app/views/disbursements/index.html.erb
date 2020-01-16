@@ -60,22 +60,25 @@
         <th>Status</th>
         <th>Message</th>
         <th>Network</th>
+				<th>Create Time</th>
       </tr>
     </thead>
     <tbody>
 			<% @disbursements.each_with_index do |disbursement, i| %>
 				<tr>
 					<td><%= (i+1)%></td>
-					<td><%= disbursement.ext_transation_id %></td>
-					<td><%= disbursement.transation_id %></td>
+					<td><%= disbursement.ext_transaction_id %></td>
+					<td><%= disbursement.transaction_id %></td>
 					<td><%= disbursement.currency %></td>
 					<td><%= disbursement.amount %></td>
 					<td><%= disbursement.phone_number %></td>
 					<td><%= disbursement.status %></td>
 					<td><%= disbursement.message %></td>
 					<td><%= disbursement.network %></td>
+					<td><%= disbursement.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P") %></td>
 				</tr>
 			<% end %>
     </tbody>
   </table>
+	<%= paginate @disbursements %>
 </div>

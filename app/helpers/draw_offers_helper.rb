@@ -1,0 +1,2 @@
+module DrawOffersHelper
+end
