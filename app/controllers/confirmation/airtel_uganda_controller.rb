@@ -19,6 +19,7 @@ class Confirmation::AirtelUgandaController < ApplicationController
 		@transaction.status = 'SUCCESS'
 		@transaction.network = "Airtel Uganda"
 		if @transaction.save
+			## perhaps check that transaction is not a duplicate
 			Rails.logger.debug(@transaction)
 			TicketWorker.perform_async(@transaction.phone_number,@transaction.message, @transaction.amount)
 			render body: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><PARTTXNID></PARTTXNID><TYPE>STANPAY</TYPE><MOBTXNID>123456789</MOBTXNID><TXNSTATUS>200</TXNSTATUS><MESSAGE>Transaction is successful</MESSAGE></COMMAND>"
