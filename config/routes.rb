@@ -26,6 +26,7 @@ Rails.application.routes.draw do
    match 'run_predictions' => "auto_jobs#run_predictions", via: [:post]
    match 'update_segments' => "auto_jobs#update_segments", via: [:post]
    match 'run_draws' => "auto_jobs#run_draws", via: [:post]
+   match 'create_gamers' => "auto_jobs#create_gamers", via: [:post]
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
