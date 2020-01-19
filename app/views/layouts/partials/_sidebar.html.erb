@@ -62,6 +62,24 @@
                <span data-localize="sidebar.nav.DASHBOARD">Jackpot</span>
             </a>
          </li>
+         <li class="<%= 'active' if controller.controller_name == 'draw_offers' %>" data-step="2" >
+            <a href="#ai_promotions" title="Layouts" data-toggle="collapse">
+               <em class="fa fa-bitcoin" aria-hidden="true"></em>
+               <span>Promotions</span>
+            </a>
+            <ul id="ai_promotions" class="nav sidebar-subnav collapse">
+               <li>
+                  <a href="<%= new_draw_offer_path %>">
+                     <span>Create Promotion</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="<%= draw_offers_path %>">
+                     <span>Created Promotions</span>
+                  </a>
+               </li>
+            </ul>
+         </li>
          <li class="<%= 'active' if controller.controller_name == 'tickets' %>" data-step="2" >
             <a href="#ai_tickets" title="Layouts" data-toggle="collapse">
                <em class="fa fa-ticket" aria-hidden="true"></em>

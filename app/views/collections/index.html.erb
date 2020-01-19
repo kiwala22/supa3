@@ -93,6 +93,7 @@
         <th>Status</th>
         <th>Message</th>
         <th>Network</th>
+				<th>Create Time</th>
       </tr>
     </thead>
     <tbody>
@@ -109,8 +110,10 @@
 					<td><%= collection.status %></td>
 					<td><%= collection.message %></td>
 					<td><%= collection.network %></td>
+					<td><%= collection.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P") %></td>
 				</tr>
 			<% end %>
     </tbody>
   </table>
+	<%= paginate @collections %>
 </div>

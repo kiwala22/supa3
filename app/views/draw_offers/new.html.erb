@@ -1,0 +1,53 @@
+<%= provide(:title, "Promotions") %>
+<h3>
+   <%= "Promotions" %>
+   <small><%= "Create New Promotion" %></small>
+</h3>
+
+
+<div class="row">
+  <div class="col-sm-4 col-centered col-md-offset-4">
+    <!-- START panel-->
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= form_for(@draw_offer , :html => {:"data-parsley-validate" => ''}) do |f| %>
+        <div class="form-group">
+          <%= f.label :multiplier_one, "Matched One", class: "text-muted" %>
+          <div>
+            <%= f.number_field :multiplier_one, placeholder: "Matched One", class: "form-control", :id => "multiplier_one", required: true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :multiplier_two, "Matched Two", class: "text-muted" %>
+          <div>
+            <%= f.number_field :multiplier_two, placeholder: "Matched Two", class: "form-control", :id => "multiplier_two", required: true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :multiplier_three, "Matched Three", class: "text-muted" %>
+          <div>
+            <%= f.number_field :multiplier_three, placeholder: "Matched Three", class: "form-control", :id => "multiplier_three", required: true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :segment, "Segment", class: "text-muted" %>
+          <div>
+            <%= f.select :segment,  options_for_select(["A", "B", "C", "D", "E", "F"]),
+            {:prompt => "Select One"}, {class: "form-control", :id => "segment", required: true} %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="large-10 columns">
+            <div class="form-group">
+              <%= f.label :expiry_time, "Expiry Time", class: "text-muted" %>
+              <%= f.text_field :expiry_time, id: "broadcast_schedule", autofocus: true, required: "true", class: "form-control" %>
+            </div>
+            <%= f.submit "Submit", class: "btn btn-primary" %>
+            <% end %>
+          </div>
+        </div>        
+      </div>
+    </div>
+    <!-- END panel-->
+  </div>
+</div>

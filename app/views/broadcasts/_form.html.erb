@@ -10,7 +10,7 @@
           <%= f.label :method, "Select Broadcast Method", class: "text-muted" %>
           <div>
             <%= f.select :method, options_for_select([["Segments", "Segments"], ["Predicted Revenue", "PredictedRevenue"]]),
-            {:prompt => "Select One"},{:id => "selector", required: true} %>
+            {:prompt => "Select One"},{class: "form-control", :id => "selector", required: true} %>
           </div>
         </div>
         <div class="colors form-group", id="Segments">

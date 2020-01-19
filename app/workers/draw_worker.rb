@@ -35,8 +35,7 @@ class DrawWorker
             segment_offers = DrawOffer.where("expiry_time > ? AND segment = ? ",Time.now,gamer_segment)
             if segment_offers.present?
                #load new multipliers and execute
-               process_ticket(draw_id, draw_numbers, ticket, matchedThree, matchedTwo, matchedOne)
-
+               process_ticket(draw_id, draw_numbers, ticket, segment_offers.multiplier_three, segment_offers.multiplier_two, segment_offers.multiplier_one)
             else
               #execute the draw
               process_ticket(draw_id, draw_numbers, ticket, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)

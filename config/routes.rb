@@ -10,6 +10,7 @@ Rails.application.routes.draw do
    resources :broadcasts
    resources :collections, only: [:index]
    resources :disbursements, only: [:index]
+   resources :draw_offers
    resources :gamers, only: [:new, :index, :create]
    resources :tickets, only: [:index, :new]
    resources :draws, only: [:index]

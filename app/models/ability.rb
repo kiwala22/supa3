@@ -13,6 +13,7 @@ class Ability
         can :manage, ApiUser
         can :manage, :disbursement
         can :manage, :collection
+        can :manage, :draw_offer
       end
    end
 end
