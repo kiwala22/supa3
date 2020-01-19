@@ -1,5 +1,6 @@
 class Collection < ApplicationRecord
 	validates :transaction_id, uniqueness: true
+	validates :ext_transaction_id, uniqueness: true
 	before_create :generate_references, on: [ :create ]
 
 	private

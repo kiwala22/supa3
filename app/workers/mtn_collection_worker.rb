@@ -9,8 +9,8 @@ class MtnCollectionWorker
 	require 'net/http'
 	require 'logger'
 
-	logger = Logger.new('mobile_money.log')
-	logger.level = Logger::ERROR
+	@@logger ||= Logger.new("#{Rails.root}/log/mobile_money.log")
+	@@logger.level = Logger::ERROR
 
 	def perform(transaction_id, ext_transaction_id, status)
     	@collection =  Collection.find_by(transaction_id: transaction_id) 
@@ -52,6 +52,6 @@ class MtnCollectionWorker
 	    	end
 	    end
     rescue StandardError => e
-  			logger.error(e.message)
+  			@@logger.error(e.message)
     end
 end

@@ -1,9 +1,10 @@
 class Confirmation::MtnUgandaController < ApplicationController
+	before_action :authenticate_source, if: "Rails.env.production?"
 	skip_before_action :verify_authenticity_token, raise: false
 
 	require 'logger'
-	logger = Logger.new('mobile_money.log')
-	logger.level = Logger::ERROR
+	@@logger ||= Logger.new("#{Rails.root}/log/mobile_money.log")
+	@@logger.level = Logger::ERROR
 
 	def create
 		request_body = Hash.from_xml(request.body.read)
@@ -24,11 +25,28 @@ class Confirmation::MtnUgandaController < ApplicationController
 				MtnCollectionWorker.perform_async(@transaction.transaction_id, @transaction.ext_transaction_id, "SUCCESS")
 			else
 				MtnCollectionWorker.perform_async(@transaction.transaction_id, @transaction.ext_transaction_id, "FAILED")
-				#respond to the request
+				#log the error
+				@@logger.error(@transaction.errors.full_messages)
 			end
 			render body: "<?xml version='1.0' encoding='UTF-8'?><ns2:paymentresponse xmlns:ns2='http://www.ericsson.com/em/emm/serviceprovider /v1_0/backend'><providertransactionid>#{@transaction.transaction_id}</providertransactionid><scheduledtransactionid></scheduledtransactionid><newbalance><amount>0</amount><currency>UGX</currency></newbalance><paymenttoken /><message /><status>PENDING</status></ns2:paymentresponse>"
 		end
 	rescue StandardError => e
-  			logger.error(e.message)
+  			@@logger.error(e.message)
 	end
+
+	protected
+
+    def authenticate_source
+      @accepted_ips = ["212.88.97.59", "129.205.27.35"]
+      unauthourized_source unless @accepted_ips.include? source_ip 
+    end
+
+    def unauthourized_source
+      render xml: {error: 'Unauthorized'}.to_xml, status: 401
+    end
+
+    def source_ip
+        request.env['REMOTE_ADDR'] || request.env["HTTP_X_FORWARDED_FOR"] || request.env['HTTP_X_REAL_IP']
+    end
+
 end
