@@ -1,5 +1,5 @@
 class Confirmation::MtnUgandaController < ApplicationController
-	before_action :authenticate_source, if: "Rails.env.production?"
+	#before_action :authenticate_source, if: "Rails.env.production?"
 	skip_before_action :verify_authenticity_token, raise: false
 
 	require 'logger'
@@ -38,7 +38,7 @@ class Confirmation::MtnUgandaController < ApplicationController
 
     def authenticate_source
       @accepted_ips = ["212.88.97.59", "129.205.27.35"]
-      unauthourized_source unless @accepted_ips.include? source_ip 
+      unauthourized_source unless @accepted_ips.include? source_ip
     end
 
     def unauthourized_source
