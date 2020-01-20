@@ -40,4 +40,9 @@ class AutoJobsController < ApplicationController
         DrawWorker.perform_async(start_time, end_time)
         render body: nil
     end
+
+    def create_gamers
+      GamerWorker.perform_async
+      render body: nil
+    end
 end
