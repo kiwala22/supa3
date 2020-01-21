@@ -1,14 +1,14 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/acacia/Desktop/work/supa_ai/config/environment.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/environment.rb": [
         null,
         1,
         null,
         null,
         1
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/application.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/application.rb": [
         1,
         null,
         1,
@@ -47,13 +47,13 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/boot.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/boot.rb": [
         1,
         null,
         1,
         1
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/spring.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/spring.rb": [
         null,
         null,
         null,
@@ -61,7 +61,7 @@
         null,
         5
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/environments/test.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/environments/test.rb": [
         1,
         null,
         null,
@@ -109,7 +109,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/active_admin.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/active_admin.rb": [
         1,
         null,
         null,
@@ -404,7 +404,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/application_controller_renderer.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/application_controller_renderer.rb": [
         null,
         null,
         null,
@@ -414,7 +414,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/assets.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/assets.rb": [
         null,
         null,
         null,
@@ -434,7 +434,7 @@
         1,
         1
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/backtrace_silencers.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/backtrace_silencers.rb": [
         null,
         null,
         null,
@@ -443,7 +443,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/bower_rails.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/bower_rails.rb": [
         1,
         null,
         1,
@@ -474,7 +474,7 @@
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/content_security_policy.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/content_security_policy.rb": [
         null,
         null,
         null,
@@ -501,14 +501,14 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/cookies_serializer.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/cookies_serializer.rb": [
         null,
         null,
         null,
         null,
         1
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/devise.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/devise.rb": [
         null,
         null,
         null,
@@ -818,13 +818,13 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/filter_parameter_logging.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/filter_parameter_logging.rb": [
         null,
         null,
         null,
         1
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/inflections.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/inflections.rb": [
         null,
         null,
         null,
@@ -842,13 +842,13 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/mime_types.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/mime_types.rb": [
         null,
         null,
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/numeric_range_input.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/numeric_range_input.rb": [
         1,
         1,
         1,
@@ -883,7 +883,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/sidekiq.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/sidekiq.rb": [
         1,
         1,
         null,
@@ -891,7 +891,7 @@
         0,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/initializers/wrap_parameters.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/config/initializers/wrap_parameters.rb": [
         null,
         null,
         null,
@@ -907,7 +907,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/controllers/application_controller.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/controllers/application_controller.rb": [
         1,
         1,
         0,
@@ -918,75 +918,75 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/application_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/application_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/analytics_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/analytics_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/api_users_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/api_users_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/auto_jobs_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/auto_jobs_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/broadcasts_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/broadcasts_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/collections_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/collections_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/collections/mtn_uganda_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/collections/mtn_uganda_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/comparisons_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/comparisons_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/confirmation/airtel_uganda_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/confirmation/airtel_uganda_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/disbursements_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/disbursements_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/draw_offers_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/draw_offers_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/draws_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/draws_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/gamers_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/gamers_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/jackpot_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/jackpot_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/revenues_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/revenues_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/ticket_analytics_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/ticket_analytics_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/helpers/tickets_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/helpers/tickets_helper.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/spec/factories/api_users.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/spec/factories/api_users.rb": [
         1,
         1,
         1,
@@ -996,27 +996,14 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/spec/factories/auto_jobs.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/spec/factories/auto_jobs.rb": [
         1,
         1,
         null,
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/spec/factories/bulks.rb": [
-        1,
-        1,
-        1,
-        1,
-        null,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/spec/factories/collections.rb": [
-        1,
-        1,
-        1,
-        1,
-        1,
+      "/home/mkiwala/Desktop/projects/supa_ai/spec/factories/bulks.rb": [
         1,
         1,
         1,
@@ -1024,26 +1011,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/spec/factories/disbursements.rb": [
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        null,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/spec/factories/draw_offers.rb": [
-        1,
-        1,
-        null,
-        null,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/spec/factories/draws.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/spec/factories/collections.rb": [
         1,
         1,
         1,
@@ -1056,7 +1024,9 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/spec/factories/messages.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/spec/factories/disbursements.rb": [
+        1,
+        1,
         1,
         1,
         1,
@@ -1066,14 +1036,44 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/spec/factories/results.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/spec/factories/draw_offers.rb": [
         1,
         1,
         null,
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/config/routes.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/spec/factories/draws.rb": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/spec/factories/messages.rb": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/spec/factories/results.rb": [
+        1,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/config/routes.rb": [
         1,
         1,
         1,
@@ -1103,6 +1103,8 @@
         1,
         1,
         1,
+        1,
+        null,
         null,
         1,
         1,
@@ -1120,7 +1122,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/models/admin_user.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/models/admin_user.rb": [
         1,
         null,
         null,
@@ -1128,33 +1130,12 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/models/application_record.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/models/application_record.rb": [
         1,
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/admin/bulks.rb": [
-        1,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/app/models/bulk.rb": [
-        1,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/app/admin/messages.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/admin/results.rb": [
         1,
         null,
         null,
@@ -1171,71 +1152,11 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/models/message.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/models/result.rb": [
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/admin/broadcasts.rb": [
-        1,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/app/models/broadcast.rb": [
-        1,
-        1,
-        1,
-        null,
-        1,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/app/admin/dashboard.rb": [
-        1,
-        null,
-        1,
-        null,
-        1,
-        0,
-        0,
-        0,
-        0,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/app/admin/collections.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/admin/bulks.rb": [
         1,
         null,
         null,
@@ -1252,7 +1173,49 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/models/collection.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/models/bulk.rb": [
+        1,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/app/admin/messages.rb": [
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/app/models/message.rb": [
+        1,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/app/admin/collections.rb": [
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/app/models/collection.rb": [
         1,
         1,
         1,
@@ -1279,112 +1242,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/admin/disbursements.rb": [
-        1,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/app/models/disbursement.rb": [
-        1,
-        1,
-        1,
-        null,
-        1,
-        1,
-        0,
-        0,
-        0,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/app/admin/admin_users.rb": [
-        1,
-        1,
-        null,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        null,
-        null,
-        1,
-        1,
-        1,
-        1,
-        null,
-        1,
-        0,
-        0,
-        0,
-        0,
-        null,
-        0,
-        null,
-        null,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/app/admin/draws.rb": [
-        1,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/app/models/draw.rb": [
-        1,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/app/admin/results.rb": [
-        1,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/app/models/result.rb": [
-        1,
-        null
-      ],
-      "/Users/acacia/Desktop/work/supa_ai/app/admin/users.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/admin/users.rb": [
         1,
         1,
         null,
@@ -1422,7 +1280,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/models/user.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/models/user.rb": [
         1,
         null,
         1,
@@ -1431,7 +1289,7 @@
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/admin/tickets.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/admin/disbursements.rb": [
         1,
         null,
         null,
@@ -1448,7 +1306,40 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/models/ticket.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/models/disbursement.rb": [
+        1,
+        1,
+        1,
+        null,
+        1,
+        1,
+        0,
+        0,
+        0,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/app/admin/tickets.rb": [
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/app/models/ticket.rb": [
         1,
         1,
         1,
@@ -1465,7 +1356,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/lib/send_sms.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/lib/send_sms.rb": [
         1,
         1,
         1,
@@ -1510,7 +1401,83 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/admin/gamers.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/admin/draws.rb": [
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/app/models/draw.rb": [
+        1,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/app/admin/broadcasts.rb": [
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/app/models/broadcast.rb": [
+        1,
+        1,
+        1,
+        null,
+        1,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/app/admin/admin_users.rb": [
+        1,
+        1,
+        null,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        1,
+        0,
+        0,
+        0,
+        0,
+        null,
+        0,
+        null,
+        null,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/app/admin/gamers.rb": [
         1,
         null,
         null,
@@ -1532,7 +1499,7 @@
         1,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/models/gamer.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/models/gamer.rb": [
         1,
         null,
         1,
@@ -1574,7 +1541,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/lib/mobile_money/mtn_ecw.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/lib/mobile_money/mtn_ecw.rb": [
         1,
         1,
         null,
@@ -1685,7 +1652,42 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/spec/support/user_sessions.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/app/admin/dashboard.rb": [
+        1,
+        null,
+        1,
+        null,
+        1,
+        0,
+        0,
+        0,
+        0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/home/mkiwala/Desktop/projects/supa_ai/spec/support/user_sessions.rb": [
         1,
         null,
         1,
@@ -1729,7 +1731,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/spec/controllers/confirmation/mtn_uganda_controller_spec.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/spec/controllers/confirmation/mtn_uganda_controller_spec.rb": [
         1,
         null,
         1,
@@ -1741,8 +1743,12 @@
         1,
         1,
         1,
+        2,
         1,
         null,
+        null,
+        1,
+        1,
         null,
         null,
         null,
@@ -1785,7 +1791,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/spec/rails_helper.rb": [
+      "/home/mkiwala/Desktop/projects/supa_ai/spec/rails_helper.rb": [
         null,
         1,
         null,
@@ -1882,11 +1888,7 @@
         null,
         null
       ],
-      "/Users/acacia/Desktop/work/supa_ai/app/controllers/confirmation/mtn_uganda_controller.rb": [
-        1,
-        2,
-        1,
-        null,
+      "/home/mkiwala/Desktop/projects/supa_ai/app/controllers/confirmation/mtn_uganda_controller.rb": [
         1,
         1,
         1,
@@ -1898,6 +1900,10 @@
         1,
         0,
         0,
+        null,
+        0,
+        0,
+        0,
         0,
         0,
         0,
@@ -1915,7 +1921,7 @@
         0,
         null,
         null,
-        1,
+        0,
         null,
         null,
         1,
@@ -1936,6 +1942,6 @@
         null
       ]
     },
-    "timestamp": 1579536462
+    "timestamp": 1579602848
   }
 }
