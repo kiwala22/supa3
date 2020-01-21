@@ -11,11 +11,11 @@ class GamerWorker
     gamers_arr = []
 
     gamers.each do |tb|
-      gamers_arr << {phone_number: tb[1], segment: tb[7]}
+      gamers_arr << {phone_number: tb[1], created_at: tb[3]}
     end
 
     gamers_arr.each do |x|
-      Gamer.create(phone_number: x[:phone_number], segment: x[:segment])
+      Gamer.create(phone_number: x[:phone_number], created_at: x[:created_at])
     end
   end
 end
