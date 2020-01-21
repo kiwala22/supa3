@@ -11,13 +11,12 @@ Rails.application.routes.draw do
    resources :collections, only: [:index]
    resources :disbursements, only: [:index]
    resources :draw_offers
-   resources :gamers, only: [:new, :index, :create]
+   resources :gamers, only: [:index]
    resources :tickets, only: [:index]
    resources :draws, only: [:index]
    match 'jackpot' => "jackpot#index", via: [:get, :post]
    match 'jackpot_draws' => "jackpot#draws", via: [:get, :post]
    match 'download_tickets' => "jackpot#download_tickets", via: [:get, :post]
-   match 'tickets' => "tickets#create", via: [:post], :defaults => { :format => 'json' }
    match 'analytics' => "analytics#index", via: [:get]
    match 'revenues' => "revenues#index", via: [:get]
    match 'comparisons' => "comparisons#index", via: [:get]
@@ -27,6 +26,9 @@ Rails.application.routes.draw do
    match 'update_segments' => "auto_jobs#update_segments", via: [:post]
    match 'run_draws' => "auto_jobs#run_draws", via: [:post]
    match 'create_gamers' => "auto_jobs#create_gamers", via: [:post]
+   match 'update_tickets' => "auto_jobs#update_tickets", via: [:post]
+   match 'update_results' => "auto_jobs#update_results", via: [:post]
+
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

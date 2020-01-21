@@ -1,5 +1,5 @@
 class AutoJobsController < ApplicationController
-    before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :create_gamers]
+    before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :create_gamers, :update_tickets, :update_results]
     skip_before_action :verify_authenticity_token
 
     def process_broadcasts
@@ -43,6 +43,16 @@ class AutoJobsController < ApplicationController
 
     def create_gamers
       GamerWorker.perform_async
+      render body: nil
+    end
+
+    def update_tickets
+      UpdateTicketsWorker.perform_async
+      render body: nil
+    end
+
+    def update_results
+      UpdateResultsWorker.perform_async
       render body: nil
     end
 end
