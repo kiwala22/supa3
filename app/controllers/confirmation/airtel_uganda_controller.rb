@@ -1,5 +1,5 @@
 class Confirmation::AirtelUgandaController < ApplicationController
-	#before_action :authenticate_source, if: "Rails.env.production?"
+	before_action :authenticate_source, :if => proc {Rails.env.production?}
 	skip_before_action :verify_authenticity_token, raise: false
 
 	require 'logger'

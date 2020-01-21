@@ -1,5 +1,5 @@
 class Confirmation::MtnUgandaController < ApplicationController
-	#before_action :authenticate_source, if: "Rails.env.production?"
+	before_action :authenticate_source, :if => proc {Rails.env.production?}
 	skip_before_action :verify_authenticity_token, raise: false
 
 	require 'logger'
@@ -11,7 +11,6 @@ class Confirmation::MtnUgandaController < ApplicationController
 		Rails.logger.debug(request_body)
 		#check the incoming body
 		if request_body.has_key?("paymentrequest")
-			Rails.logger.debug("I am happy")
 			@transaction = Collection.new()
 			@transaction.ext_transaction_id = request_body['paymentrequest']["transactionid"]
 			@transaction.phone_number = request_body['paymentrequest']["accountholderid"][3..-8]
