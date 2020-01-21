@@ -6,8 +6,8 @@ module MobileMoney
 		require 'uri'
 		require 'net/http'
 		require 'logger'
-		logger = Logger.new('mobile_money.log')
-		logger.level = Logger::ERROR
+		@@logger ||= Logger.new("#{Rails.root}/log/mobile_money.log")
+		@@logger.level = Logger::ERROR
 
 		@@payer_phone_number = 
 		@@user_name = 
@@ -35,7 +35,7 @@ module MobileMoney
 	        end
 
 	    rescue StandardError => e
-  			logger.error(e.message)
+  			@@logger.error(e.message)
 		end
 
 		def self.check_transaction_status(ext_transaction_id)
@@ -57,7 +57,7 @@ module MobileMoney
 	        end
 
 	    rescue StandardError => e
-  			logger.error(e.message)
+  			@@logger.error(e.message)
 		end
 			
 	end	

@@ -6,8 +6,8 @@ module MobileMoney
 		require 'uri'
 		require 'net/http'
 		require 'logger'
-		logger = Logger.new('mobile_money.log')
-		logger.level = Logger::ERROR
+		@@logger ||= Logger.new("#{Rails.root}/log/mobile_money.log")
+		@@logger.level = Logger::ERROR
 
 		def self.make_disbursement(first_name, last_name, phone_number, amount, transaction_id)
 			url = "https://10.156.145.219:8017/poextvip/v1/sptransfer"
@@ -28,7 +28,7 @@ module MobileMoney
 	        end
 
 	    rescue StandardError => e
-  			logger.error(e.message)
+  			@@logger.error(e.message)
 		end
 
 		def self.transaction_status(ext_reference_id)
@@ -50,7 +50,7 @@ module MobileMoney
 	        end
 
 	    rescue StandardError => e
-  			logger.error(e.message)
+  			@@logger.error(e.message)
 		end
 
 		def self.get_account_info(phone_number)
@@ -72,7 +72,7 @@ module MobileMoney
 	        end
 
 	    rescue StandardError => e
-  			logger.error(e.message)
+  			@@logger.error(e.message)
 
 		end
 
@@ -96,7 +96,7 @@ module MobileMoney
 	        end
 
 	    rescue StandardError => e
-  			logger.error(e.message)
+  			@@logger.error(e.message)
 
 		end
 
