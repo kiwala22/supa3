@@ -21,7 +21,7 @@ module MobileMoney
 			request.body = req_xml
 			http.use_ssl = true
 			http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt"))
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt")))
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("sptransferresponse")
@@ -44,7 +44,7 @@ module MobileMoney
 			request.body = req_xml
 			http.use_ssl = true
 			http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt"))
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt")))
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("gettransactionstatusresponse")
@@ -67,7 +67,7 @@ module MobileMoney
 			request.body = req_xml
 			http.use_ssl = true
 			http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt"))
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt")))
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("getaccountholderinforesponse")
@@ -92,7 +92,7 @@ module MobileMoney
 			request.body = req_xml
 			http.use_ssl = true
 			http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt"))
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt")))
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("getbalanceresponse")
