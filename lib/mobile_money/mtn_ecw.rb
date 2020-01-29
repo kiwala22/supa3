@@ -94,9 +94,10 @@ module MobileMoney
 			request.content_type = 'text/xml'
 			request.body = req_xml
 			http.use_ssl = true
-			http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+			http.ssl_version = :TLSv1_2
+			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
-			http.ca_file = Rails.root.to_s + "config/m3_external_cert_CA.txt"
+			http.ca_file = "#{Rails.root.join("config/m3_external_cert_CA.crt")"}"
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("getbalanceresponse")
@@ -106,7 +107,7 @@ module MobileMoney
 			end
 
 		rescue StandardError => e
-			Rails.logger.debug(request_body)
+			Rails.logger.debug(e)
 			@@logger.error(e.message)
 
 		end
