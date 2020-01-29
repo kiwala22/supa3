@@ -13,7 +13,7 @@ class MtnCollectionWorker
 	@@logger.level = Logger::ERROR
 
 	def perform(transaction_id, ext_transaction_id, status)
-    	@collection =  Collection.find_by(transaction_id: transaction_id) 
+    	@collection =  Collection.find_by(transaction_id: transaction_id)
     	if @collection && @collection.status != "SUCCESSFUL"
 	    	if status == 'SUCCESSFUL'
 	    		#send request and mark status as successful
@@ -24,8 +24,11 @@ class MtnCollectionWorker
 		        request = Net::HTTP::Post.new(uri.request_uri)
 		        request.content_type = 'text/xml'
 		        request.body = req_xml
-		        http.use_ssl = true
-		        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+				  http.use_ssl = true
+	  			  http.ssl_version = :TLSv1_2
+	  			  http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+	  			  http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt")))
+	  			  http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
 		        res = http.request(request)
 		        result = Hash.from_xml(res.body)
 		        if res.code == '200'
@@ -41,14 +44,17 @@ class MtnCollectionWorker
 		        request = Net::HTTP::Post.new(uri.request_uri)
 		        request.content_type = 'text/xml'
 		        request.body = req_xml
-		        http.use_ssl = true
-		        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+				  http.use_ssl = true
+	  			  http.ssl_version = :TLSv1_2
+	  			  http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+	  			  http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt")))
+	  			  http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
 		        res = http.request(request)
 		        result = Hash.from_xml(res.body)
 		        if res.code == '200'
 		        	@collection.update_attributes(status: status)
 	    		end
-	    		
+
 	    	end
 	    end
     rescue StandardError => e
