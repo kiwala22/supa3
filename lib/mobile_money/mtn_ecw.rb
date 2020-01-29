@@ -95,8 +95,8 @@ module MobileMoney
 			request.body = req_xml
 			http.use_ssl = true
 			http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt")))
-			http.ca_file = Rails.root.join("config/mtn_ecw_CA.txt")
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
+			http.ca_file = Rails.root.to_s + "config/m3_external_cert_CA.txt"
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("getbalanceresponse")
