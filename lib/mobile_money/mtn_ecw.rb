@@ -106,6 +106,7 @@ module MobileMoney
 			end
 
 		rescue StandardError => e
+			Rails.logger.debug(request_body)
 			@@logger.error(e.message)
 
 		end
