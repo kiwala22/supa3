@@ -26,7 +26,7 @@ module MobileMoney
 			http.use_ssl = true
 			http.ssl_version = :TLSv1_2
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt")))
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
 			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
 			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
 			http.set_debug_output($stdout) # to be removed later
@@ -55,7 +55,7 @@ module MobileMoney
 		# 	http.use_ssl = true
 		# 	http.ssl_version = :TLSv1_2
 		# 	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-		# 	http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt")))
+		# 	http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
 		# 	http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
 		# 	http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
 		# 	res = http.request(request)
@@ -83,7 +83,7 @@ module MobileMoney
 			http.use_ssl = true
 			http.ssl_version = :TLSv1_2
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/mtn_ecw.crt")))
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
 			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
 			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
 			res = http.request(request)
@@ -118,7 +118,7 @@ module MobileMoney
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("getbalanceresponse")
-				return {amount: result['getbalanceresponse']['amount'], currency: result['getbalanceresponse']['currency']}
+				return {amount: result['getbalanceresponse']['balance']['amount'], currency: result['getbalanceresponse']['balance']['currency']}
 			else
 				return nil
 			end
