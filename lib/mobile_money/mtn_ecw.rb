@@ -101,8 +101,8 @@ module MobileMoney
 
 		def self.get_balance
 			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/getbalance"
-			fri = @@fri
-			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:getbalancerequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_0'><fri>#{@@fri}</fri></ns2:getbalancerequest>"
+			#fri = @@fri
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:getbalancerequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_0'><fri>FRI:#{@@username}/USER</fri></ns2:getbalancerequest>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
 			request = Net::HTTP::Post.new(uri.request_uri)
