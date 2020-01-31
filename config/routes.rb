@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :confirmation do
-    match 'mtn' => 'mtn_uganda#create', via: [:post, :get]
+    match 'mtn/payment' => 'mtn_uganda#create', via: [:post, :get]
     match 'airtel' => 'airtel_uganda#create', via: [:post, :get]
 
   end

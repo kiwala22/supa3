@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Confirmation::MtnUgandaController, type: :controller do
+RSpec.describe "mtn confirmation", type: :request do
 
 	describe "POST create" do
 		it "returns status success for well formed request and saves collection" do
