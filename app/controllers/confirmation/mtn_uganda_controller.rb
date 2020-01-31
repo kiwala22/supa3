@@ -3,7 +3,7 @@ class Confirmation::MtnUgandaController < ApplicationController
 	skip_before_action :verify_authenticity_token, raise: false
 
 	require 'logger'
-	@@logger ||= Logger.new("#{Rails.root}/log/mobile_money.log")
+	@@logger ||= Logger.new("#{Rails.root}/log/mtn_mobile_money.log")
 	@@logger.level = Logger::ERROR
 
 	def create

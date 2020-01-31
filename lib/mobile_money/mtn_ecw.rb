@@ -6,7 +6,7 @@ module MobileMoney
 		require 'uri'
 		require 'net/http'
 		require 'logger'
-		logger = Logger.new('mobile_money.log')
+		logger = Logger.new('mtn_mobile_money.log')
 		logger.level = Logger::ERROR
 
 		def self.make_disbursement(first_name, last_name, phone_number, amount, transaction_id)
