@@ -133,7 +133,7 @@ module MobileMoney
 		end
 
 		def self.get_account_info(phone_number)
-			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/getaccountholderinfo"
+			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/getaccountholderidentification"
 			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:getaccountholderinforequest xmlns:ns0='http://www.ericsson.com/em/emm/provisioning/v1_2'><identity>ID:#{phone_number}/MSISDN</identity></ns0:getaccountholderinforequest>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
