@@ -19,8 +19,8 @@ class MtnCollectionWorker
     	if @collection && @collection.status != "SUCCESSFUL"
 	    	if status == 'SUCCESSFUL'
 	    		#send request and mark status as successful
-	    		url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/paymentcompletedequest"
-				req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:paymentcompletedequest xmlns:ns2='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend'><providertransactionid>#{transaction_id}</providertransactionid><scheduledtransactionid></scheduledtransactionid><newbalance><amount>0</amount><currency>UGX</currency></newbalance><paymenttoken/><message>Thank you for playing SUPA 3</message><status>SUCCESSFUL</status></ns2:paymentcompletedequest>"
+	    		url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/paymentcompleted"
+				req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:paymentcompletedrequest xmlns:ns2='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend'><providertransactionid>#{transaction_id}</providertransactionid><scheduledtransactionid></scheduledtransactionid><newbalance><amount>0</amount><currency>UGX</currency></newbalance><paymenttoken/><message>Thank you for playing SUPA 3</message><status>SUCCESSFUL</status></ns2:paymentcompletedrequest>"
 				uri = URI.parse(url)
 		        http = Net::HTTP.new(uri.host, uri.port)
 		        request = Net::HTTP::Post.new(uri.request_uri)
@@ -41,7 +41,7 @@ class MtnCollectionWorker
 	    		end
 	        elsif status == 'FAILED'
 	        	#send request and mark status as successful
-	    		url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/paymentcompletedequest"
+	    		url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/paymentcompleted"
 				req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:paymentcompletedrequest xmlns:ns0='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend'><transactionid>#{ext_transaction_id}</transactionid><providertransactionid>#{transaction_id}</providertransactionid><message /><status>FAILED</status></ns0:paymentcompletedrequest>"
 				uri = URI.parse(url)
 		        http = Net::HTTP.new(uri.host, uri.port)

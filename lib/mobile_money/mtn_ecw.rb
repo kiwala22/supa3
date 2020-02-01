@@ -35,6 +35,7 @@ module MobileMoney
 			if result.has_key?("sptransferresponse")
 				return {ext_transaction_id: result['sptransferresponse']['transactionid'], status: res.code}
 			else
+				@@logger.error(result)
 				return nil
 			end
 
@@ -43,33 +44,92 @@ module MobileMoney
 			false
 		end
 
-		# def self.transaction_status(ext_reference_id)
-		# 	url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/gettransactionstatus"
-		# 	req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:gettransactionstatusrequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_1'><referenceid>#{ext_reference_id}</referenceid></ns2:gettransactionstatusrequest>"
-		# 	uri = URI.parse(url)
-		# 	http = Net::HTTP.new(uri.host, uri.port)
-		# 	request = Net::HTTP::Post.new(uri.request_uri)
-		# 	request.basic_auth(@@username, @@password)
-		# 	request.content_type = 'text/xml'
-		# 	request.body = req_xml
-		# 	http.use_ssl = true
-		# 	http.ssl_version = :TLSv1_2
-		# 	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-		# 	http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
-		# 	http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
-		# 	http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
-		# 	res = http.request(request)
-		# 	result = Hash.from_xml(res.body)
-		# 	if result.has_key?("gettransactionstatusresponse")
-		# 		return {amount: result['gettransactionstatusresponse']['amount'], currency: result['gettransactionstatusresponse']['currency']}
-		# 	else
-		# 		return nil
-		# 	end
-		#
-		# rescue StandardError => e
-		# 	@@logger.error(e.message)
-		# 	false
-		# end
+		def self.request_payment(phone_number, amount, transaction_id, message)
+			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/debit"
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:debitrequest xmlns:ns0='http://www.ericsson.com/em/emm/financial/v1_0'><fromfri>FRI:#{phone_number}/MSISDN</fromfri><tofri>FRI:#{@@payment}/USER</tofri><amount><amount>#{amount}</amount><currency>UGX</currency></amount><externaltransactionid>#{transaction_id}</externaltransactionid><frommessage>#{message}</frommessage><referenceid>#{message}</referenceid></ns0:debitrequest>"
+			uri = URI.parse(url)
+			http = Net::HTTP.new(uri.host, uri.port)
+			request = Net::HTTP::Post.new(uri.request_uri)
+			request.basic_auth(@@username, @@password)
+			request.content_type = 'text/xml'
+			request.body = req_xml
+			http.use_ssl = true
+			http.ssl_version = :TLSv1_2
+			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
+			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
+			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
+			res = http.request(request)
+			result = Hash.from_xml(res.body)
+			if result.has_key?("debitresponse")
+				return {amount: result['gettransactionstatusresponse']['amount'], currency: result['gettransactionstatusresponse']['currency']}
+			else
+				@@logger.error(result)
+				return nil
+			end
+
+		rescue StandardError => e
+			@@logger.error(e.message)
+			false
+		end
+
+		def self.make_refund(amount, message)
+			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/refund"
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:refundrequest xmlns:ns0='http://www.ericsson.com/em/emm/financial/v1_0'><amount><amount>#{amount}</amount><currency>UGX</currency></amount><refundernote>#{message}</refundernote><financialtransactionid>2661050</financialtransactionid><receivermessage /></ns0:refundrequest>"
+			uri = URI.parse(url)
+			http = Net::HTTP.new(uri.host, uri.port)
+			request = Net::HTTP::Post.new(uri.request_uri)
+			request.basic_auth(@@username, @@password)
+			request.content_type = 'text/xml'
+			request.body = req_xml
+			http.use_ssl = true
+			http.ssl_version = :TLSv1_2
+			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
+			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
+			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
+			res = http.request(request)
+			result = Hash.from_xml(res.body)
+			if result.has_key?("refundresponse")
+				return {amount: result['gettransactionstatusresponse']['amount'], currency: result['gettransactionstatusresponse']['currency']}
+			else
+				@@logger.error(result)
+				return nil
+			end
+
+		rescue StandardError => e
+			@@logger.error(e.message)
+			false
+		end
+
+		def self.transaction_status(ext_reference_id)
+			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/gettransactionstatus"
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:gettransactionstatusrequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_1'><referenceid>#{ext_reference_id}</referenceid></ns2:gettransactionstatusrequest>"
+			uri = URI.parse(url)
+			http = Net::HTTP.new(uri.host, uri.port)
+			request = Net::HTTP::Post.new(uri.request_uri)
+			request.basic_auth(@@username, @@password)
+			request.content_type = 'text/xml'
+			request.body = req_xml
+			http.use_ssl = true
+			http.ssl_version = :TLSv1_2
+			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
+			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
+			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
+			res = http.request(request)
+			result = Hash.from_xml(res.body)
+			if result.has_key?("gettransactionstatusresponse")
+				return {amount: result['gettransactionstatusresponse']['amount'], currency: result['gettransactionstatusresponse']['currency']}
+			else
+				@@logger.error(result)
+				return nil
+			end
+
+		rescue StandardError => e
+			@@logger.error(e.message)
+			false
+		end
 
 		def self.get_account_info(phone_number)
 			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/getaccountholderinfo"
@@ -91,6 +151,7 @@ module MobileMoney
 			if result.has_key?("getaccountholderinforesponse")
 				return {mssidn: result['getaccountholderinforesponse']['accountholderbasicinfo']['mssidn'], first_name: result['getaccountholderinforesponse']['accountholderbasicinfo']['first_name'], surname: result['getaccountholderinforesponse']['accountholderbasicinfo']['surname']}
 			else
+				@@logger.error(result)
 				return nil
 			end
 
@@ -120,6 +181,7 @@ module MobileMoney
 			if result.has_key?("getbalanceresponse")
 				return {amount: result['getbalanceresponse']['balance']['amount'], currency: result['getbalanceresponse']['balance']['currency']}
 			else
+				@@logger.error(result)
 				return nil
 			end
 
