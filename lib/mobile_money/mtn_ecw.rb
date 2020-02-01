@@ -134,7 +134,7 @@ module MobileMoney
 
 		def self.get_account_info(phone_number)
 			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/getaccountholderidentification"
-			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:getaccountholderinforequest xmlns:ns0='http://www.ericsson.com/em/emm/provisioning/v1_2'><identity>ID:#{phone_number}/MSISDN</identity></ns0:getaccountholderinforequest>"
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:getaccountholderidentificationrequest xmlns:ns2='http://www.ericsson.com/em/emm/provisioning/v1_0' version='1.0'><identity>ID:#{phone_number}/MSISDN</identity></ns2:getaccountholderidentificationrequest>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
 			request = Net::HTTP::Post.new(uri.request_uri)
@@ -148,9 +148,10 @@ module MobileMoney
 			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
 			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
 			res = http.request(request)
+			p res.body
 			result = Hash.from_xml(res.body)
 			if result.has_key?("getaccountholderinforesponse")
-				return {mssidn: result['getaccountholderinforesponse']['accountholderbasicinfo']['mssidn'], first_name: result['getaccountholderinforesponse']['accountholderbasicinfo']['first_name'], surname: result['getaccountholderinforesponse']['accountholderbasicinfo']['surname']}
+				return {mssidn: result['getaccountholderidentificationresponse']['accountholderbasicinfo']['mssidn'], first_name: result['getaccountholderidentificationresponse']['accountholderbasicinfo']['first_name'], surname: result['getaccountholderinforesponse']['accountholderbasicinfo']['surname']}
 			else
 				@@logger.error(result)
 				return nil
