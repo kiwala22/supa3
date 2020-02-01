@@ -6,6 +6,7 @@ module MobileMoney
 		require 'uri'
 		require 'net/http'
 		require 'logger'
+
 		@@logger ||= Logger.new("#{Rails.root}/log/mobile_money.log")
 		@@logger.level = Logger::ERROR
 

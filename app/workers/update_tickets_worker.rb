@@ -12,7 +12,8 @@ class UpdateTicketsWorker
     end
 
     tickets_arr.each do |t|
-      Ticket.create(phone_number: t[:phone_number], amount: t[:amount], time: t[:time])
+      @gamer = Gamer.find_or_create_by(phone_number: t[:phone_number])
+      Ticket.create(phone_number: t[:phone_number], amount: t[:amount], time: t[:time], gamer_id: @gamer.id)
     end
   end
 end

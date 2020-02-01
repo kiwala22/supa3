@@ -6,12 +6,13 @@ module MobileMoney
 		require 'uri'
 		require 'net/http'
 		require 'logger'
+
 		@@logger ||= Logger.new("#{Rails.root}/log/mobile_money.log")
 		@@logger.level = Logger::ERROR
 
-		@@payer_phone_number = 
-		@@user_name = 
-		@@password = 
+		@@payer_phone_number =
+		@@user_name =
+		@@password =
 
 
 
@@ -28,7 +29,7 @@ module MobileMoney
 	        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 	        res = http.request(request)
 	        result = Hash.from_xml(res.body)
-	        if result.has_key?("COMMAND")
+	        if result.has_key?("CzOMMAND")
 	        	return {ext_transaction_id: result['COMMAND']['TXNID'], status: result['COMMAND']['TXNSTATUS'] , message: result['COMMAND']['MESSAGE'] }
 	        else
 	        	return nil
@@ -59,7 +60,7 @@ module MobileMoney
 	    rescue StandardError => e
   			@@logger.error(e.message)
 		end
-			
-	end	
-	
+
+	end
+
 end
