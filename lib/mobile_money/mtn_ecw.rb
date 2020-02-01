@@ -30,11 +30,14 @@ module MobileMoney
 			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
 			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
 			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
-			http.set_debug_output($stdout) # to be removed later
+			#http.set_debug_output($stdout) # to be removed later
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("sptransferresponse")
 				return {ext_transaction_id: result['sptransferresponse']['transactionid'], status: res.code}
+			elsif result.has_key?("errorResponse")
+				@@logger.error(res.body)
+				return nil
 			else
 				@@logger.error(result)
 				return nil
@@ -64,6 +67,9 @@ module MobileMoney
 			result = Hash.from_xml(res.body)
 			if result.has_key?("debitresponse")
 				return {amount: result['gettransactionstatusresponse']['amount'], currency: result['gettransactionstatusresponse']['currency']}
+			elsif result.has_key?("errorResponse")
+				@@logger.error(res.body)
+				return nil
 			else
 				@@logger.error(result)
 				return nil
@@ -93,6 +99,9 @@ module MobileMoney
 			result = Hash.from_xml(res.body)
 			if result.has_key?("refundresponse")
 				return {amount: result['gettransactionstatusresponse']['amount'], currency: result['gettransactionstatusresponse']['currency']}
+			elsif result.has_key?("errorResponse")
+				@@logger.error(res.body)
+				return nil
 			else
 				@@logger.error(result)
 				return nil
@@ -122,6 +131,9 @@ module MobileMoney
 			result = Hash.from_xml(res.body)
 			if result.has_key?("gettransactionstatusresponse")
 				return {amount: result['gettransactionstatusresponse']['amount'], currency: result['gettransactionstatusresponse']['currency']}
+			elsif result.has_key?("errorResponse")
+				@@logger.error(res.body)
+				return nil
 			else
 				@@logger.error(result)
 				return nil
@@ -152,6 +164,9 @@ module MobileMoney
 			result = Hash.from_xml(res.body)
 			if result.has_key?("getaccountholderinforesponse")
 				return {mssidn: result['getaccountholderidentificationresponse']['accountholderbasicinfo']['mssidn'], first_name: result['getaccountholderidentificationresponse']['accountholderbasicinfo']['first_name'], surname: result['getaccountholderinforesponse']['accountholderbasicinfo']['surname']}
+			elsif result.has_key?("errorResponse")
+				@@logger.error(res.body)
+				return nil
 			else
 				@@logger.error(result)
 				return nil
@@ -182,6 +197,9 @@ module MobileMoney
 			result = Hash.from_xml(res.body)
 			if result.has_key?("getbalanceresponse")
 				return {amount: result['getbalanceresponse']['balance']['amount'], currency: result['getbalanceresponse']['balance']['currency']}
+			elsif result.has_key?("errorResponse")
+				@@logger.error(res.body)
+				return nil
 			else
 				@@logger.error(result)
 				return nil
