@@ -212,10 +212,6 @@ module MobileMoney
 			false
 		end
 
-		def self.included(base)
-			base.send :helper_method, :get_balance if base.respond_to? :helper_method
-		end
-
 	end
 
 end
