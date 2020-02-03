@@ -1,6 +1,6 @@
 class AirtelCollectionWorker
 	include Sidekiq::Worker
-	sidekiq_options queue: "high"
+	sidekiq_options queue: "critical"
 	sidekiq_options retry: false
 
 	require 'openssl'
@@ -13,7 +13,7 @@ class AirtelCollectionWorker
 	@@logger.level = Logger::ERROR
 
 	def perform(transaction_id)
-    	@collection =  Collection.find_by(transaction_id: transaction_id) 
+    	@collection =  Collection.find_by(transaction_id: transaction_id)
     	TicketWorker.perform_async(@collection.phone_number,@collection.message, @collection.amount)
     rescue StandardError => e
   			@@logger.error(e.message)
