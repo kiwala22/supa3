@@ -104,7 +104,27 @@
 					<td><%= disbursement.currency %></td>
 					<td><%= disbursement.amount %></td>
 					<td><%= disbursement.phone_number %></td>
-					<td><%= disbursement.status %></td>
+					<% if disbursement.status == "PENDING" %>
+						<td>
+							<div class="label label-warning">
+								<%= disbursement.status%>
+							</div>
+						</td>
+					<% end %>
+					<% if disbursement.status == "SUCCESS" %>
+						<td>
+							<div class="label label-success">
+								<%= disbursement.status%>
+							</div>
+						</td>
+					<% end %>
+					<% if disbursement.status == "FAILED" %>
+						<td>
+							<div class="label label-danger">
+								<%= disbursement.status%>
+							</div>
+						</td>
+					<% end %>
 					<td><%= disbursement.message %></td>
 					<td><%= disbursement.network %></td>
 					<td><%= disbursement.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P") %></td>
