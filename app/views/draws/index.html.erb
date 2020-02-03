@@ -61,7 +61,7 @@
 							<td><%= draw.users %></td>
               <td><%= draw.payout %></td>
               <td><%= draw.revenue %></td>
-							<% if !draw.rtp.nil? && draw.rtp > 100 %>
+							<% if draw.rtp > 100 %>
 								<td>
 									<div class="rtp_red">
 										<%= number_to_percentage(draw.rtp, precision: 2)  %>

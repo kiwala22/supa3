@@ -66,7 +66,7 @@ class DrawWorker
       payout = Ticket.where(draw_id: draw_id).sum(:win_amount)
       mtn_tickets = Ticket.where("network = ? AND draw_id = ?", mtn, draw_id).count()
       airtel_tickets = Ticket.where("network = ? AND draw_id = ?", airtel, draw_id).count()
-      rtp = (payout / revenue) * 100
+      rtp = revenue > 0 ? ((payout / revenue) * 100) : 0
       unique_users = Ticket.where(draw_id: draw_id).select('DISTINCT gamer_id').count()
       no_match = Ticket.where(draw_id: draw_id, number_matches: 0).count()
       one_match = Ticket.where(draw_id: draw_id, number_matches: 1).count()
