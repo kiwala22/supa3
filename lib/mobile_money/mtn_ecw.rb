@@ -37,7 +37,7 @@ module MobileMoney
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("sptransferresponse")
-				return {ext_transaction_id: result['sptransferresponse']['transactionid'], status: result['sptransferresponse']['status']}
+				return {ext_transaction_id: result['sptransferresponse']['transactionid'], status: res.code}
 			elsif result.has_key?("errorResponse")
 				return {status: res.code}
 			else
