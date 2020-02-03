@@ -14,7 +14,7 @@ class DisbursementWorker
 
     		when /^(25678|25677|25639)/
     			#process mtn disbursement
-    			result = MobileMoney::Ecw.make_disbursement(@gamer.first_name, @gamer.last_name, @gamer.phone_number, amount, @disbursement.transaction_id)
+    			result = MobileMoney::MtnEcw.make_disbursement(@gamer.first_name, @gamer.last_name, @gamer.phone_number, amount, @disbursement.transaction_id)
     			if result
     				if result[:status] == '200'
 						#update attributes for disbusement such as the network

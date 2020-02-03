@@ -11,8 +11,6 @@ class CollectionsController < ApplicationController
     @search_params = params[:q]
 
     @mtn_collections = MobileMoney::MtnEcw.get_collection_balance[:amount]
-    @mtn_payouts = MobileMoney::MtnEcw.get_payout_balance[:amount]
     @airtel_collections = 0
-    @airtel_payouts = 0
   end
 end

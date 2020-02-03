@@ -3,6 +3,38 @@
 	<%= "Disbursements" %>
 </h3>
 
+
+<div class="row">
+	<div class="col-sm-8 col-centered">
+		<div class="col-sm-6">
+			<div class="panel widget bg-info">
+				 <div class="row row-table">
+						<div class="col-xs-4 text-center bg-info-dark pv-lg">
+							 <em class="fa fa-dollar fa-3x"></em>
+						</div>
+						<div class="col-xs-10 pv-lg">
+							 <!-- <div class="h2 mt0"><#%= MobileMoney::MtnEcw.get_balance() %></div> -->
+							 <div class="h2 mt0"><%= @mtn_payouts %></div>
+							 <div class="text-uppercase">MTN PayOut Balance</div>
+						</div>
+				 </div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="panel widget bg-info">
+				 <div class="row row-table">
+						<div class="col-xs-4 text-center bg-info-dark pv-lg">
+							 <em class="fa fa-dollar fa-3x"></em>
+						</div>
+						<div class="col-xs-10 pv-lg">
+							 <div class="h2 mt0"><%= @airtel_payouts %></div>
+							 <div class="text-uppercase">Airtel PayOut Balance</div>
+						</div>
+				 </div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
