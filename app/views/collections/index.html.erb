@@ -107,7 +107,27 @@
 					<td><%= collection.currency %></td>
 					<td><%= collection.amount %></td>
 					<td><%= collection.phone_number %></td>
-					<td><%= collection.status %></td>
+					<% if collection.status == "PENDING" %>
+						<td>
+							<div class="label label-warning">
+								<%= collection.status%>
+							</div>
+						</td>
+					<% end %>
+					<% if collection.status == "SUCCESS" %>
+						<td>
+							<div class="label label-success">
+								<%= collection.status%>
+							</div>
+						</td>
+					<% end %>
+					<% if collection.status == "FAILED" %>
+						<td>
+							<div class="label label-danger">
+								<%= collection.status%>
+							</div>
+						</td>
+					<% end %>
 					<td><%= collection.message %></td>
 					<td><%= collection.network %></td>
 					<td><%= collection.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P") %></td>
