@@ -37,7 +37,7 @@ module MobileMoney
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("sptransferresponse")
-				return {ext_transaction_id: result['sptransferresponse']['transactionid'], status: res.code}
+				return {ext_transaction_id: result['sptransferresponse']['transactionid'], status: result['sptransferresponse']['status']}
 			elsif result.has_key?("errorResponse")
 				return {status: res.code}
 			else
@@ -149,7 +149,7 @@ module MobileMoney
 
 		def self.get_account_info(phone_number)
 			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/getaccountholderinfo"
-			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:getaccountholderinforequest xmlns:ns0='http://www.ericsson.com/em/emm/provisioning/v1_2'><identity>ID:#{phone_number}/MSISDN</identity></ns0:getaccountholderinforequest>"
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:getaccountholderinforequest xmlns:ns0='http://www.ericsson.com/em/emm/provisioning/v1_0'><identity>ID:#{phone_number}/MSISDN</identity></ns0:getaccountholderinforequest>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
 			request = Net::HTTP::Post.new(uri.request_uri)
