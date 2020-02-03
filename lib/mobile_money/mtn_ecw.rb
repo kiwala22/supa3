@@ -167,7 +167,7 @@ module MobileMoney
 			p res.body
 			result = Hash.from_xml(res.body)
 			if result.has_key?("getaccountholderinforesponse")
-				return {mssidn: result['getaccountholderinforesponse']['accountholderbasicinfo']['mssidn'], first_name: result['getaccountholderinforesponse']['accountholderbasicinfo']['first_name'], surname: result['getaccountholderinforesponse']['accountholderbasicinfo']['surname']}
+				return {mssidn: result['getaccountholderinforesponse']['accountholderbasicinfo']['mssidn'], first_name: result['getaccountholderinforesponse']['accountholderbasicinfo']['firstname'], surname: result['getaccountholderinforesponse']['accountholderbasicinfo']['surname']}
 			elsif result.has_key?("errorResponse")
 				@@logger.error(res.body)
 				return nil
