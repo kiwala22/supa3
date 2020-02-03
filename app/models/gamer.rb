@@ -18,7 +18,7 @@ class Gamer < ApplicationRecord
       case self.phone_number
       when /^(25678|25677|25639)/
          #update info
-         result = MobileMoney.Ecw.get_account_info(self.phone_number)
+         result = MobileMoney::MtnEcw.get_account_info(self.phone_number)
          if result
             self.update_attributes(first_name: result[:first_name], last_name: result[:surname])
          end
