@@ -20,7 +20,7 @@ module MobileMoney
 
 		def self.make_disbursement(first_name, last_name, phone_number, amount, transaction_id)
 			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/sptransfer"
-			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:sptransferrequest xmlns:ns0='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend'><sendingfri>FRI:#{@@username}/USER</sendingfri><receivingfri>FRI:#{phone_number}/MSISDN</receivingfri><amount><amount>#{amount}</amount><currency>UGX</currency></amount><providertransactionid>#{transaction_id}</providertransactionid><name><firstname>#{first_name}</firstname><lastname>#{last_name}</lastname></name><sendernote>Winner Payout</sendernote><receivermessage>You have received UGX #{amount} from Supa3.</receivermessage></ns0:sptransferrequest>"
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:sptransferrequest xmlns:ns0='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend'><sendingfri>FRI:#{@@username_out}/USER</sendingfri><receivingfri>FRI:#{phone_number}/MSISDN</receivingfri><amount><amount>#{amount}</amount><currency>UGX</currency></amount><providertransactionid>#{transaction_id}</providertransactionid><name><firstname>#{first_name}</firstname><lastname>#{last_name}</lastname></name><sendernote>Winner Payout</sendernote><receivermessage>You have received UGX #{amount} from Supa3.</receivermessage></ns0:sptransferrequest>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
 			request = Net::HTTP::Post.new(uri.request_uri)
