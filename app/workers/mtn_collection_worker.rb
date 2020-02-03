@@ -1,6 +1,6 @@
 class MtnCollectionWorker
 	include Sidekiq::Worker
-	sidekiq_options queue: "high"
+	sidekiq_options queue: "critical"
 	sidekiq_options retry: false
 
 	require 'openssl'
