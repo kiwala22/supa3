@@ -27,7 +27,7 @@ class Confirmation::MtnUgandaController < ApplicationController
 				#log the error
 				@@logger.error(@transaction.errors.full_messages)
 			end
-			render body: "<?xml version='1.0' encoding='UTF-8'?><ns2:paymentresponse xmlns:ns2='http://www.ericsson.com/em/emm/serviceprovider /v1_0/backend'><providertransactionid>#{@transaction.transaction_id}</providertransactionid><scheduledtransactionid></scheduledtransactionid><newbalance><amount>0</amount><currency>UGX</currency></newbalance><paymenttoken /><message /><status>PENDING</status></ns2:paymentresponse>"
+			render body: "<?xml version='1.0' encoding='UTF-8'?><ns0:paymentresponse xmlns:ns0='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend/client'><providertransactionid>#{@transaction.transaction_id}</providertransactionid><message>pending</message><status>PENDING</status></ns0:paymentresponse>"
 		end
 	rescue StandardError => e
   			@@logger.error(e.message)
