@@ -10,7 +10,8 @@ class DisbursementsController < ApplicationController
     @disbursements = @q.result(distinct: true).order("created_at DESC").page params[:page]
     @search_params = params[:q]
 
-    @mtn_payouts = MobileMoney::MtnEcw.get_payout_balance[:amount]
+    mtn_balance = MobileMoney::MtnEcw.get_payout_balance
+    @mtn_payouts = mtn_balance[:amount] unless mtn_balance == nil end
     @airtel_payouts = 0
   end
 end

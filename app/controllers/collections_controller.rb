@@ -10,7 +10,8 @@ class CollectionsController < ApplicationController
     @collections = @q.result(distinct: true).order("created_at DESC").page params[:page]
     @search_params = params[:q]
 
-    @mtn_collections = MobileMoney::MtnEcw.get_collection_balance[:amount]
+    mtn_balance = MobileMoney::MtnEcw.get_collection_balance
+    @mtn_collections = mtn_balance[:amount] unless mtn_balance == nil end
     @airtel_collections = 0
   end
 end
