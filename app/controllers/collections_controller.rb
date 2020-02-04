@@ -11,7 +11,11 @@ class CollectionsController < ApplicationController
     @search_params = params[:q]
 
     mtn_balance = MobileMoney::MtnEcw.get_collection_balance
-    @mtn_collections = mtn_balance[:amount] unless mtn_balance == nil end
+    if mtn_balance == false || mtn_balance == nil
+      @mtn_collections = "N/A"
+    else
+      @mtn_collections = mtn_balance[:amount]
+    end
     @airtel_collections = 0
   end
 end
