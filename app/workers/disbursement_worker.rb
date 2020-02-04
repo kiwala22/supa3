@@ -8,8 +8,8 @@ class DisbursementWorker
 
 	def perform(gamer_id, amount)
     	@gamer = Gamer.find(gamer_id)
-    	@disbusement = Disbursement.new(phone_number: @gamer.phone_number, currency: "UGX", amount: amount, status: "PENDING")
-    	if @gamer && @disbusement.save
+    	@disbursement = Disbursement.new(phone_number: @gamer.phone_number, currency: "UGX", amount: amount, status: "PENDING")
+    	if @gamer && @disbursement.save
     		case @gamer.phone_number
 
     		when /^(25678|25677|25639)/
