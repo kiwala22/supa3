@@ -12,9 +12,9 @@ class DisbursementsController < ApplicationController
 
     mtn_balance = MobileMoney::MtnEcw.get_payout_balance
     if mtn_balance == false || mtn_balance == nil
-      @payouts = "N/A"
+      @mtn_payouts = "N/A"
     else
-      @payouts = mtn_balance[:amount]
+      @mtn_payouts = mtn_balance[:amount]
     end
     @airtel_payouts = 0
   end

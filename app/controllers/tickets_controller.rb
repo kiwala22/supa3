@@ -5,7 +5,7 @@ class TicketsController < ApplicationController
 
    def index
       #consider only the last 10000 tickets for quick results
-      @q = Ticket.limit(10000).ransack(params[:q])
+      @q = Ticket.limit(1000).ransack(params[:q])
       @tickets = @q.result(distinct: true).order("created_at DESC").page params[:page]
       @search_params = params[:q]
    end
