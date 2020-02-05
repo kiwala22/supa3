@@ -31,7 +31,7 @@ class TicketWorker
       else
          #generate random numbers
          random_data = generate_random_data
-         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network)
+         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: gamer.first_name, last_name: gamer.last_name)
          if ticket.save
             #Send SMS with the confirmation and random number
             message_content = "Thank you for playing #{ENV['GAME']}. Input was incorrect and we have picked #{random_data} for you entered in to #{draw_time} draw. you could win #{text} Ticket: #{reference}"
@@ -59,7 +59,7 @@ class TicketWorker
       while random_numbers.length != 3
            random_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(3).map(&:to_i)
       end
-      return random_numbers.join(",")
+      return random_numbers.join("")
    end
 
    def generate_ticket_reference
