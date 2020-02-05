@@ -89,7 +89,7 @@ class DrawWorker
          win = (ticket.amount).to_i * matched_three
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
          #send confirmation message
-         message_content = "Winning Numbers for draw ##{draw_id} are #{draw_numbers.join(",")}. You matched #{number_matches} in-line numbers. You have won UGX #{win}. Thank you for playing #{ENV['GAME']}"
+         message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the Supa Jackpot"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payments
          DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
@@ -98,7 +98,7 @@ class DrawWorker
          win = (ticket.amount).to_i * matched_two
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
          #send confirmation message
-         message_content = "Winning Numbers for draw ##{draw_id} are #{draw_numbers.join(",")}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
+         message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the Supa Jackpot"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
          DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
@@ -107,7 +107,7 @@ class DrawWorker
          win = (ticket.amount).to_i * matched_two
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
          #send confirmation message
-         message_content = "Winning Numbers for draw ##{draw_id} are #{draw_numbers.join(",")}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
+         message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the Supa Jackpot"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
          DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
@@ -116,7 +116,7 @@ class DrawWorker
          win = (ticket.amount).to_i * matched_one
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
          #send confirmation message
-         message_content = "Winning Numbers for draw ##{draw_id} are #{draw_numbers.join(",")}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
+         message_content = "Hi,#{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers this time. Play Now & win in the next 10mins + increase your Jackpot Entries"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
          if win > 0
@@ -127,7 +127,7 @@ class DrawWorker
          win = (ticket.amount).to_i * 0
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
          #send confirmation message
-         message_content = "Winning Numbers for draw ##{draw_id} are #{draw_numbers.join(",")}. You matched #{number_matches} numbers.  Thank you for playing #{ENV['GAME']}"
+         message_content = "Hi,#{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers this time. Play Now & win in the next 10mins + increase your Jackpot Entries"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
 
