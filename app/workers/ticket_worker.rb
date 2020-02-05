@@ -17,7 +17,7 @@ class TicketWorker
 
       reference = generate_ticket_reference
       network = ticket_network(gamer.phone_number)
-      max_win = (max_win).to_i
+      max_win = (amount * 200).to_i
 
       if (data.split("").all?{|f| f.match(/\d/)} && data.split("").length == 3) #should also check that its below 10
          ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data.gsub(" ", ","), amount: amount.to_i, reference: reference, network: network, first_name: gamer.first_name, last_name: gamer.last_name)
