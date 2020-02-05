@@ -15,14 +15,13 @@ class TicketWorker
       #remove all spaces, leading, trailing and between spaces
       data = data.gsub(/\s+/, '')
 
-      text = "UGX.200000!"
       reference = generate_ticket_reference
       network = ticket_network(gamer.phone_number)
       if (data.split("").all?{|f| f.match(/\d/)} && data.split("").length == 3) #should also check that its below 10
          ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data.gsub(" ", ","), amount: amount.to_i, reference: reference, network: network, first_name: gamer.first_name, last_name: gamer.last_name)
          if ticket.save
             #Send SMS with confirmation
-            message_content = "Thank you for playing #{ENV['GAME']}. Your lucky numbers: #{data.gsub(" ", ",")} entered in to #{draw_time} draw. You could win #{text} Ticket ID: #{reference}"
+            message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{amount * 200}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
             if SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
               ticket.update_attributes(confirmation: true)
             end
@@ -34,7 +33,7 @@ class TicketWorker
          ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: gamer.first_name, last_name: gamer.last_name)
          if ticket.save
             #Send SMS with the confirmation and random number
-            message_content = "Thank you for playing #{ENV['GAME']}. Input was incorrect and we have picked #{random_data} for you entered in to #{draw_time} draw. you could win #{text} Ticket: #{reference}"
+            message_content = "We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{amount * 200}, Ticket ID: #{reference} Thank you for playing #{ENV['GAME']}."
             if SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
               ticket.update_attributes(confirmation: true)
             end
