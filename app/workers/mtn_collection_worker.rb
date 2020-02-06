@@ -22,7 +22,7 @@ class MtnCollectionWorker
 				if @collection.amount.to_i > 50000
 					#send request and mark status as successful
 					url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/paymentcompleted"
-					req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns4:paymentcompletedrequest xmlns:ns4='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend' xmlns:op='http://www.ericsson.com/em/emm/v1_0/common' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='1.0'><transactionid>#{@collection.ext_transaction_id}</transactionid><providertransactionid>#{@collection.transaction_id}</providertransactionid><status>FAILED</status><message>Amount Above Limit</message></ns4:paymentcompletedrequest>"
+					req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns4:paymentcompletedrequest xmlns:ns4='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend' xmlns:op='http://www.ericsson.com/em/emm/v1_0/common' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='1.0'><transactionid>#{@collection.ext_transaction_id}</transactionid><providertransactionid>#{@collection.transaction_id}</providertransactionid><status>FAILED</status></ns4:paymentcompletedrequest>"
 					uri = URI.parse(url)
 					http = Net::HTTP.new(uri.host, uri.port)
 					request = Net::HTTP::Post.new(uri.request_uri)
@@ -47,7 +47,7 @@ class MtnCollectionWorker
 				elsif @collection.amount.to_i < 1000
 					#send request and mark status as successful
 					url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/paymentcompleted"
-					req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns4:paymentcompletedrequest xmlns:ns4='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend' xmlns:op='http://www.ericsson.com/em/emm/v1_0/common' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='1.0'><transactionid>#{@collection.ext_transaction_id}</transactionid><providertransactionid>#{@collection.transaction_id}</providertransactionid><status>FAILED</status><message>Amount Below Limit</message></ns4:paymentcompletedrequest>"
+					req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns4:paymentcompletedrequest xmlns:ns4='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend' xmlns:op='http://www.ericsson.com/em/emm/v1_0/common' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='1.0'><transactionid>#{@collection.ext_transaction_id}</transactionid><providertransactionid>#{@collection.transaction_id}</providertransactionid><status>FAILED</status></ns4:paymentcompletedrequest>"
 					uri = URI.parse(url)
 					http = Net::HTTP.new(uri.host, uri.port)
 					request = Net::HTTP::Post.new(uri.request_uri)
