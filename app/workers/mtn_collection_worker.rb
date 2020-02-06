@@ -41,7 +41,7 @@ class MtnCollectionWorker
 					if res.code == '200' && result.has_key?("paymentcompletedresponse")
 						@collection.update_attributes(status: "FAILED")
 					end
-					message_content = "Your recent wager of UGX.#{amount} exceeded the maximum of UGX.50000. Please reduce the amount and try again"
+					message_content = "Your recent wager of UGX.#{@collection.amount} exceeded the maximum of UGX.50000. Please reduce the amount and try again"
 		         SendSMS.process_sms_now(receiver: @collection.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
 				elsif @collection.amount.to_i < 1000
@@ -66,7 +66,7 @@ class MtnCollectionWorker
 					if res.code == '200' && result.has_key?("paymentcompletedresponse")
 						@collection.update_attributes(status: "FAILED")
 					end
-					message_content = "Your recent wager of UGX.#{amount} is below the minimum of UGX.1000. Please increase the amount and try again"
+					message_content = "Your recent wager of UGX.#{@collection.amount} is below the minimum of UGX.1000. Please increase the amount and try again"
 		         SendSMS.process_sms_now(receiver: @collection.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
 
