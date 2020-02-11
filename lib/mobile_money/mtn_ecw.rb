@@ -19,7 +19,7 @@ module MobileMoney
 		@@password_out = 'Password2020'
 
 		def self.make_disbursement(first_name, last_name, phone_number, amount, transaction_id)
-			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/sptransfer"
+			url = "https://10.156.144.21:8006/poextvip/v1/sptransfer"
 			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:sptransferrequest xmlns:ns0='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend'><sendingfri>FRI:#{@@username_out}/USER</sendingfri><receivingfri>FRI:#{phone_number}/MSISDN</receivingfri><amount><amount>#{amount}</amount><currency>UGX</currency></amount><providertransactionid>#{transaction_id}</providertransactionid><name><firstname>#{first_name}</firstname><lastname>#{last_name}</lastname></name><sendernote>Winner Payout</sendernote><receivermessage>You have received UGX #{amount} from Supa3.</receivermessage></ns0:sptransferrequest>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
@@ -51,7 +51,7 @@ module MobileMoney
 		end
 
 		# def self.request_payment(phone_number, amount, transaction_id, message)
-		# 	url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/debit"
+		# 	url = "https://10.156.144.21:8006/poextvip/v1/debit"
 		# 	req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:debitrequest xmlns:ns0='http://www.ericsson.com/em/emm/financial/v1_0'><fromfri>FRI:#{phone_number}/MSISDN</fromfri><tofri>FRI:#{@@payment}/USER</tofri><amount><amount>#{amount}</amount><currency>UGX</currency></amount><externaltransactionid>#{transaction_id}</externaltransactionid><frommessage>#{message}</frommessage><referenceid>#{message}</referenceid></ns0:debitrequest>"
 		# 	uri = URI.parse(url)
 		# 	http = Net::HTTP.new(uri.host, uri.port)
@@ -83,7 +83,7 @@ module MobileMoney
 		# end
 		#
 		# def self.make_refund(amount, message)
-		# 	url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/refund"
+		# 	url = "https://10.156.144.21:8006/poextvip/v1/refund"
 		# 	req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:refundrequest xmlns:ns0='http://www.ericsson.com/em/emm/financial/v1_0'><amount><amount>#{amount}</amount><currency>UGX</currency></amount><refundernote>#{message}</refundernote><financialtransactionid>2661050</financialtransactionid><receivermessage /></ns0:refundrequest>"
 		# 	uri = URI.parse(url)
 		# 	http = Net::HTTP.new(uri.host, uri.port)
@@ -115,7 +115,7 @@ module MobileMoney
 		# end
 
 		def self.transaction_status(ext_reference_id)
-			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/gettransactionstatus"
+			url = "https://10.156.144.21:8006/poextvip/v1/gettransactionstatus"
 			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:gettransactionstatusrequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_1'><referenceid>#{ext_reference_id}</referenceid></ns2:gettransactionstatusrequest>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
@@ -148,7 +148,7 @@ module MobileMoney
 		end
 
 		def self.get_account_info(phone_number)
-			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/getaccountholderinfo"
+			url = "https://10.156.144.21:8006/poextvip/v1/getaccountholderinfo"
 			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:getaccountholderinforequest xmlns:ns0='http://www.ericsson.com/em/emm/provisioning/v1_0'><identity>ID:#{phone_number}/MSISDN</identity></ns0:getaccountholderinforequest>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
@@ -182,7 +182,7 @@ module MobileMoney
 		end
 
 		def self.get_collection_balance
-			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/getbalance"
+			url = "https://10.156.144.21:8006/poextvip/v1/getbalance"
 			#fri = @@fri
 			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:getbalancerequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_0'><fri>FRI:#{@@username}/USER</fri></ns2:getbalancerequest>"
 			uri = URI.parse(url)
@@ -216,7 +216,7 @@ module MobileMoney
 		end
 
 		def self.get_payout_balance
-			url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/getbalance"
+			url = "https://10.156.144.21:8006/poextvip/v1/getbalance"
 			#fri = @@fri
 			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:getbalancerequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_0'><fri>FRI:#{@@username_out}/USER</fri></ns2:getbalancerequest>"
 			uri = URI.parse(url)

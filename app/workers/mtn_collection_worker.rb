@@ -21,7 +21,7 @@ class MtnCollectionWorker
 			if status == 'SUCCESS'
 				if @collection.amount.to_i > 50000
 					#send request and mark status as successful
-					url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/paymentcompleted"
+					url = "https://10.156.144.21:8006/poextvip/v1/paymentcompleted"
 					req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns4:paymentcompletedrequest xmlns:ns4='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend' xmlns:op='http://www.ericsson.com/em/emm/v1_0/common' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='1.0'><transactionid>#{@collection.ext_transaction_id}</transactionid><providertransactionid>#{@collection.transaction_id}</providertransactionid><status>FAILED</status></ns4:paymentcompletedrequest>"
 					uri = URI.parse(url)
 					http = Net::HTTP.new(uri.host, uri.port)
@@ -46,7 +46,7 @@ class MtnCollectionWorker
 
 				elsif @collection.amount.to_i < 1000
 					#send request and mark status as successful
-					url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/paymentcompleted"
+					url = "https://10.156.144.21:8006/poextvip/v1/paymentcompleted"
 					req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns4:paymentcompletedrequest xmlns:ns4='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend' xmlns:op='http://www.ericsson.com/em/emm/v1_0/common' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='1.0'><transactionid>#{@collection.ext_transaction_id}</transactionid><providertransactionid>#{@collection.transaction_id}</providertransactionid><status>FAILED</status></ns4:paymentcompletedrequest>"
 					uri = URI.parse(url)
 					http = Net::HTTP.new(uri.host, uri.port)
@@ -72,7 +72,7 @@ class MtnCollectionWorker
 
 				elsif @collection.amount.to_i.between?(1000,50000)
 					#send request and mark status as successful
-					url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/paymentcompleted"
+					url = "https://10.156.144.21:8006/poextvip/v1/paymentcompleted"
 					req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns4:paymentcompletedrequest xmlns:ns4='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend' xmlns:op='http://www.ericsson.com/em/emm/v1_0/common' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='1.0'><transactionid>#{@collection.ext_transaction_id}</transactionid><providertransactionid>#{@collection.transaction_id}</providertransactionid><status>COMPLETED</status></ns4:paymentcompletedrequest>"
 					uri = URI.parse(url)
 					http = Net::HTTP.new(uri.host, uri.port)
@@ -97,7 +97,7 @@ class MtnCollectionWorker
 
 			elsif status == 'FAILED'
 				#send request and mark status as successful
-				url = "https://f5-test.mtn.co.ug:8017/poextvip/v1/paymentcompleted"
+				url = "https://10.156.144.21:8006/poextvip/v1/paymentcompleted"
 				req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns4:paymentcompletedrequest xmlns:ns4='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend' xmlns:op='http://www.ericsson.com/em/emm/v1_0/common' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='1.0'><transactionid>#{@collection.ext_transaction_id}</transactionid><providertransactionid>#{@collection.transaction_id}</providertransactionid><status>FAILED</status></ns4:paymentcompletedrequest>"
 				uri = URI.parse(url)
 				http = Net::HTTP.new(uri.host, uri.port)
