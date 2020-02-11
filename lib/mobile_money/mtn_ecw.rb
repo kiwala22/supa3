@@ -30,10 +30,10 @@ module MobileMoney
 			http.use_ssl = true
 			http.ssl_version = :TLSv1_2
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
-			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
+			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
 			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
-			http.set_debug_output($stdout)
+			#http.set_debug_output($stdout)
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("sptransferresponse")
@@ -62,8 +62,8 @@ module MobileMoney
 		# 	http.use_ssl = true
 		# 	http.ssl_version = :TLSv1_2
 		# 	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-		# 	http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
-		# 	http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
+		# 	http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
+		# 	http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
 		# 	http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
 		# 	res = http.request(request)
 		# 	result = Hash.from_xml(res.body)
@@ -94,8 +94,8 @@ module MobileMoney
 		# 	http.use_ssl = true
 		# 	http.ssl_version = :TLSv1_2
 		# 	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-		# 	http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
-		# 	http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
+		# 	http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
+		# 	http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
 		# 	http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
 		# 	res = http.request(request)
 		# 	result = Hash.from_xml(res.body)
@@ -126,10 +126,10 @@ module MobileMoney
 			http.use_ssl = true
 			http.ssl_version = :TLSv1_2
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
-			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
+			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
 			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
-			http.set_debug_output($stdout)
+			#http.set_debug_output($stdout)
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("gettransactionstatusresponse")
@@ -159,10 +159,10 @@ module MobileMoney
 			http.use_ssl = true
 			http.ssl_version = :TLSv1_2
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
-			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
+			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
 			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
-			http.set_debug_output($stdout)
+			#http.set_debug_output($stdout)
 			res = http.request(request)
 			p res.body
 			result = Hash.from_xml(res.body)
@@ -194,10 +194,10 @@ module MobileMoney
 			http.use_ssl = true
 			http.ssl_version = :TLSv1_2
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
-			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
+			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
 			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
-			http.set_debug_output($stdout)
+			#http.set_debug_output($stdout)
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("getbalanceresponse")
@@ -228,10 +228,10 @@ module MobileMoney
 			http.use_ssl = true
 			http.ssl_version = :TLSv1_2
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/134_209_22_183.crt")))
-			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/134_209_22_183.key")))
+			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
+			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
 			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
-			http.set_debug_output($stdout)
+			#http.set_debug_output($stdout)
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("getbalanceresponse")
