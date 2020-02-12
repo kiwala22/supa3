@@ -32,7 +32,7 @@ module MobileMoney
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
 			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
-			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
+			http.ca_file = Rails.root.join("config/prod/m3_EXTERNAL_ca_UG.crt").to_s
 			#http.set_debug_output($stdout)
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
@@ -64,7 +64,7 @@ module MobileMoney
 		# 	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 		# 	http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
 		# 	http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
-		# 	http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
+		# 	http.ca_file = Rails.root.join("config/prod/m3_EXTERNAL_ca_UG.crt").to_s
 		# 	res = http.request(request)
 		# 	result = Hash.from_xml(res.body)
 		# 	if result.has_key?("debitresponse")
@@ -96,7 +96,7 @@ module MobileMoney
 		# 	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 		# 	http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
 		# 	http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
-		# 	http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
+		# 	http.ca_file = Rails.root.join("config/prod/m3_EXTERNAL_ca_UG.crt").to_s
 		# 	res = http.request(request)
 		# 	result = Hash.from_xml(res.body)
 		# 	if result.has_key?("refundresponse")
@@ -128,7 +128,7 @@ module MobileMoney
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
 			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
-			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
+			http.ca_file = Rails.root.join("config/prod/m3_EXTERNAL_ca_UG.crt").to_s
 			#http.set_debug_output($stdout)
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
@@ -161,7 +161,7 @@ module MobileMoney
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
 			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
-			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
+			http.ca_file = Rails.root.join("config/prod/m3_EXTERNAL_ca_UG.crt").to_s
 			#http.set_debug_output($stdout)
 			res = http.request(request)
 			p res.body
@@ -196,7 +196,7 @@ module MobileMoney
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
 			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
-			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
+			http.ca_file = Rails.root.join("config/prod/m3_EXTERNAL_ca_UG.crt").to_s
 			#http.set_debug_output($stdout)
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
@@ -230,7 +230,7 @@ module MobileMoney
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
 			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
-			http.ca_file = Rails.root.join("config/m3_external_cert_CA.crt").to_s
+			http.ca_file = Rails.root.join("config/prod/m3_EXTERNAL_ca_UG.crt").to_s
 			#http.set_debug_output($stdout)
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
