@@ -12,11 +12,11 @@ module MobileMoney
 
 		@@fri = "fri:12345@supa3.sp7/SP"
 
-		@@username = "SUPA3.sp7" #test credentials
-		@@password = "ABc123456!" #test credentials
+		@@username = ENV['COLLECTION_USERNAME']
+		@@password = ENV['COLLECTION_PASSWORD']
 
-		@@username_out = 'supa2pout.sp'
-		@@password_out = 'Password2020'
+		@@username_out = ENV['DISBURSEMENT_USERNAME']
+		@@password_out = ENV['DISBURSEMENT_PASSWORD']
 
 		def self.make_disbursement(first_name, last_name, phone_number, amount, transaction_id)
 			url = "https://f5.mtn.co.ug:8006/poextvip/v1/sptransfer"

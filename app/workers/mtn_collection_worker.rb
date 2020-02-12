@@ -14,8 +14,8 @@ class MtnCollectionWorker
 	@@logger.level = Logger::ERROR
 
 	def perform(transaction_id, ext_transaction_id, status)
-		@username = "SUPA3.sp7" #test credentials
-		@password = "ABc123456!" #test credentials
+		@username = ENV['COLLECTION_USERNAME']
+		@password = ENV['COLLECTION_PASSWORD']
 		@collection =  Collection.find_by(transaction_id: transaction_id)
 		if @collection && @collection.status != "SUCCESSFUL"
 			if status == 'SUCCESS'
