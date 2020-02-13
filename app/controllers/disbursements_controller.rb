@@ -16,6 +16,11 @@ class DisbursementsController < ApplicationController
     else
       @mtn_payouts = mtn_balance[:amount]
     end
-    @airtel_payouts = 0
+    airtel_balance = MobileMoney::AirtelUganda.get_payout_balance
+    if airtel_balance == false || airtel_balance == nil
+      @airtel_payouts = "N/A"
+    else
+      @airtel_payouts = airtel_balance[:amount]
+    end
   end
 end

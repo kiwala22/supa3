@@ -16,6 +16,11 @@ class CollectionsController < ApplicationController
     else
       @mtn_collections = mtn_balance[:amount]
     end
-    @airtel_collections = 0
+    airtel_balance = MobileMoney::AirtelUganda.get_collection_balance
+    if airtel_balance == false || airtel_balance == nil
+      @airtel_collections = "N/A"
+    else
+      @airtel_collections = airtel_balance[:amount]
+    end
   end
 end
