@@ -87,7 +87,7 @@ module MobileMoney
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("COMMAND") && result['COMMAND'].has_key?("BALANCE") && res.code == "200"
-				return {amount: result['COMMAND']['BALANCE'], currency: "UGX", status: res.code }
+				return {amount: result['COMMAND']['BALANCE'], currency: "UGX", status: result['COMMAND']['TXNSTATUS'] }
 			else
 				@@logger.error(result)
 				return nil
@@ -111,7 +111,7 @@ module MobileMoney
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("COMMAND") && result['COMMAND'].has_key?("BALANCE") && res.code == "200"
-				return {amount: result['COMMAND']['BALANCE'], currency: "UGX", status: res.code }
+				return {amount: result['COMMAND']['BALANCE'], currency: "UGX", status: result['COMMAND']['TXNSTATUS'] }
 			else
 				@@logger.error(result)
 				return nil
