@@ -26,7 +26,7 @@ module MobileMoney
 
 		def self.make_disbursement(phone_number, amount, transaction_id)
 			phone_number = phone_number[3..-1]
-			url = "http://172.27.77.135:9192/services/MFS?LOGIN=#{@@payout_username}&PASSWORD=#{@@ppayout_assword}&REQUEST_GATEWAY_CODE=WEB&REQUEST_GATEWAY_TYPE=WEB&requestText="
+			url = "http://172.27.77.135:9192/services/MFS?LOGIN=#{@@payout_username}&PASSWORD=#{@@payout_password}&REQUEST_GATEWAY_CODE=WEB&REQUEST_GATEWAY_TYPE=WEB&requestText="
 			req_xml = "<?xml version='1.0' encoding='UTF-8'?><COMMAND><SNDINSTRUMENT>12</SNDINSTRUMENT><MSISDN>#{@@payout_msisdn}</MSISDN><PAYID>12</PAYID><SNDPROVIDER>101</SNDPROVIDER><language>en</language><RCVINSTRUMENT>12</RCVINSTRUMENT><LANGUAGE2>1</LANGUAGE2><PAYID2>12</PAYID2><LANGUAGE1>1</LANGUAGE1><PAYID1>12</PAYID1><PROVIDER1>101</PROVIDER1><PIN>#{@@payout_pin}</PIN><PROVIDER2>101</PROVIDER2><RCVPROVIDER>101</RCVPROVIDER><IS_MERCHANT_CASHIN>Y</IS_MERCHANT_CASHIN><MERCHANT_TXN_ID>#{transaction_id}</MERCHANT_TXN_ID><PROVIDER>101</PROVIDER><BPROVIDER>101</BPROVIDER><PIN_CHECK>FALSE</PIN_CHECK><TYPE>RCIREQ</TYPE><AMOUNT>#{amount}</AMOUNT><MSISDN2>#{phone_number}</MSISDN2><interfaceId>SUPA3</interfaceId><USERNAME>#{@@payout_username}</USERNAME><PASSWORD>#{@@payout_password}</PASSWORD></COMMAND>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)

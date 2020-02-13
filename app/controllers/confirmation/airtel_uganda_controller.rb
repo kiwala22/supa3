@@ -21,7 +21,7 @@ class Confirmation::AirtelUgandaController < ApplicationController
 		@transaction.network = "Airtel Uganda"
 		if @transaction.save
 			## perhaps check that transaction is not a duplicate # done with uniqueness on ext_transaction_id
-			AirtelCollectionWorker.perform_async(@transaction_id)
+			AirtelCollectionWorker.perform_async(@transaction.transaction_id)
 			render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><PARTTXNID>#{@transaction.transaction_id}</PARTTXNID><TYPE>STANPAY</TYPE><MOBTXNID>#{@transaction.ext_transaction_id}</MOBTXNID><TXNSTATUS>200</TXNSTATUS><MESSAGE>Transaction is successful</MESSAGE></COMMAND>"
 		else
 			render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><PARTTXNID>#{@transaction.transaction_id}</PARTTXNID><TYPE>STANPAY</TYPE><MOBTXNID>#{@transaction.ext_transaction_id}</MOBTXNID><TXNSTATUS>400</TXNSTATUS><MESSAGE>Transaction has failed</MESSAGE></COMMAND>"
