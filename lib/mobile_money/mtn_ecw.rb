@@ -148,8 +148,8 @@ module MobileMoney
 		end
 
 		def self.get_account_info(phone_number)
-			url = "https://f5.mtn.co.ug:8006/poextvip/v1/getaccountholderinfo"
-			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:getaccountholderinforequest xmlns:ns0='http://www.ericsson.com/em/emm/provisioning/v1_0'><identity>ID:#{phone_number}/MSISDN</identity></ns0:getaccountholderinforequest>"
+			url = "https://f5.mtn.co.ug:8006/poextvip/v1_1/getaccountholderinfo"
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns0:getaccountholderinforequest xmlns:ns0='http://www.ericsson.com/em/emm/provisioning/v1_1'><identity>ID:#{phone_number}/MSISDN</identity></ns0:getaccountholderinforequest>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
 			request = Net::HTTP::Post.new(uri.request_uri)
@@ -167,7 +167,7 @@ module MobileMoney
 			p res.body
 			result = Hash.from_xml(res.body)
 			if result.has_key?("getaccountholderinforesponse")
-				return {mssidn: result['getaccountholderinforesponse']['accountholderbasicinfo']['mssidn'], first_name: result['getaccountholderinforesponse']['accountholderbasicinfo']['firstname'], surname: result['getaccountholderinforesponse']['accountholderbasicinfo']['surname']}
+				return {msisdn: result['getaccountholderinforesponse']['accountholderbasicinfo']['msisdn'], first_name: result['getaccountholderinforesponse']['accountholderbasicinfo']['firstname'], surname: result['getaccountholderinforesponse']['accountholderbasicinfo']['surname']}
 			elsif result.has_key?("errorResponse")
 				@@logger.error(res.body)
 				return nil
