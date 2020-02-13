@@ -32,7 +32,7 @@ class TicketWorker
       else
          #generate random numbers
          random_data = generate_random_data
-         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: gamer.first_name, last_name: gamer.last_name)
+         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network)
          if ticket.save
             #Send SMS with the confirmation and random number
             message_content = "We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}, Ticket ID: #{reference} Thank you for playing #{ENV['GAME']}."
