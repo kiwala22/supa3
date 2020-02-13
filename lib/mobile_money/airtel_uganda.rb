@@ -16,8 +16,11 @@ module MobileMoney
 		@@payout_username = 'test'
 		@@payout_password = 'test@supa'
 
+		@@collection_username = 'test'
+		@@collection_password = 'test@supa'
+
 		@@payout_pin = '1111'
-		@@collection_pin =  '1111'
+		@@collection_pin = '1111'
 
 
 
