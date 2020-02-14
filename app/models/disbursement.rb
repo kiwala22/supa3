@@ -2,6 +2,11 @@ class Disbursement < ApplicationRecord
 	audited
 	validates :transaction_id, uniqueness: true
 	before_create :generate_references, on: [ :create ]
+	require 'csv'
+
+	def self.send_daily_report
+
+	end
 
 	private
 	def generate_references

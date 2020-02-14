@@ -1,0 +1,2 @@
+class DisbursementsMailer < ApplicationMailer
+end

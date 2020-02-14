@@ -1,0 +1,2 @@
+class CollectionsMailer < ApplicationMailer
+end
