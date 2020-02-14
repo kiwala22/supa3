@@ -40,7 +40,7 @@
 		   <div class="panel-body">
 				 <%= search_form_for @q, url: collections_path, html: { method: :get } do |f| %>
 		      <fieldset>
-		        <div class="col-sm-4">
+		        <div class="col-sm-6">
 		          <div class="form-group">
 		              <%= f.label :phone_number, "Phone Number", class:"col-lg-4 control-label" %>
 		              <div class="col-lg-8">
@@ -48,7 +48,7 @@
 		              </div>
 		          </div>
 		        </div>
-		        <div class="col-sm-4">
+		        <div class="col-sm-6">
 		          <div class="form-group">
 		              <%= f.label :ext_transaction_id, "External Transaction ID", class:"col-lg-4 control-label" %>
 		              <div class="col-lg-8">
@@ -56,15 +56,25 @@
 		              </div>
 		          </div>
 		        </div>
-		        <div class="col-sm-4">
-		          <div class="form-group">
-		              <%= f.label :transaction_id, "Transaction ID", class:"col-lg-4 control-label" %>
-		              <div class="col-lg-8">
-		              <%= f.search_field :transaction_id_eq, { include_blank: true, :class=>"form-control", id: "transaction_id"}%>
-		              </div>
-		          </div>
-		        </div>
 		      </fieldset>
+					<fieldset>
+							<div class="col-sm-6">
+							 <div class="form-group">
+									 <%= f.label :transaction_id, "Transaction ID", class:"col-lg-4 control-label" %>
+									 <div class="col-lg-8">
+									 <%= f.search_field :transaction_id_eq, { include_blank: true, :class=>"form-control", id: "transaction_id"}%>
+									 </div>
+							 </div>
+						 </div>
+						 <div class="col-md-6">
+								<div class="form-group">
+									 <%= f.label :status, "Status", class:"col-lg-4 control-label" %>
+									 <div class="col-lg-8">
+									 <%= f.select :status_eq, ["PENDING", 'SUCCESS', "FAILED"],{ include_blank: true } , {:class=>"form-control", id: "status"}%>
+									 </div>
+								</div>
+						 </div>
+					</fieldset>
 		      <div class="pannel-footer">
 		         <div class="clearfix">
 		            <div class="pull-right">

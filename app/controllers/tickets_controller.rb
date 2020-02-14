@@ -47,7 +47,7 @@ class TicketsController < ApplicationController
    #
    # end
    private
-   def sent_sms_params
+   def ticket_params
        params.permit(:search_params, :gamer, :amount)
    end
 end
