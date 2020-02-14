@@ -12,7 +12,7 @@ Rails.application.routes.draw do
    resources :disbursements, only: [:index]
    resources :draw_offers
    resources :gamers, only: [:index]
-   resources :tickets, only: [:index]
+   resources :tickets, only: [:index, :update]
    resources :draws, only: [:index]
    match 'jackpot' => "jackpot#index", via: [:get, :post]
    match 'jackpot_draws' => "jackpot#draws", via: [:get, :post]
