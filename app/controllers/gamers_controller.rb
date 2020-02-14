@@ -4,7 +4,7 @@ class GamersController < ApplicationController
 
    def index
       @q = Gamer.all.ransack(params[:q])
-      @gamers = @q.result(distinct: true).order("created_at DESC").page params[:page]
+      @gamers = @q.result.order("created_at DESC").page params[:page]
       @search_params = params[:q]
    end
 

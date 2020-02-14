@@ -92,7 +92,8 @@ class DrawWorker
          message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the Supa Jackpot"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payments
-         DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
+         win_after_taxes = (win.to_i * 0.85)
+         DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
       elsif number_matches == 3 && draw_numbers != ticket_numbers
          win = (ticket.amount).to_i * matched_two
