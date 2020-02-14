@@ -1,4 +1,5 @@
 class Collection < ApplicationRecord
+	audited
 	validates :transaction_id, uniqueness: true
 	validates :ext_transaction_id, uniqueness: true
 	validates_length_of :phone_number, :is => 12, :message => "number should be 12 digits long."

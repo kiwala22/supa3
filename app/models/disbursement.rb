@@ -1,4 +1,5 @@
 class Disbursement < ApplicationRecord
+	audited
 	validates :transaction_id, uniqueness: true
 	before_create :generate_references, on: [ :create ]
 
@@ -9,6 +10,6 @@ class Disbursement < ApplicationRecord
 			break self.transaction_id = transaction_id unless Disbursement.where(transaction_id: transaction_id).exists?
 
 		end
-		
+
 	end
 end

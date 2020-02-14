@@ -94,3 +94,4 @@ gem 'newrelic_rpm'
 gem 'jwt'
 gem 'scout_apm'
 gem 'openssl'
+gem "audited", "~> 4.9"

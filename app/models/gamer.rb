@@ -1,5 +1,5 @@
 class Gamer < ApplicationRecord
-
+   audited
    require "send_sms"
    require "mobile_money/mtn_ecw"
 
