@@ -73,9 +73,10 @@ class DrawWorker
       two_match = Ticket.where(draw_id: draw_id, number_matches: 2).count()
       three_match = Ticket.where(draw_id: draw_id, number_matches: 3).count()
       new_users = Gamer.where("created_at <= ? AND created_at >= ?", end_time, start_time).count()
+      winning_number = draw_numbers.join("")
 
       @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match, ticket_count: ticket_count, mtn_tickets: mtn_tickets,
-      airtel_tickets: airtel_tickets, users: unique_users, rtp: rtp)
+      airtel_tickets: airtel_tickets, users: unique_users, rtp: rtp, winning_number: winning_number)
 
    end
 
@@ -84,10 +85,11 @@ class DrawWorker
       #check number of matches
       ticket_numbers = ticket.data.split("").map(&:to_i)
       number_matches = (draw_numbers & ticket_numbers).count()
+      winning_number = draw_numbers.join("")
 
       if number_matches == 3 && draw_numbers == ticket_numbers
          win = (ticket.amount).to_i * matched_three
-         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
+         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the Supa Jackpot"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
@@ -96,7 +98,7 @@ class DrawWorker
 
       elsif number_matches == 3 && draw_numbers != ticket_numbers
          win = (ticket.amount).to_i * matched_two
-         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
+         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the Supa Jackpot"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
@@ -105,7 +107,7 @@ class DrawWorker
 
       elsif number_matches == 2
          win = (ticket.amount).to_i * matched_two
-         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
+         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the Supa Jackpot"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
@@ -114,7 +116,7 @@ class DrawWorker
 
       elsif number_matches == 1
          win = (ticket.amount).to_i * matched_one
-         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
+         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "Hi,#{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers this time. Play Now & win in the next 10mins + increase your Jackpot Entries"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
@@ -125,7 +127,7 @@ class DrawWorker
 
       else
          win = (ticket.amount).to_i * 0
-         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false)
+         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "Hi,#{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers this time. Play Now & win in the next 10mins + increase your Jackpot Entries"
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_13_102024) do
+ActiveRecord::Schema.define(version: 2020_02_14_134542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 2020_01_13_102024) do
     t.integer "users"
     t.integer "new_users"
     t.integer "undefined_tickets"
+    t.string "winning_number"
   end
 
   create_table "gamers", force: :cascade do |t|
@@ -201,6 +202,7 @@ ActiveRecord::Schema.define(version: 2020_01_13_102024) do
     t.boolean "confirmation", default: false
     t.string "first_name"
     t.string "last_name"
+    t.string "winning_number"
     t.index ["amount"], name: "index_tickets_on_amount"
     t.index ["data"], name: "index_tickets_on_data"
     t.index ["draw_id"], name: "index_tickets_on_draw_id"
