@@ -10,6 +10,17 @@ class TicketsController < ApplicationController
       @search_params = params[:q]
    end
 
+   def update
+     #method to recall disbursement that did not initially process
+     gamer_id = params[:gamer]
+     ticket_id = params[:id]
+     win_amount = (params[:amount]).to_i
+     #after receiving the parameters, we recall the disbursement worker to create new disbursements
+     DisbursementWorker.perform_async(gamer_id, win_amount, ticket_id)
+     flash[:notice] = "Reprocessing Disbursement..."
+     redirect_to :action => :index
+   end
+
    # def new
    # end
    #
@@ -35,8 +46,8 @@ class TicketsController < ApplicationController
    # def import
    #
    # end
-   # private
-   # def sent_sms_params
-   #     params.permit(:search_params)
-   # end
+   private
+   def ticket_params
+       params.permit(:search_params, :gamer, :amount)
+   end
 end

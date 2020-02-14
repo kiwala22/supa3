@@ -3,7 +3,6 @@
 	<%= "Tickets" %>
 <small><%= "All Tickets" %></small>
 </h3>
-</h3>
 
 <div class="panel panel-default">
    <%= search_form_for @q, url: tickets_path, html: { method: :get } do |f| %>
@@ -31,7 +30,7 @@
           <div class="form-group">
               <%= f.label :created_at_gteq, "Created After", class:"col-lg-2 control-label" %>
               <div class="col-sm-6">
-                <%= f.search_field :created_at_gteq,  id: "broadcast_schedule", class: "form-control" %>
+                <%= f.search_field :created_at_gteq, {include_blank: true, id: "broadcast_schedule", class: "form-control"} %>
               </div>
           </div>
         </div>
@@ -39,7 +38,25 @@
           <div class="form-group">
               <%= f.label :created_at_lteq, "Created Before", class:"col-lg-2 control-label" %>
               <div class="col-sm-6">
-                <%= f.search_field :created_at_lteq,  id: "broadcast_schedule_cp", class: "form-control" %>
+                <%= f.search_field :created_at_lteq, {include_blank: true, id: "broadcast_schedule_cp", class: "form-control"} %>
+              </div>
+          </div>
+        </div>
+      </fieldset>
+			<fieldset>
+        <div class="col-md-6">
+          <div class="form-group">
+              <%= f.label :win_amount_gt, "Winner", class:"col-lg-2 control-label" %>
+              <div class="col-sm-6">
+								<%= f.select :win_amount_gt, options_for_select([["True", "0"]]), {include_blank: true}, {:class=>"form-control", id: ""}%>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+              <%= f.label :paid_eq, "Paid", class:"col-lg-2 control-label" %>
+              <div class="col-sm-6">
+                <%= f.select :paid_eq, options_for_select([["True", true], ["False", false]]), {include_blank: true}, {:class=>"form-control", id: ""} %>
               </div>
           </div>
         </div>
@@ -56,7 +73,7 @@
 </div>
 
 <div>
-  <table class="table table-striped table-bordered table-hoverlarge-12 columns large-centered">
+	<table class="table table-striped table-bordered table-hoverlarge-12 columns large-centered">
       <thead>
         <tr>
           <th>No</th>
@@ -65,12 +82,14 @@
           <th>Phone Number</th>
           <th>Ticket ID</th>
           <th>Selection</th>
+					<th>Winning Number</th>
           <th>Amount Played</th>
           <th>Matched</th>
           <th>Amount Won</th>
           <th>Paid</th>
           <th><%= sort_link(@q, :created_at, 'Time') %></th>
 					<th>Confirmation</th>
+					<th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -82,6 +101,7 @@
               <td><%= ticket.phone_number %></td>
               <td><%= ticket.reference %></td>
               <td><%= ticket.data %></td>
+							<td><%= ticket.winning_number %></td>
               <td><%= ticket.amount %></td>
               <td><%= ticket.number_matches %></td>
               <td><%= ticket.win_amount %></td>
@@ -114,6 +134,11 @@
 									</div>
 								</td>
 							<% end %>
+							<td>
+								 <% if ticket.win_amount > 0 && ticket.paid == false %>
+										<%= link_to "Pay", ticket_path(id: ticket.id, amount: ticket.win_amount, gamer: ticket.gamer_id), html_options = {class: "btn btn-info", method: :put, id: "pay"} %>
+								 <% end %>
+							</td>
             </tr>
         <% end %>
       </tbody>

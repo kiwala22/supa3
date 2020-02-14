@@ -8,6 +8,7 @@ class DrawOffersController < ApplicationController
   end
 
   def new
+    authorize! :new, :draw_offer, :message => "You are not allowed to view this page..."
     @draw_offer = DrawOffer.new()
   end
 
