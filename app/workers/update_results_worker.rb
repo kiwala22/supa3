@@ -4,7 +4,7 @@ class UpdateResultsWorker
   sidekiq_options retry: false
 
   def perform
-    results = CSV.read("/tmp/results_supa3.csv")
+    results = CSV.read("/tmp/results_supa3_update.csv")
 
     results_arr = []
     results.each do |result|

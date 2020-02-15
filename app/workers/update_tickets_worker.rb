@@ -4,7 +4,7 @@ class UpdateTicketsWorker
   sidekiq_options retry: false
 
   def perform
-    tickets = CSV.read("/tmp/tickets_supa3.csv")
+    tickets = CSV.read("/tmp/tickets_supa3_update.csv")
 
     tickets_arr = []
     tickets.each do |ticket|

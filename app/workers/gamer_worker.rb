@@ -4,7 +4,7 @@ class GamerWorker
   sidekiq_options retry: false
 
   def perform
-    gamers = CSV.read("/tmp/gamers_supa3.csv")
+    gamers = CSV.read("/tmp/gamers_supa3_update.csv")
 
     #gamers.shift
 
