@@ -60,4 +60,10 @@ class AutoJobsController < ApplicationController
       UpdateGamerInfoWorker.perform_async
       render body: nil
     end
+
+    def generate_daily_reports
+      Collection.send_daily_report
+      Disbursement.send_daily_report
+      render body: nil
+    end
 end

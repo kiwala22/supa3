@@ -6,15 +6,17 @@ class Disbursement < ApplicationRecord
 
 	def self.send_daily_report
 		disbursements = Disbursement.where("created_at <= ? AND created_at >= ?", Date.yesterday.end_of_day, Date.yesterday.beginning_of_day)
-		disbursement_csv = CSV.generate do |csv|
+		file_name =  "#{Rails.root}/public/reports/disbursements-#{Date.yesterday.strftime('%d-%m-%Y')}.csv"
+		pp file_name
+		CSV.open(file_name, 'w') do |csv|
 			csv << ["Id","Ext Transaction","Transaction","Currency","Amount","Phone Number","Status","Created At","Updated At","Network"]
 			disbursements.each do |disbursement|
 				csv << [ disbursement.id, disbursement.ext_transaction_id, disbursement.transaction_id, disbursement.currency, disbursement.amount, disbursement.phone_number, disbursement.status, disbursement.created_at, disbursement.updated_at, disbursement.network  ]
 			end
 		end
 
-		#call the mailer for deivery
-		DisbursementsMailer.daily_report(disbursement_csv).deliver_now
+		Report.create(file_name: file_name.split("/").last , file_path: file_name)
+
 	end
 
 	private

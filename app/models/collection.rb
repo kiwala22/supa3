@@ -10,15 +10,16 @@ class Collection < ApplicationRecord
 
 	def self.send_daily_report
 		collections = Collection.where("created_at <= ? AND created_at >= ?", Date.yesterday.end_of_day, Date.yesterday.beginning_of_day)
-		collection_csv = CSV.generate do |csv|
+		file_name =  "#{Rails.root}/public/reports/collections-#{Date.yesterday.strftime('%d-%m-%Y')}.csv"
+		pp file_name
+		CSV.open(file_name, 'w') do |csv|
 			csv << ["Id","Ext Transaction","Transaction","Currency","Amount","Phone Number","Status","Created At","Updated At","Network"]
 			collections.each do |collection|
 				csv << [ collection.id, collection.ext_transaction_id, collection.transaction_id, collection.currency, collection.amount, collection.phone_number, collection.status, collection.created_at, collection.updated_at, collection.network  ]
 			end
 		end
 
-		#call the mailer for deivery
-		CollectionsMailer.daily_report(collection_csv).deliver_now
+		Report.create(file_name: file_name.split("/").last , file_path: file_name)
 
 	end
 

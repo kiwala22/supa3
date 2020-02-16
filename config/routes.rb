@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+   resources :reports, only: [:index]
+   match "download_report" => "reports#download_report", via: [:get]
    namespace :confirmation do
       match 'mtn/payment' => 'mtn_uganda#create', via: [:post, :get]
       match 'airtel' => 'airtel_uganda#create', via: [:post, :get]

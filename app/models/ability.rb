@@ -15,6 +15,7 @@ class Ability
          can :manage, DrawOffer
          can :manage, Gamer
          can :manage, Draw
+         can :manage, Report
       end
 
       can :manage, :all if user.role == "admin"
