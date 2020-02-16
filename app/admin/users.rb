@@ -30,6 +30,7 @@ permit_params :email, :password, :password_confirmation, :first_name, :last_name
         f.input :password
         f.input :password_confirmation, label: 'Confirmation'
         f.input :admin, as: :boolean
+        f.input :role
     end
     f.actions
     end
