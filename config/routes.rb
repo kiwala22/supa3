@@ -28,6 +28,7 @@ Rails.application.routes.draw do
    match 'run_predictions' => "auto_jobs#run_predictions", via: [:post]
    match 'update_segments' => "auto_jobs#update_segments", via: [:post]
    match 'update_user_info' => "auto_jobs#update_user_info", via: [:post]
+   match 'run_daily_reports' => "auto_jobs#generate_daily_reports", via: [:post]
    match 'run_draws' => "auto_jobs#run_draws", via: [:post]
    match 'create_gamers' => "auto_jobs#create_gamers", via: [:post]
    match 'update_tickets' => "auto_jobs#update_tickets", via: [:post]
