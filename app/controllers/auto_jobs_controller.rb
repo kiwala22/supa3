@@ -1,5 +1,5 @@
 class AutoJobsController < ApplicationController
-    before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :create_gamers, :update_tickets, :update_results]
+    before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :create_gamers, :update_tickets, :update_results, :update_user_info]
     skip_before_action :verify_authenticity_token
 
     def process_broadcasts
