@@ -55,4 +55,9 @@ class AutoJobsController < ApplicationController
       UpdateResultsWorker.perform_async
       render body: nil
     end
+
+    def update_user_info
+      UpdateGamerInfoWorker.perform_async
+      render body: nil
+    end
 end
