@@ -1,2 +1,0 @@
-class DisbursementsMailer < ApplicationMailer
-end

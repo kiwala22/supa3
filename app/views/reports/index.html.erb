@@ -1,0 +1,32 @@
+<%= provide(:title, "Transaction Reports") %>
+<h3>
+   <%= "Reports" %>
+   <small><%= "All Reports" %></small>
+</h3>
+</h3>
+
+<div>
+   <table class="table table-striped table-bordered table-hoverlarge-12 columns large-centered">
+      <thead>
+         <tr>
+            <th>No</th>
+            <th>Report Name</th>
+            <th>File</th>
+            <th>Create Time</th>
+         </tr>
+      </thead>
+      <tbody>
+         <% @reports.each_with_index do |report, i| %>
+         <tr>
+            <td><%= report.id %></td>
+            <td><%= report.file_name %></td>
+            <td><%= link_to "Download", download_report_path(report_id: report.id), class: "btn btn-sm btn-default" %></td>
+            <td><%= (report.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P")) %></td>
+
+         </tr>
+         <% end %>
+      </tbody>
+   </table>
+   <%= paginate @reports %>
+
+</div>
