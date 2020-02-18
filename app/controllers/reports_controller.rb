@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-   before_action :authenticate_user!
+   before_action :authenticate_user!, except: [:download_report]
    load_and_authorize_resource
 
    def index
