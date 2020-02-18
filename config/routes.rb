@@ -11,7 +11,7 @@ Rails.application.routes.draw do
    resources :api_users, only: [:new, :index, :create]
    resources :bulks
    resources :broadcasts
-   resources :collections, only: [:index]
+   resources :collections, only: [:index, :update]
    resources :disbursements, only: [:index]
    resources :draw_offers
    resources :gamers, only: [:index]

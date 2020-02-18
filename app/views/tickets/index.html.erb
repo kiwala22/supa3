@@ -48,7 +48,7 @@
           <div class="form-group">
               <%= f.label :win_amount_gt, "Winner", class:"col-lg-2 control-label" %>
               <div class="col-sm-6">
-								<%= f.select :win_amount_gt, options_for_select([["True", "0"]]), {include_blank: true}, {:class=>"form-control", id: ""}%>
+								<%= f.select :win_amount_gt, options_for_select([["True", "0"]]), {include_blank: true}, {:class=>"form-control", id: "winner"}%>
               </div>
           </div>
         </div>
@@ -56,7 +56,7 @@
           <div class="form-group">
               <%= f.label :paid_eq, "Paid", class:"col-lg-2 control-label" %>
               <div class="col-sm-6">
-                <%= f.select :paid_eq, options_for_select([["True", true], ["False", false]]), {include_blank: true}, {:class=>"form-control", id: ""} %>
+                <%= f.select :paid_eq, options_for_select([["True", true], ["False", false]]), {include_blank: true}, {:class=>"form-control", id: "paid"} %>
               </div>
           </div>
         </div>
