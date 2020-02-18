@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_14_134542) do
+ActiveRecord::Schema.define(version: 2020_02_16_121318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,6 +185,13 @@ ActiveRecord::Schema.define(version: 2020_02_14_134542) do
     t.index ["to"], name: "index_messages_on_to"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.string "file_name"
+    t.string "file_path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "results", force: :cascade do |t|
     t.string "phone_number"
     t.integer "matches"
@@ -255,6 +262,7 @@ ActiveRecord::Schema.define(version: 2020_02_14_134542) do
     t.string "first_name"
     t.string "last_name"
     t.boolean "admin", default: false
+    t.string "role"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

@@ -94,4 +94,11 @@ Rails.application.configure do
 
   # Add the fonts path
   config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+
+
+  ## setup action_mailer
+
+   config.action_mailer.delivery_method = :sendmail
+
+   config.action_mailer.perform_deliveries = true
 end
