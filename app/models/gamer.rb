@@ -27,8 +27,8 @@ class Gamer < ApplicationRecord
          #update user info
       end
       #send welcome message
-      #message = "Welcome to SUPA3! Win up to 200x your amount every 10 minutes, 24hrs a day. Are you ready to get that Supa Feeling?"
-      #SendSMS.process_sms_now(transaction: true, receiver: self.phone_number, content: message, sender_id: ENV['DEFAULT_SENDER_ID'])
+      message = "Welcome to SUPA3! Win up to 200x your amount every 10 minutes, 24hrs a day. Are you ready to get that Supa Feeling?"
+      SendSMS.process_sms_now(transaction: true, receiver: self.phone_number, content: message, sender_id: ENV['DEFAULT_SENDER_ID'])
 
    end
 

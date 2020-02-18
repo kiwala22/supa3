@@ -16,9 +16,19 @@ class TicketsController < ApplicationController
      ticket_id = params[:id]
      win_amount = (params[:amount]).to_i
      #after receiving the parameters, we recall the disbursement worker to create new disbursements
+     if win_amount >= 200000
+        win_amount = (win_amount * 0.85).to_i
+     end
      DisbursementWorker.perform_async(gamer_id, win_amount, ticket_id)
      flash[:notice] = "Reprocessing Disbursement..."
      redirect_to :action => :index
+     #ticket = Ticket.find(ticket_id)
+     #ticket.update_attributes(paid: true)
+     #respond_to do |format|
+       #format.html { redirect_to tickets_url }
+       #format.json { head :no_content}
+       #format.js { render :layout => false }
+     #end
    end
 
    # def new

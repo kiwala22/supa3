@@ -7,7 +7,7 @@ module MobileMoney
 		require 'net/http'
 		require 'logger'
 
-		@@logger ||= Logger.new("#{Rails.root}/log/mobile_money.log")
+		@@logger ||= Logger.new("#{Rails.root}/log/mtn_mobile_money.log")
 		@@logger.level = Logger::ERROR
 
 		@@fri = "fri:12345@supa3.sp7/SP"

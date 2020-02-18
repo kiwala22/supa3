@@ -135,9 +135,10 @@
 								</td>
 							<% end %>
 							<td>
-								 <% if ticket.win_amount > 0 && ticket.paid == false %>
-										<%= link_to "Pay", ticket_path(id: ticket.id, amount: ticket.win_amount, gamer: ticket.gamer_id), html_options = {class: "btn btn-info", method: :put, id: "pay"} %>
-								 <% end %>
+								<% if ticket.win_amount > 0 && ticket.paid == false %>
+									<!-- <#%= link_to "Pay", ticket_path(id: ticket.id, amount: ticket.win_amount, gamer: ticket.gamer_id), method: :put, :remote => true, :class => 'btn btn-info payment' %> -->
+									<%= link_to "Pay", ticket_path(id: ticket.id, amount: ticket.win_amount, gamer: ticket.gamer_id), method: :put, :class => 'btn btn-info' %>
+								<% end %>
 							</td>
             </tr>
         <% end %>

@@ -7,7 +7,7 @@ module MobileMoney
 		require 'net/http'
 		require 'logger'
 
-		@@logger ||= Logger.new("#{Rails.root}/log/mobile_money.log")
+		@@logger ||= Logger.new("#{Rails.root}/log/airtel_mobile_money.log")
 		@@logger.level = Logger::ERROR
 
 		@@payout_msisdn = '100012903'
