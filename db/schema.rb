@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_16_121318) do
+ActiveRecord::Schema.define(version: 2020_02_19_175013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,6 +183,18 @@ ActiveRecord::Schema.define(version: 2020_02_16_121318) do
     t.index ["message"], name: "index_messages_on_message"
     t.index ["sms_type"], name: "index_messages_on_sms_type"
     t.index ["to"], name: "index_messages_on_to"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone_number"
+    t.decimal "amount", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "approved_by"
+    t.integer "initiated_by"
+    t.string "status"
   end
 
   create_table "reports", force: :cascade do |t|
