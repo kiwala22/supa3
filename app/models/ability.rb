@@ -10,13 +10,13 @@ class Ability
 
 
       if user.role == "manager"
-         can :manage, Jackpot
+         can :manage, :jackpot
          can :manage, Ticket
          can :manage, DrawOffer
          can :manage, Gamer
          can :manage, Draw
          can :manage, Report
-         can [:red, :create], Payment
+         can [:read, :create], Payment
       end
 
       can :manage, :all if user.role == "admin"

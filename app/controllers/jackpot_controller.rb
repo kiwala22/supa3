@@ -1,5 +1,6 @@
 class JackpotController < ApplicationController
   before_action :authenticate_user!
+  authorize_resource :class => false
   #assign tickets object to global variable
   $tickets
   def index

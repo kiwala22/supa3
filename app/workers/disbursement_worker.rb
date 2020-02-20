@@ -25,7 +25,7 @@ class DisbursementWorker
 	    				@disbursement.update_attributes(status: "FAILED", ext_transaction_id: result[:ext_transaction_id], network: "MTN Uganda")
 	    			end
 					else
-						@disbursement.update_attributes(status: "FAILED", ext_transaction_id: result[:ext_transaction_id], network: "MTN Uganda")
+						@disbursement.update_attributes(status: "FAILED", network: "MTN Uganda")
     			end
     		when /^(25675|25670)/
     			#Airtel disbursement
@@ -39,7 +39,7 @@ class DisbursementWorker
 	    				@disbursement.update_attributes(status: "FAILED", ext_transaction_id: result[:ext_transaction_id], network: "Airtel Uganda")
 	    			end
 					else
-						@disbursement.update_attributes(status: "FAILED", ext_transaction_id: result[:ext_transaction_id], network: "Airtel Uganda")
+						@disbursement.update_attributes(status: "FAILED", network: "Airtel Uganda")
     			end
     		end
 		end

@@ -57,7 +57,7 @@ class PaymentsController < ApplicationController
    end
 
    def payment_params
-      params.permit(:list, :page ,q: [:phone_number_eq] )
+      params.permit(:list, :approved_by, :page ,q: [:phone_number_eq] )
    end
 
 end
