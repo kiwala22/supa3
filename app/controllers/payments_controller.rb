@@ -6,8 +6,8 @@ class PaymentsController < ApplicationController
    require "csv"
 
    def index
-      @q = Payment.all.ransack(params[:q])
-      @payments = @q.result.order("created_at DESC").page params[:page]
+      @q = Payment.all.ransack(payment_params[:q])
+      @payments = @q.result.order("created_at DESC").page payment_params[:page]
       @search_params = params[:q]
 
    end
@@ -19,8 +19,8 @@ class PaymentsController < ApplicationController
          (2..spreadsheet.last_row).each do |i|
             Payment.create({first_name: spreadsheet.cell(i, 'A'), last_name: spreadsheet.cell(i, 'B'), phone_number: spreadsheet.cell(i, 'C'), amount: spreadsheet.cell(i, 'D'), status: "PENDING", initiated_by: @current_user.id })
          end
-         flash.now[:notie] = "Payments Successfully Added"
-         render action: 'index'
+         flash.now[:notice] = "Payments Successfully Added"
+         redirect_to :action => :index
       else
          flash.now[:error] =  "Please attach the file"
          render action: 'new'
@@ -32,7 +32,12 @@ class PaymentsController < ApplicationController
    end
 
    def update
-
+      @payment = Payment.find(params[:id])
+      if @payment
+         @payment.update_attributes(approved_by: payment_params[:approved_by])
+         PaymentWorker.perform_async(@payment.id, @payment.amount )
+      end
+      redirect_to :action => :index
    end
 
    private
@@ -52,7 +57,7 @@ class PaymentsController < ApplicationController
    end
 
    def payment_params
-      params.permit(:list, :q, :page)
+      params.permit(:list, :page ,q: [:phone_number_eq] )
    end
 
 end
