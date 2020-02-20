@@ -4,7 +4,7 @@ class TicketWorker
    sidekiq_options retry: false
    require "send_sms"
 
-   def perform(phone_number, data, amount)
+   def perform(phone_number, message, amount)
       draw_time = ((Time.now - (Time.now.min % 10).minutes).beginning_of_minute + 10.minutes).strftime("%I:%M %p")
       #Check if gamer exists or create with segment A and return gamer
       gamer = Gamer.create_with(segment: 'A').find_or_create_by(phone_number: phone_number)
@@ -13,14 +13,19 @@ class TicketWorker
       #if valid, then create the ticket and send confirmation sms
 
       #remove all spaces, leading, trailing and between spaces
-      data = data.gsub(/\s+/, '')
+      message = message.gsub(/\s+/, '')
+      data = message.scan(/\d/).join('')
+      if data.length > 3
+         data = data[0..2]
+      end
+      keyword = message.gsub(/\d+/, '')
 
       reference = generate_ticket_reference
       network = ticket_network(gamer.phone_number)
       max_win = amount.to_i * 200
 
-      if (data.split("").all?{|f| f.match(/\d/)} && data.split("").length == 3) #should also check that its below 10
-         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data.gsub(" ", ","), amount: amount.to_i, reference: reference, network: network, first_name: gamer.first_name, last_name: gamer.last_name)
+      if data.length == 3 #should also check that its below 10
+         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: gamer.first_name, last_name: gamer.last_name)
          if ticket.save
             #Send SMS with confirmation
             message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"

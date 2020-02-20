@@ -36,7 +36,10 @@
             <th>Phone Number</th>
             <th>Amount</th>
             <th>Status</th>
+            <th>Initiated By</th>
+            <th>Approved By</th>
             <th>Time</th>
+            <th>Actions</th>
          </tr>
       </thead>
       <tbody>
@@ -48,7 +51,12 @@
             <td><%= payment.phone_number %></td>
             <td><%= payment.amount %></td>
             <td><%= payment.status %></td>
+            <td><%= User.find(payment.initiated_by).first_name %></td>
+            <td><%= User.find(payment.approved_by).first_name unless payment.approved_by == nil %></td>
             <td><%= (payment.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P")) %></td>
+            <td>
+               <%= (payment.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P")) %>
+            </td>
 
          </tr>
          <% end %>
