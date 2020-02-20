@@ -86,6 +86,7 @@
 				<th>Amount Played</th>
 				<th>Matched</th>
 				<th>Amount Won</th>
+				<th>Keyword</th>
 				<th>Paid</th>
 				<th><%= sort_link(@q, :created_at, 'Time') %></th>
 				<th>Confirmation</th>
@@ -105,6 +106,7 @@
 				<td><%= ticket.amount %></td>
 				<td><%= ticket.number_matches %></td>
 				<td><%= ticket.win_amount %></td>
+				<td><%= ticket.keyword %></td>
 				<% if ticket.paid == true %>
 				<td>
 					<div class="rtp_green">
