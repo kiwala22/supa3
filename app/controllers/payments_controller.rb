@@ -34,7 +34,7 @@ class PaymentsController < ApplicationController
    def update
       @payment = Payment.find(params[:id])
       if @payment
-         @payment.update_attributes(approved_by: payment_params[:approved_by])
+         @payment.update_attributes(approved_by: payment_params[:approved_by], status: "PROCESSING")
          PaymentWorker.perform_async(@payment.id, @payment.amount )
       end
       redirect_to :action => :index
