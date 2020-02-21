@@ -34,6 +34,7 @@ Rails.application.routes.draw do
    match 'create_gamers' => "auto_jobs#create_gamers", via: [:post]
    match 'update_tickets' => "auto_jobs#update_tickets", via: [:post]
    match 'update_results' => "auto_jobs#update_results", via: [:post]
+   match 'balance_notification' => "auto_jobs#low_credit_notification", via: [:post]
 
 
    devise_for :admin_users, ActiveAdmin::Devise.config
