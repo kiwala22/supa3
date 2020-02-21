@@ -9,12 +9,22 @@
    <%= search_form_for @q, url: draws_path, html: { method: :get } do |f| %>
    <div class="panel-body">
       <fieldset>
-          <div class="form-group">
-              <%= f.label :draw_time, class:"col-lg-2 control-label" %>
-              <div class="col-sm-6">
-              <%= f.search_field :draw_time_eq, { include_blank: true, :class=>"form-control", id: "broadcast_schedule"}%>
-              </div>
-          </div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<%= f.label :draw_time_gteq, "Drawn After", class:"col-lg-2 control-label" %>
+						<div class="col-sm-6">
+							<%= f.search_field :draw_time_gteq, {include_blank: true, id: "broadcast_schedule", class: "form-control"} %>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<%= f.label :draw_time_lteq, "Drawn Before", class:"col-lg-2 control-label" %>
+						<div class="col-sm-6">
+							<%= f.search_field :draw_time_lteq, {include_blank: true, id: "broadcast_schedule_cp", class: "form-control"} %>
+						</div>
+					</div>
+				</div>
       </fieldset>
       <div class="pannel-footer">
          <div class="clearfix">

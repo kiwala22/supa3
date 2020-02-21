@@ -35,9 +35,15 @@ class PaymentsController < ApplicationController
       @payment = Payment.find(params[:id])
       if @payment
          @payment.update_attributes(approved_by: payment_params[:approved_by], status: "PROCESSING")
-         PaymentWorker.perform_async(@payment.id, @payment.amount )
+         PaymentWorker.perform_async(@payment.id, @payment.amount)
+         #after calling the payments worker use js to rerender the same page
+         respond_to do |format|
+           flash.now[:notice] = "Payment processing..."
+           format.html
+           format.json
+           format.js  { render :layout => false }
+         end
       end
-      redirect_to :action => :index
    end
 
    private

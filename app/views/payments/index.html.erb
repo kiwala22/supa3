@@ -1,4 +1,7 @@
 <%= provide(:title, "Payments") %>
+<div id="notice">
+
+</div>
 <h3>
    <%= "Payments" %>
    <small><%= "All Payments" %></small>
@@ -50,13 +53,33 @@
             <td><%= payment.last_name %></td>
             <td><%= payment.phone_number %></td>
             <td><%= payment.amount %></td>
-            <td><%= payment.status %></td>
+            <% if (payment.status == "PENDING" || payment.status == "PROCESSING") %>
+  						<td>
+  							<div class="label label-warning">
+  								<%= payment.status%>
+  							</div>
+  						</td>
+  					<% end %>
+  					<% if payment.status == "SUCCESS" %>
+  						<td>
+  							<div class="label label-success">
+  								<%= payment.status%>
+  							</div>
+  						</td>
+  					<% end %>
+  					<% if payment.status == "FAILED" %>
+  						<td>
+  							<div class="label label-danger">
+  								<%= payment.status%>
+  							</div>
+  						</td>
+  					<% end %>
             <td><%= User.find(payment.initiated_by).first_name %></td>
             <td><%= User.find(payment.approved_by).first_name unless payment.approved_by == nil %></td>
             <td><%= (payment.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P")) %></td>
             <td>
-               <% if can? :update, Payment && (payment.status != "SUCCESS" || payment.status != "PROCESSING") %>
-                  <%= link_to "Approve", payment_path(id: payment.id, approved_by: @current_user.id), method: :put, :class => 'btn btn-info' %>
+               <% if (can? :update, Payment) && (payment.status == "FAILED" || payment.status == "PENDING") %>
+                  <%= link_to "Approve", payment_path(id: payment.id, approved_by: @current_user.id), method: :put, remote: true, :class => 'btn btn-info payment' %>
                <% end %>
             </td>
 

@@ -1,4 +1,7 @@
 <%= provide(:title, "Tickets") %>
+<div id="notice">
+
+</div>
 <h3>
 	<%= "Tickets" %>
 	<small><%= "All Tickets" %></small>
@@ -39,6 +42,24 @@
 					<%= f.label :created_at_lteq, "Created Before", class:"col-lg-2 control-label" %>
 					<div class="col-sm-6">
 						<%= f.search_field :created_at_lteq, {include_blank: true, id: "broadcast_schedule_cp", class: "form-control"} %>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<div class="col-md-6">
+				<div class="form-group">
+					<%= f.label :amount_gteq, "Amount Min", class:"col-lg-2 control-label" %>
+					<div class="col-sm-6">
+						<%= f.search_field :amount_gteq, {include_blank: true, id: "amount_min", class: "form-control"} %>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<%= f.label :amount_lteq, "Amount Max", class:"col-lg-2 control-label" %>
+					<div class="col-sm-6">
+						<%= f.search_field :amount_lteq, {include_blank: true, id: "amount_max", class: "form-control"} %>
 					</div>
 				</div>
 			</div>
@@ -138,8 +159,8 @@
 				<% end %>
 				<td>
 					<% if ticket.win_amount > 0 && ticket.paid == false %>
-					<!-- <#%= link_to "Pay", ticket_path(id: ticket.id, amount: ticket.win_amount, gamer: ticket.gamer_id), method: :put, :remote => true, :class => 'btn btn-info payment' %> -->
-					<%= link_to "Pay", ticket_path(id: ticket.id, amount: ticket.win_amount, gamer: ticket.gamer_id), method: :put, :class => 'btn btn-info' %>
+					<%= link_to "Pay", ticket_path(id: ticket.id, amount: ticket.win_amount, gamer: ticket.gamer_id), method: :put, :remote => true, :class => 'btn btn-info payment' %>
+					<!-- <#%= link_to "Pay", ticket_path(id: ticket.id, amount: ticket.win_amount, gamer: ticket.gamer_id), method: :put, :class => 'btn btn-info' %> -->
 					<% end %>
 				</td>
 			</tr>

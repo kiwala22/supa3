@@ -9,3 +9,11 @@
 //= require time_picker
 //= require echarts.min
 //= require broadcasts
+
+
+$('.payment').click('ajax:complete', function() {
+  $(this).closest('tr').fadeOut();
+  setTimeout(function(){
+    $('#notice').html("")
+  }, 1000)
+});

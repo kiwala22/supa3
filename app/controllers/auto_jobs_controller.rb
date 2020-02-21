@@ -1,6 +1,10 @@
 class AutoJobsController < ApplicationController
-    before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :create_gamers, :update_tickets, :update_results, :update_user_info, :generate_daily_reports]
+    before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :create_gamers, :update_tickets, :update_results, :update_user_info, :generate_daily_reports, :low_credit_notification]
     skip_before_action :verify_authenticity_token
+
+    require 'mobile_money/mtn_ecw'
+    require 'mobile_money/airtel_uganda'
+    require 'send_sms'
 
     def process_broadcasts
         jobs = Broadcast.where('status = ? AND execution_time <= ?', "PENDING", Time.now)
@@ -64,6 +68,26 @@ class AutoJobsController < ApplicationController
     def generate_daily_reports
       Collection.send_daily_report
       Disbursement.send_daily_report
+      render body: nil
+    end
+
+    def low_credit_notification
+      #check balances on both payout accounts and check if any of them is below threshold level
+      threshold = 200000
+      message_content = "Hello BetCity, your payout balances are currently below threshold level, please top up. Thank you."
+      users = ["256786481312", "256776582036", "256785724466", "256704164444", "256771870788"]
+      mtn_balance = MobileMoney::MtnEcw.get_payout_balance
+      airtel_balance = MobileMoney::AirtelUganda.get_payout_balance
+      if (mtn_balance != nil || mtn_balance != false || mtn_balance != true ) && (airtel_balance != nil || airtel_balance != false || airtel_balance != true)
+        @mtn_balance = mtn_balance[:amount]
+        @airtel_balance = airtel_balance[:amount]
+        if @mtn_balance < threshold || @airtel_balance < threshold
+          users.each do |user|
+            #send a notification message to each user
+            SendSMS.process_sms_now(transaction: false, receiver: user, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+          end
+        end
+      end
       render body: nil
     end
 end
