@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get 'push_pay_boradcasts/index'
+  get 'push_pay_boradcasts/new'
+  get 'push_pay_boradcasts/create'
    resources :payments, only: [:new, :index, :update, :create]
    resources :reports, only: [:index]
    match "download_report" => "reports#download_report", via: [:get]

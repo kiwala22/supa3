@@ -1,0 +1,2 @@
+class PushPayBroadcast < ApplicationRecord
+end
