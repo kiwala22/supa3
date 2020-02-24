@@ -1,4 +1,6 @@
 class PushPayBroadcast < ApplicationRecord
-
-  attr_accessor :list, :message
+   audited
+   attr_accessor :list, :message
+   validates :phone_number, :amount, presence: true
+   paginates_per 50
 end
