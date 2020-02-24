@@ -1,7 +1,6 @@
 class PushPayBroadcastsController < ApplicationController
    before_action :authenticate_user!
    load_and_authorize_resource
-
    require "roo"
    require "csv"
 
@@ -12,7 +11,7 @@ class PushPayBroadcastsController < ApplicationController
    end
 
    def new
-     @push_pay_broadcast = PushPayBroadcast.new()
+     #@push_pay_broadcast = PushPayBroadcast.new()
    end
 
    def create

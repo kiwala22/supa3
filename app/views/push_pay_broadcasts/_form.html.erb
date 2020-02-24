@@ -2,7 +2,7 @@
   <div class="col-sm-6 col-centered col-md-offset-3"">
     <div class="panel panel-default">
       <div class="panel-body">
-        <%= form_for(@push_pay_broadcast , :html => {:"data-parsley-validate" => ''}) do |f| %>
+        <%= form_with(url: {action: :create}, :html => {:"data-parsley-validate" => ''}, multipart: true) do |f| %>
           <div class="form-group">
             <%= f.label :message, "Broadcast Message", class: "text-muted" %>
             <%= f.text_area :message, class: "form-control wysiwyg mt-lg", autofocus: true, required: "true", placeholder: "Type message here ...", id: "broadcast_compose_message", rows: 8 %>
