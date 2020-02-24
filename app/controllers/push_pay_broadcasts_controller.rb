@@ -13,12 +13,22 @@ class PushPayBroadcastsController < ApplicationController
 
    end
 
+   def new
+
+
+   end
+
    def create
 
-      if payment_params[:list]
-         spreadsheet = open_spreadsheet(payment_params[:list])
+      if push_pay_broadcast_params[:list]
+         message_content = push_pay_broadcast_params[:message]
+         amount =  1000
+         spreadsheet = open_spreadsheet(push_pay_broadcast_params[:list])
          (2..spreadsheet.last_row).each do |i|
-            Payment.create({first_name: spreadsheet.cell(i, 'A'), last_name: spreadsheet.cell(i, 'B'), phone_number: spreadsheet.cell(i, 'C'), amount: spreadsheet.cell(i, 'D'), status: "PENDING", initiated_by: @current_user.id })
+            #push to worker after create
+            broadcast = PushPayBroadcast.create(spreadsheet.cell(i, 'A'), amount: 1000, status: "PENDING"})
+            PushPayBroadcastWorker.perform_async(broadcast.id)
+
          end
          flash.now[:notice] = "Payments Successfully Added"
          redirect_to :action => :index
@@ -26,19 +36,6 @@ class PushPayBroadcastsController < ApplicationController
          flash.now[:error] =  "Please attach the file"
          render action: 'new'
       end
-   end
-
-   def new
-
-   end
-
-   def update
-      @payment = Payment.find(params[:id])
-      if @payment
-         @payment.update_attributes(approved_by: payment_params[:approved_by])
-         PaymentWorker.perform_async(@payment.id, @payment.amount )
-      end
-      redirect_to :action => :index
    end
 
    private
