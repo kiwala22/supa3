@@ -26,7 +26,7 @@ class Confirmation::AirtelUgandaController < ApplicationController
 				render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><PARTTXNID>#{@transaction.transaction_id}</PARTTXNID><TYPE>STANPAY</TYPE><MOBTXNID>#{@transaction.ext_transaction_id}</MOBTXNID><TXNSTATUS>200</TXNSTATUS><MESSAGE>Transaction is successful</MESSAGE></COMMAND>"
 			else
 				#check if it already existing
-				existing_transaction = Collection.find_by(ext_transaction_id: @transaction_id.ext_transaction_id)
+				existing_transaction = Collection.find_by(ext_transaction_id: @transaction.ext_transaction_id)
 				if existing_transaction.blank?
 					render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><PARTTXNID>#{@transaction.transaction_id}</PARTTXNID><TYPE>STANPAY</TYPE><MOBTXNID>#{@transaction.ext_transaction_id}</MOBTXNID><TXNSTATUS>400</TXNSTATUS><MESSAGE>Transaction has failed</MESSAGE></COMMAND>"
 					@@logger.error(@transaction.errors.full_messages)

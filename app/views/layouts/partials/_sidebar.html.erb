@@ -50,18 +50,18 @@
                </li>
             </ul>
          </li>
-         <li data-step="2" >
+         <li class="<%= 'active' if controller.controller_name == 'payments' %>" data-step="2" >
             <a href="#ai_payments" title="Layouts" data-toggle="collapse">
                <em class="fa fa-share" aria-hidden="true"></em>
                <span>Payments</span>
             </a>
             <ul id="ai_payments" class="nav sidebar-subnav collapse">
-               <li class="<%= 'active' if controller.controller_name == 'payments' %>">
+               <li>
                   <a href="<%= payments_path %>">
                      <span>Payments</span>
                   </a>
                </li>
-               <li class="<%= 'active' if controller.controller_name == 'payments' %>">
+               <li>
                   <a href="<%= new_payment_path %>">
                      <span>New Payments</span>
                   </a>
@@ -138,6 +138,24 @@
                <li>
                   <a href="<%= broadcasts_path %>">
                      <span>Scheduled Broadcasts</span>
+                  </a>
+               </li>
+            </ul>
+         </li>
+         <li class="<%= 'active' if controller.controller_name == 'push_pay_broadcasts' %>" data-step="2" >
+            <a href="#ai_push_pay_broadcasts" title="Layouts" data-toggle="collapse">
+               <em class="fa fa-rocket" aria-hidden="true"></em>
+               <span>Push Broadcasts</span>
+            </a>
+            <ul id="ai_push_pay_broadcasts" class="nav sidebar-subnav collapse">
+               <li>
+                  <a href="<%= new_push_pay_broadcast_path %>">
+                     <span>New Push Broadcasts</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="<%= push_pay_broadcasts_path %>">
+                     <span>Push Broadcasts</span>
                   </a>
                </li>
             </ul>
