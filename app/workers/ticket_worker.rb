@@ -5,9 +5,26 @@ class TicketWorker
    require "send_sms"
 
    def perform(phone_number, message, amount)
-      draw_time = ((Time.now - (Time.now.min % 10).minutes).beginning_of_minute + 10.minutes).strftime("%I:%M %p")
       #Check if gamer exists or create with segment A and return gamer
       gamer = Gamer.create_with(segment: 'A').find_or_create_by(phone_number: phone_number)
+
+      case amount.to_i
+      when < 1000
+         #keep the money and sms the user
+
+      when > 50000
+         #play 50000 and refund the excess
+
+      when 1000..50000
+         process_ticket(phone_number, message, amount)
+      end
+
+
+   end
+
+   def process_ticket(phone_number, message, amount)
+      draw_time = ((Time.now - (Time.now.min % 10).minutes).beginning_of_minute + 10.minutes).strftime("%I:%M %p")
+
       #check if the data is purely numbers and 3 digits long
       #if not valid send invalid sms message and generate random 3 digit code
       #if valid, then create the ticket and send confirmation sms
@@ -30,7 +47,7 @@ class TicketWorker
             #Send SMS with confirmation
             message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
             if SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
-              ticket.update_attributes(confirmation: true)
+               ticket.update_attributes(confirmation: true)
             end
          end
 
@@ -42,7 +59,7 @@ class TicketWorker
             #Send SMS with the confirmation and random number
             message_content = "We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}, Ticket ID: #{reference} Thank you for playing #{ENV['GAME']}."
             if SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
-              ticket.update_attributes(confirmation: true)
+               ticket.update_attributes(confirmation: true)
             end
          end
       end
@@ -63,7 +80,7 @@ class TicketWorker
    def generate_random_data()
       random_numbers = []
       while random_numbers.length != 3
-           random_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(3).map(&:to_i)
+         random_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(3).map(&:to_i)
       end
       return random_numbers.join("")
    end
