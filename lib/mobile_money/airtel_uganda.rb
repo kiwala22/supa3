@@ -124,7 +124,7 @@ module MobileMoney
 		def self.push_merchantpay_request(phone_number, transaction_id, message)
 			phone_number = phone_number[3..-1]
 			url = "http://172.27.77.145:9192/services/UTL?LOGIN=#{@@collection_username}&PASSWORD=#{@@collection_password}&REQUEST_GATEWAY_CODE=EXT001&REQUEST_GATEWAY_TYPE=EXTSYS"
-			req_xml = "<?xml version='1.0' encoding='UTF-8'?><COMMAND><TYPE>MERCHPAYMENT</TYPE><interfaceId>SUPA3</interfaceId><MSISDN>#{phone_number}</MSISDN><MSISDN2>#{@@collection_msisdn}</MSISDN2><AMOUNT>1000</AMOUNT><EXTTRID>#{transaction_id}</EXTTRID><REFERENCE></REFERENCE><BILLERID></BILLERID><MEMO>#{message}</MEMO><serviceType>SUPA3MERCHPAYPUSH</serviceType><USERNAME>#{@@collection_username}</USERNAME><PASSWORD>#{@@collection_password}</PASSWORD></COMMAND>"
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><COMMAND><serviceType>MERCHPAY</serviceType><interfaceId>SUPANEW</interfaceId><MSISDN>#{phone_number}</MSISDN><PIN>#{@@collection_username}</PIN><MSISDN2>#{@@collection_msisdn}</MSISDN2><AMOUNT>1000</AMOUNT><EXTTRID>#{transaction_id}</EXTTRID><TRID></TRID><MESSAGE>#{message}</MESSAGE><REFERENCE_NO>19606562</REFERENCE_NO></COMMAND>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
 			request = Net::HTTP::Post.new(uri.request_uri)
@@ -135,8 +135,8 @@ module MobileMoney
 			http.set_debug_output($stdout)
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
-			if result.has_key?("COMMAND") && result['COMMAND'].has_key?("CMPRESP") && res.code == "200"
-				return {ext_transaction_id: result['COMMAND']['TXNID'], transaction_id: result['COMMAND']['EXTTRID'], status: result['COMMAND']['TXNSTATUS'] }
+			if result.has_key?("COMMAND")  && res.code == "200"
+				return {ext_transaction_id: result['COMMAND']['TXNID'], transaction_id: result['COMMAND']['EXTRA'], status: result['COMMAND']['TXNSTATUS'] }
 			else
 				@@logger.error(result)
 				return nil

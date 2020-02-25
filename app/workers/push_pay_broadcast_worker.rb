@@ -8,13 +8,13 @@ class PushPayBroadcastWorker
 
 	def perform(broadcast_id, message)
       @broadcast = PushPayBroadcast.find(broadcast_id)
-      phone_number = @broadcast.phone_number[3..-1]
+      phone_number = @broadcast.phone_number
       data = generate_random_data()
       data = "PUSHPAY" + data
       transaction_id = generate_references
       @broadcast.update_attributes(status: "PROCESSING", data: data, transaction_id: transaction_id)
       result = MobileMoney::AirtelUganda.push_merchantpay_request(phone_number, transaction_id, message)
-      if result && result.status == 200
+      if result && result[:status] == "200"
          @broadcast.update_attributes(ext_transaction_id: result[:ext_transaction_id], status: "COMPLETED")
       else
          @broadcast.update_attributes(status: "FAILED")
