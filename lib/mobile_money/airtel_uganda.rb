@@ -143,7 +143,7 @@ module MobileMoney
 			end
 		rescue StandardError => e
 			@@logger.error(e.message)
-
+			return nil
 		end
 
 	end
