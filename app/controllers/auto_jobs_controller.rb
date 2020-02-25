@@ -84,7 +84,7 @@ class AutoJobsController < ApplicationController
         if @mtn_balance.to_i < threshold || @airtel_balance.gsub(/,/, '').to_i < threshold
           users.each do |user|
             #send a notification message to each user
-            SendSMS.process_sms_now(transaction: false, receiver: user, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+            SendSMS.process_sms_now(transaction: false, receiver: user, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID')
           end
         end
       end
