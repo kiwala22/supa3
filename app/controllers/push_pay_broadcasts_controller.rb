@@ -23,8 +23,7 @@ class PushPayBroadcastsController < ApplicationController
          (2..spreadsheet.last_row).each do |i|
             #push to worker after create
             broadcast = PushPayBroadcast.create({phone_number: spreadsheet.cell(i, 'A'), amount: amount, status: "PENDING"})
-            PushPayBroadcastWorker.perform_async(broadcast.id, message_content)
-
+            #PushPayBroadcastWorker.perform_async(broadcast.id, message_content)
          end
          flash.now[:notice] = "Push Broadcast Successfully Created"
          redirect_to :action => :index
