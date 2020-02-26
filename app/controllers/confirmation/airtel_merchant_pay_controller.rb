@@ -8,34 +8,37 @@ class Confirmation::AirtelMerchantPayController < ApplicationController
 
 
   def create
-    if request_body['COMMAND']['TYPE'] == "CALLBCKREQ"
-      push_pay_broadcast = PushPayBroadcast.find_by(transaction_id: request_body['COMMAND']["EXTTRID"])
-      if push_pay_broadcast
-        case request_body['COMMAND']["TXNSTATUS"]
-        when "200"
-          push_pay_broadcast.update_attributes(status: "SUCCESS", ext_transaction_id: request_body['COMMAND']["TXNID"])
-          #process the collection
-          @transaction = Collection.new()
-          @transaction.ext_transaction_id = request_body['COMMAND']["TXNID"]
-          @transaction.phone_number = push_pay_broadcast.phone_number
-          @transaction.receiving_fri = ""
-          @transaction.amount = push_pay_broadcast.amount
-          @transaction.currency = "UGX"
-          @transaction.message = push_pay_broadcast.data
-          @transaction.status = 'SUCCESS'
-          @transaction.network = "Airtel Uganda"
+      request_body = Hash.from_xml(request.body.read)
+    	Rails.logger.debug(request_body)
+      if request_body['COMMAND']['TYPE'] == "CALLBCKREQ"
+        push_pay_broadcast = PushPayBroadcast.find_by(transaction_id: request_body['COMMAND']["EXTTRID"])
+        if push_pay_broadcast
+          case request_body['COMMAND']["TXNSTATUS"]
+          when "200"
+            push_pay_broadcast.update_attributes(status: "SUCCESS", ext_transaction_id: request_body['COMMAND']["TXNID"])
+            #process the collection
+            @transaction = Collection.new()
+            @transaction.ext_transaction_id = request_body['COMMAND']["TXNID"]
+            @transaction.phone_number = push_pay_broadcast.phone_number
+            @transaction.receiving_fri = ""
+            @transaction.amount = push_pay_broadcast.amount
+            @transaction.currency = "UGX"
+            @transaction.message = push_pay_broadcast.data
+            @transaction.status = 'SUCCESS'
+            @transaction.network = "Airtel Uganda"
 
-          if @transaction.save
-            ## perhaps check that transaction is not a duplicate # done with uniqueness on ext_transaction_id
-            AirtelCollectionWorker.perform_async(@transaction.transaction_id)
+            if @transaction.save
+              ## perhaps check that transaction is not a duplicate # done with uniqueness on ext_transaction_id
+              AirtelCollectionWorker.perform_async(@transaction.transaction_id)
+            end
+            render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><TYPE>CALLBCKRESP</TYPE><TXNID>#{push_pay_broadcast.ext_transaction_id}</TXNID><EXTTRID>#{push_pay_broadcast.transaction_id}</EXTTRID><TXNSTATUS>200</TXNSTATUS><MESSAGE>Transaction is successful</MESSAGE></COMMAND>"
+          else
+            push_pay_broadcast.update_attributes(status: "FAILED", ext_transaction_id: request_body['COMMAND']["TXNID"])
+            render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><TYPE>CALLBCKRESP</TYPE><TXNID>#{push_pay_broadcast.ext_transaction_id}</TXNID><EXTTRID>#{push_pay_broadcast.transaction_id}</EXTTRID><TXNSTATUS>400</TXNSTATUS><MESSAGE>Transaction has failed</MESSAGE></COMMAND>"
           end
-          render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><TYPE>CALLBCKRESP</TYPE><TXNID>#{push_pay_broadcast.ext_transaction_id}</TXNID><EXTTRID>#{push_pay_broadcast.transaction_id}</EXTTRID<TXNSTATUS>200</TXNSTATUS><MESSAGE>Transaction is successful</MESSAGE></COMMAND>"
         else
-          push_pay_broadcast.update_attributes(status: "FAILED", ext_transaction_id: request_body['COMMAND']["TXNID"])
-          render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><TYPE>CALLBCKRESP</TYPE><TXNID>#{push_pay_broadcast.ext_transaction_id}</TXNID><EXTTRID>#{push_pay_broadcast.transaction_id}</EXTTRID<TXNSTATUS>400</TXNSTATUS><MESSAGE>Transaction has failed</MESSAGE></COMMAND>"
+            render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><TYPE>CALLBCKRESP</TYPE><TXNSTATUS>400</TXNSTATUS><MESSAGE>Transaction has failed</MESSAGE></COMMAND>"
         end
-      else
-          render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><TYPE>CALLBCKRESP</TYPE><TXNSTATUS>400</TXNSTATUS><MESSAGE>Transaction has failed</MESSAGE></COMMAND>"
       end
     rescue StandardError => e
       @@logger.error(e.message)
