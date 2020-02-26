@@ -6,6 +6,7 @@ Rails.application.routes.draw do
    namespace :confirmation do
       match 'mtn/payment' => 'mtn_uganda#create', via: [:post, :get]
       match 'airtel' => 'airtel_uganda#create', via: [:post, :get]
+      match 'airtel/merchant_pay' => 'airtel_merchant_pay#create', via: [:post, :get]
    end
    get '/api_user_keys/:id', to: 'api_users#generate_api_keys', as: 'user_keys'
    resources :api_users, only: [:new, :index, :create]

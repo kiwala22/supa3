@@ -35,6 +35,9 @@
          <tr>
             <th>No</th>
             <th>Phone Number</th>
+            <th>Transaction ID</th>
+            <th>External Transaction ID</th>
+            <th>Data</th>
             <th>Amount</th>
             <th>Status</th>
             <th>Time</th>
@@ -45,6 +48,9 @@
          <tr>
             <td><%= (i+1) %></td>
             <td><%= broadcast.phone_number %></td>
+            <td><%= broadcast.transaction_id %></td>
+            <td><%= broadcast.ext_transaction_id %></td>
+            <td><%= broadcast.data %></td>
             <td><%= broadcast.amount %></td>
             <% if (broadcast.status == "PENDING" || broadcast.status == "PROCESSING") %>
   						<td>
@@ -53,7 +59,7 @@
   							</div>
   						</td>
   					<% end %>
-  					<% if broadcast.status == "SUCCESS" %>
+  					<% if broadcast.status == "COMPLETED" %>
   						<td>
   							<div class="label label-success">
   								<%= broadcast.status%>

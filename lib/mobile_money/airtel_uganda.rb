@@ -121,10 +121,10 @@ module MobileMoney
 			@@logger.error(e.message)
 		end
 
-		def self.push_merchantpay_request(phone_number, transaction_id, message)
+		def self.push_merchantpay_request(phone_number, transaction_id, message, data)
 			phone_number = phone_number[3..-1]
-			url = "http://172.27.77.145:9192/services/UTL?LOGIN=#{@@collection_username}&PASSWORD=#{@@collection_password}&REQUEST_GATEWAY_CODE=EXT001&REQUEST_GATEWAY_TYPE=EXTSYS"
-			req_xml = "<?xml version='1.0' encoding='UTF-8'?><COMMAND><serviceType>MERCHPAY</serviceType><interfaceId>SUPANEW</interfaceId><MSISDN>#{phone_number}</MSISDN><PIN>#{@@collection_username}</PIN><MSISDN2>#{@@collection_msisdn}</MSISDN2><AMOUNT>1000</AMOUNT><EXTTRID>#{transaction_id}</EXTTRID><TRID></TRID><MESSAGE>#{message}</MESSAGE><REFERENCE_NO>19606562</REFERENCE_NO></COMMAND>"
+			url = "http://172.27.77.135:9192/services/MFS?LOGIN=SUPA3&PASSWORD=#SUPA3@1234&REQUEST_GATEWAY_CODE=EXT001&REQUEST_GATEWAY_TYPE=EXTSYS"
+			req_xml = "<?xml version='1.0' encoding='UTF-8'?><COMMAND><interfaceId>SUPA3</interfaceId><MSISDN>#{phone_number}</MSISDN><MSISDN2>100012903</MSISDN2><AMOUNT>1000</AMOUNT><EXTTRID>#{transaction_id}</EXTTRID><REFERENCE>673</REFERENCE><BILLERID>100012903</BILLERID><MEMO>SUPA3 BANK</MEMO><serviceType>MERCHPAY</serviceType><USERNAME>SUPA3</USERNAME><PASSWORD>SUPA3@1234</PASSWORD></COMMAND>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
 			request = Net::HTTP::Post.new(uri.request_uri)
