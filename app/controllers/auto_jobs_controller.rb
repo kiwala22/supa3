@@ -75,7 +75,7 @@ class AutoJobsController < ApplicationController
       #check balances on both payout accounts and check if any of them is below threshold level
       threshold = 200000
       message_content = "Hello BetCity, your payout balances are currently below threshold level, please top up. Thank you."
-      users = ["256786481312", "256776582036", "256785724466"]
+      users = ["256786481312", "256776582036", "256785724466", "256754400108"]
       mtn_balance = MobileMoney::MtnEcw.get_payout_balance
       airtel_balance = MobileMoney::AirtelUganda.get_payout_balance
       if (mtn_balance != nil || mtn_balance != false || mtn_balance != true ) && (airtel_balance != nil || airtel_balance != false || airtel_balance != true)

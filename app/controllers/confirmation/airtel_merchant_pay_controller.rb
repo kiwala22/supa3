@@ -15,7 +15,7 @@ class Confirmation::AirtelMerchantPayController < ApplicationController
         if push_pay_broadcast
           case request_body['COMMAND']["TXNSTATUS"]
           when "200"
-            push_pay_broadcast.update_attributes(status: "SUCCESS", ext_transaction_id: request_body['COMMAND']["TXNID"])
+            push_pay_broadcast.update_attributes(status: "COMPLETED", ext_transaction_id: request_body['COMMAND']["TXNID"])
             #process the collection
             @transaction = Collection.new()
             @transaction.ext_transaction_id = request_body['COMMAND']["TXNID"]
@@ -34,10 +34,10 @@ class Confirmation::AirtelMerchantPayController < ApplicationController
             render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><TYPE>CALLBCKRESP</TYPE><TXNID>#{push_pay_broadcast.ext_transaction_id}</TXNID><EXTTRID>#{push_pay_broadcast.transaction_id}</EXTTRID><TXNSTATUS>200</TXNSTATUS><MESSAGE>Transaction is successful</MESSAGE></COMMAND>"
           else
             push_pay_broadcast.update_attributes(status: "FAILED", ext_transaction_id: request_body['COMMAND']["TXNID"])
-            render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><TYPE>CALLBCKRESP</TYPE><TXNID>#{push_pay_broadcast.ext_transaction_id}</TXNID><EXTTRID>#{push_pay_broadcast.transaction_id}</EXTTRID><TXNSTATUS>400</TXNSTATUS><MESSAGE>Transaction has failed</MESSAGE></COMMAND>"
+            render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><TYPE>CALLBCKRESP</TYPE><TXNID>#{push_pay_broadcast.ext_transaction_id}</TXNID><EXTTRID>#{push_pay_broadcast.transaction_id}</EXTTRID><TXNSTATUS>300</TXNSTATUS><MESSAGE>Transaction has failed</MESSAGE></COMMAND>"
           end
         else
-            render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><TYPE>CALLBCKRESP</TYPE><TXNSTATUS>400</TXNSTATUS><MESSAGE>Transaction has failed</MESSAGE></COMMAND>"
+            render xml: "<?xml version='1.0' encoding='UTF-8'?><COMMAND><TYPE>CALLBCKRESP</TYPE><TXNSTATUS>300</TXNSTATUS><MESSAGE>Transaction has failed</MESSAGE></COMMAND>"
         end
       end
     rescue StandardError => e
@@ -47,7 +47,7 @@ class Confirmation::AirtelMerchantPayController < ApplicationController
   protected
 
 	def authenticate_source
-		@accepted_ips = ["41.223.86.50","41.223.86.51","41.223.86.52","41.223.86.34", "172.22.77.136","172.22.77.137","172.22.77.138","172.22.77.135","172.22.77.145","172.22.77.147","172.22.77.148","172.22.77.151","172.22.77.152","172.22.77.153" ]
+		@accepted_ips = ["41.223.86.43","41.223.86.50","41.223.86.51","41.223.86.52","41.223.86.34", "172.22.77.136","172.22.77.137","172.22.77.138","172.22.77.135","172.22.77.145","172.22.77.147","172.22.77.148","172.22.77.151","172.22.77.152","172.22.77.153" ]
 		unauthourized_source unless @accepted_ips.include? source_ip
 	end
 
