@@ -15,6 +15,8 @@ class TicketWorker
       when > 50000
          #play 50000 and refund the excess
          refund_amount = (amount.to_i - 50000)
+         process_ticket(phone_number, message, 50000)
+
 
       when 1000..50000
          process_ticket(phone_number, message, amount)
@@ -80,7 +82,7 @@ class TicketWorker
 
    def generate_random_data()
       random_numbers = []
-      while random_numbers.length != 3
+      while (random_numbers.length != 3 || random_numbers == [1,2,3] || Draw.where("winning_number = ? AND created_at >= ?", random_numbers.join(""), Time.now-24.hours).exists?)
          random_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(3).map(&:to_i)
       end
       return random_numbers.join("")
