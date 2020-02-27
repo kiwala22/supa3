@@ -14,6 +14,7 @@ class TicketWorker
 
       when > 50000
          #play 50000 and refund the excess
+         refund_amount = (amount.to_i - 50000)
 
       when 1000..50000
          process_ticket(phone_number, message, amount)
