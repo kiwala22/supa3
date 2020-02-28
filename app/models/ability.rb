@@ -5,6 +5,7 @@ class Ability
       user ||= User.new
       can :read, Ticket
       can :manage, Broadcast
+      can :manage, PushPayBroadcast
       can :read, Gamer
       can :read, ApiUser
 
