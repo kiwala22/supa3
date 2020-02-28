@@ -6,8 +6,9 @@ class PushPayBroadcastWorker
 	require "mobile_money/mtn_ecw"
 	require "mobile_money/airtel_uganda"
 
-	def perform(broadcast_id, message)
-      @broadcast = PushPayBroadcast.find(broadcast_id)
+	def perform(message)
+		PushPayBroadcast.where("status = ?", "PENDING").find_each(batch_size: 1000) do |push|
+      @broadcast = PushPayBroadcast.find(push.id)
       phone_number = @broadcast.phone_number
       data = generate_random_data()
       data = "PUSHPAY" + data
@@ -19,7 +20,7 @@ class PushPayBroadcastWorker
       else
          @broadcast.update_attributes(status: "FAILED")
       end
-
+		end
 	end
 
    def generate_random_data()
