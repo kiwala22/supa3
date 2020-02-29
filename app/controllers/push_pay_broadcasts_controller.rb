@@ -5,8 +5,8 @@ class PushPayBroadcastsController < ApplicationController
    require "csv"
 
    def index
-      @q = PushPayBroadcast.all.ransack(params[:q])
-      @push_pay_broadcasts = @q.result.order("created_at DESC").page params[:page]
+      @q = PushPayBroadcast.all.ransack(push_pay_broadcast_params[:q])
+      @push_pay_broadcasts = @q.result.order("created_at DESC").page push_pay_broadcast_params[:page]
       @search_params = params[:q]
    end
 
@@ -21,10 +21,10 @@ class PushPayBroadcastsController < ApplicationController
          amount =  1000
          spreadsheet = open_spreadsheet(push_pay_broadcast_params[:list])
          (2..spreadsheet.last_row).each do |i|
-            broadcast = PushPayBroadcast.create({phone_number: spreadsheet.cell(i, 'A'), amount: 1000, status: "PENDING"})
+            #push to worker after create
+            broadcast = PushPayBroadcast.create({phone_number: spreadsheet.cell(i, 'A'), amount: amount, status: "PENDING"})
+            PushPayBroadcastWorker.perform_async(broadcast.id, message_content)
          end
-         #only pass message content to worker
-         PushPayBroadcastWorker.perform_async(message_content)
          flash.now[:notice] = "Push Broadcast Successfully Created"
          redirect_to :action => :index
       else
