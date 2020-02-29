@@ -30,6 +30,7 @@ module MobileMoney
 			req_xml = "<?xml version='1.0' encoding='UTF-8'?><COMMAND><SNDINSTRUMENT>12</SNDINSTRUMENT><MSISDN>#{@@payout_msisdn}</MSISDN><PAYID>12</PAYID><SNDPROVIDER>101</SNDPROVIDER><language>en</language><RCVINSTRUMENT>12</RCVINSTRUMENT><LANGUAGE2>1</LANGUAGE2><PAYID2>12</PAYID2><LANGUAGE1>1</LANGUAGE1><PAYID1>12</PAYID1><PROVIDER1>101</PROVIDER1><PIN>#{@@payout_pin}</PIN><PROVIDER2>101</PROVIDER2><RCVPROVIDER>101</RCVPROVIDER><IS_MERCHANT_CASHIN>Y</IS_MERCHANT_CASHIN><MERCHANT_TXN_ID>#{transaction_id}</MERCHANT_TXN_ID><PROVIDER>101</PROVIDER><BPROVIDER>101</BPROVIDER><PIN_CHECK>FALSE</PIN_CHECK><TYPE>RCIREQ</TYPE><AMOUNT>#{amount}</AMOUNT><MSISDN2>#{phone_number}</MSISDN2><interfaceId>SUPA3</interfaceId><USERNAME>#{@@payout_username}</USERNAME><PASSWORD>#{@@payout_password}</PASSWORD></COMMAND>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
+			http.read_timeout = 180
 			request = Net::HTTP::Post.new(uri.request_uri)
 			request.content_type = 'text/xml'
 			request.body = req_xml
@@ -127,6 +128,7 @@ module MobileMoney
       req_xml = "<?xml version='1.0' encoding='UTF-8'?><COMMAND><interfaceId>SUPANEW</interfaceId><MSISDN>#{phone_number}</MSISDN><MSISDN2>100100658</MSISDN2><AMOUNT>1000</AMOUNT><EXTTRID>#{transaction_id}</EXTTRID><REFERENCE>#{data}</REFERENCE><BILLERID>100012903</BILLERID><MESSAGE>#{message}</MESSAGE><serviceType>MERCHPAY</serviceType><USERNAME>SUPA3</USERNAME><PASSWORD>SUPA3@1234</PASSWORD></COMMAND>"
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
+			http.read_timeout = 180
 			request = Net::HTTP::Post.new(uri.request_uri)
 			request.content_type = 'text/xml'
 			request.body = req_xml
