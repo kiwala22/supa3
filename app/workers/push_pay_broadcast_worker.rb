@@ -1,7 +1,17 @@
 class PushPayBroadcastWorker
 	include Sidekiq::Worker
+	include Sidekiq::Throttled::Worker
+
 	sidekiq_options queue: "low"
 	sidekiq_options retry: false
+
+	sidekiq_throttle({
+	    # Allow maximum 10 concurrent jobs of this class at a time.
+	    :concurrency => { :limit => 2 },
+	    # Allow maximum 3 jobs being processed within one second window.
+	    :threshold => { :limit => 3, :period => 1.second }
+  	})
+
 
 	require "mobile_money/mtn_ecw"
 	require "mobile_money/airtel_uganda"
