@@ -5,8 +5,8 @@ class PushPayBroadcastsController < ApplicationController
    require "csv"
 
    def index
-      @q = PushPayBroadcast.all.ransack(push_pay_broadcast_params[:q])
-      @push_pay_broadcasts = @q.result.order("created_at DESC").page push_pay_broadcast_params[:page]
+      @q = PushPayBroadcast.all.ransack(params[:q])
+      @push_pay_broadcasts = @q.result.order("created_at DESC").page params[:page]
       @search_params = params[:q]
    end
 
