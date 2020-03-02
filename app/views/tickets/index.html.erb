@@ -168,4 +168,7 @@
 		</tbody>
 	</table>
 	<%= paginate @tickets %>
+	<p>
+		<%= link_to "Download CSV", "/tickets.csv", class: "button expand pull-right" %>
+	</p>
 </div>

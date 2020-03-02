@@ -22,6 +22,10 @@ class CollectionsController < ApplicationController
     else
       @airtel_collections = airtel_balance[:amount]
     end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @collections.to_csv, filename: "Collections #{Date.today}.csv" }
+    end
   end
 
   #update method to reprocess pending collections
@@ -31,7 +35,11 @@ class CollectionsController < ApplicationController
     external_transaction_id = params[:ext_id]
     #make a call to the mtn collection worker
     MtnCollectionWorker.perform_async(transaction_id, external_transaction_id, "SUCCESS")
-    flash[:notice] = "Reprocessing Collection..."
-    redirect_to :action => :index
+    respond_to do |format|
+      flash.now[:notice] = "Collection Reprocessed."
+      format.html
+      format.json
+      format.js   { render :layout => false }
+    end
   end
 end

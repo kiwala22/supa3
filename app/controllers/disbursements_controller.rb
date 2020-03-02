@@ -22,5 +22,9 @@ class DisbursementsController < ApplicationController
     else
       @airtel_payouts = airtel_balance[:amount]
     end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @disbursements.to_csv, filename: "Disbursements #{Date.today}.csv" }
+    end
   end
 end

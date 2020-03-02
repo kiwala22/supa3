@@ -23,6 +23,16 @@ class Collection < ApplicationRecord
 
 	end
 
+	def self.to_csv
+		CSV.generate do |csv|
+			column_names = %w(ext_transaction_id transaction_id currency amount phone_number status message created_at updated_at network)
+			csv << column_names
+			all.each do |result|
+				csv << result.attributes.values_at(*column_names)
+			end
+		end
+	end
+
 	private
 	def generate_references
 		loop do
