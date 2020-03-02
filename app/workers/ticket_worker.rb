@@ -11,12 +11,14 @@ class TicketWorker
       case amount.to_i
       when < 1000
          #keep the money and sms the user
+         message_content = "Your recent wager of UGX.#{amount} is below the minimum of UGX.1000. Please increase the amount and try again"
+         SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
       when > 50000
          #play 50000 and refund the excess
          refund_amount = (amount.to_i - 50000)
-         process_ticket(phone_number, message, 50000)
-
+         ticket_id = process_ticket(phone_number, message, 50000)
+         DisbursementWorker.perform_async(gamer.id, refund_amount, ticket_id)
 
       when 1000..50000
          process_ticket(phone_number, message, amount)
@@ -66,7 +68,7 @@ class TicketWorker
             end
          end
       end
-
+      return ticket.id
    end
 
    def ticket_network(phone_number)
