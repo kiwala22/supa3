@@ -18,7 +18,7 @@ class DrawWorker
       draw_id = @draw.id
       #generate random number for winnings
       draw_numbers = []
-      while draw_numbers.length != 3
+      while (draw_numbers.length != 3 || draw_numbers == [1,2,3] || Draw.where("winning_number = ? AND created_at >= ?", draw_numbers.join(""), Time.now-24.hours).exists?)
            draw_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(3).map(&:to_i)
       end
 
