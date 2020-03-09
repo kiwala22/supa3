@@ -5,9 +5,31 @@ class TicketWorker
    require "send_sms"
 
    def perform(phone_number, message, amount)
+      #Check if @@gamer exists or create with segment A and return @@gamer
+      @@gamer = Gamer.create_with(segment: 'A').find_or_create_by(phone_number: phone_number)
+
+      case
+      when amount.to_i >= 0 && amount.to_i < 1000
+         #keep the money and sms the user
+         message_content = "Your recent wager of UGX.#{amount} is below the minimum of UGX.1000. Please increase the amount and try again"
+         SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+
+      when amount.to_i > 50000
+         #play 50000 and refund the excess
+         refund_amount = (amount.to_i - 50000)
+         ticket_id = process_ticket(phone_number, message, 50000)
+         DisbursementWorker.perform_async(@@gamer.id, refund_amount, ticket_id)
+
+      when amount.to_i >= 1000 && amount.to_i <= 50000
+         process_ticket(phone_number, message, amount)
+      end
+
+
+   end
+
+   def process_ticket(phone_number, message, amount)
       draw_time = ((Time.now - (Time.now.min % 10).minutes).beginning_of_minute + 10.minutes).strftime("%I:%M %p")
-      #Check if gamer exists or create with segment A and return gamer
-      gamer = Gamer.create_with(segment: 'A').find_or_create_by(phone_number: phone_number)
+
       #check if the data is purely numbers and 3 digits long
       #if not valid send invalid sms message and generate random 3 digit code
       #if valid, then create the ticket and send confirmation sms
@@ -21,32 +43,32 @@ class TicketWorker
       keyword = message.gsub(/\d+/, '')
 
       reference = generate_ticket_reference
-      network = ticket_network(gamer.phone_number)
+      network = ticket_network(phone_number)
       max_win = amount.to_i * 200
 
       if data.length == 3 #should also check that its below 10
-         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: gamer.first_name, last_name: gamer.last_name, keyword: keyword)
+         ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword)
          if ticket.save
             #Send SMS with confirmation
             message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
-            if SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
-              ticket.update_attributes(confirmation: true)
+            if SendSMS.process_sms_now(receiver: @@gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
+               ticket.update_attributes(confirmation: true)
             end
          end
 
       else
          #generate random numbers
          random_data = generate_random_data
-         ticket = gamer.tickets.new(phone_number: gamer.phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: gamer.first_name, last_name: gamer.last_name, keyword: keyword)
+         ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword)
          if ticket.save
             #Send SMS with the confirmation and random number
             message_content = "We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}, Ticket ID: #{reference} Thank you for playing #{ENV['GAME']}."
-            if SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
-              ticket.update_attributes(confirmation: true)
+            if SendSMS.process_sms_now(receiver: @@gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
+               ticket.update_attributes(confirmation: true)
             end
          end
       end
-
+      return ticket.id
    end
 
    def ticket_network(phone_number)
@@ -63,7 +85,7 @@ class TicketWorker
    def generate_random_data()
       random_numbers = []
       while random_numbers.length != 3
-           random_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(3).map(&:to_i)
+         random_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(3).map(&:to_i)
       end
       return random_numbers.join("")
    end

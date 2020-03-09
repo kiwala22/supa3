@@ -6,7 +6,7 @@ class Ticket < ApplicationRecord
 
    def self.to_csv
      CSV.generate do |csv|
-       column_names = %w(first_name last_name phone_number reference created_at)
+       column_names = %w(first_name last_name phone_number reference data amount number_matches win_amount keyword created_at)
        csv << column_names
        all.each do |result|
          csv << result.attributes.values_at(*column_names)
