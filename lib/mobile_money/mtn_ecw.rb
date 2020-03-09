@@ -133,7 +133,7 @@ module MobileMoney
 			res = http.request(request)
 			result = Hash.from_xml(res.body)
 			if result.has_key?("gettransactionstatusresponse")
-				return {amount: result['gettransactionstatusresponse']['amount'], currency: result['gettransactionstatusresponse']['currency']}
+				return {ext_transaction_id: result['gettransactionstatusresponse']['financialtransactionid'], status: result['gettransactionstatusresponse']['status']}
 			elsif result.has_key?("errorResponse")
 				@@logger.error(res.body)
 				return nil

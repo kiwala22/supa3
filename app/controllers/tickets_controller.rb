@@ -3,6 +3,9 @@ class TicketsController < ApplicationController
    skip_before_action :verify_authenticity_token
    load_and_authorize_resource
 
+   require "mobile_money/mtn_ecw"
+ 	 require "mobile_money/airtel_uganda"
+
    def index
       #consider only the last 10000 tickets for quick results
       @q = Ticket.limit(1000).ransack(params[:q])
@@ -15,13 +18,38 @@ class TicketsController < ApplicationController
      gamer_id = params[:gamer]
      ticket_id = params[:id]
      win_amount = (params[:amount]).to_i
-     #after receiving the parameters, we recall the disbursement worker to create new disbursements
+     transaction_id = params[:transaction_id]
+     network = params[:network]
+
+     #win amount multiplied by 85% if more than 200K
      if win_amount >= 200000
         win_amount = (win_amount * 0.85).to_i
      end
-     DisbursementWorker.perform_async(gamer_id, win_amount, ticket_id)
+
+     #find the disbursement
+     @disbursement = Disbursement.where(transaction_id: transaction_id)
+
+     #find the ticket
+     @ticket = Ticket.find(ticket_id)
+
+     #check which network ticket belongs to before checking transaction status
+     if network == "MTN Uganda"
+       result = MobileMoney::MtnEcw.transaction_status(transaction_id)
+       #implementation here for mtn transactions
+     elsif network == "Airtel Uganda"
+       result = MobileMoney::AirtelUganda.check_transaction_status(transaction_id)
+       if result[:status] == "TF"
+         #call disbursement worker and update pending disbursement to failed
+         @disbursement.update_attributes(status: "FAILED")
+         DisbursementWorker.perform_async(gamer_id, win_amount, ticket_id)
+       elsif result[:status] == "TS"
+         #update ticket to paid true and update disbursement to success
+         @disbursement.update_attributes(status: "SUCCESS")
+         @ticket.update_attributes(paid: true)
+       end
+     end
      respond_to do |format|
-       flash.now[:notice] = "Ticket has been paid."
+       flash.now[:notice] = "Ticket has been successfully updated."
        format.html
        format.json
        format.js   { render :layout => false }
