@@ -256,7 +256,11 @@ ActiveRecord::Schema.define(version: 2020_03_09_092206) do
     t.string "last_name"
     t.string "winning_number"
     t.string "keyword"
+<<<<<<< HEAD
     t.string "game", default: "Supa3"
+=======
+    t.string "disbursement_reference"
+>>>>>>> origin/feature_updates
     t.index ["amount"], name: "index_tickets_on_amount"
     t.index ["data"], name: "index_tickets_on_data"
     t.index ["draw_id"], name: "index_tickets_on_draw_id"
