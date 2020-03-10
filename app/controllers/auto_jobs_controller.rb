@@ -19,9 +19,7 @@ class AutoJobsController < ApplicationController
    end
 
    def run_predictions
-      Gamer.find_each(batch_size: 1000) do |gamer|
-         SegmentPredictionWorker.perform_async(gamer.id)
-      end
+      SegmentPredictionWorker.perform_async()
       render body: nil
    end
 

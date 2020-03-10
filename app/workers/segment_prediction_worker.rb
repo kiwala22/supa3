@@ -4,16 +4,16 @@ class SegmentPredictionWorker
    sidekiq_options retry: 3
    require "httparty"
 
-   def perform(id)
-      gamer = Gamer.find(id)
-      ##method to update user segments using number of days when last played
-      tickets = Ticket.where(gamer_id: id).order("created_at DESC")
-      if tickets.blank?
-         gamer.update_attributes(segment: "G")
-      else
-         days = ((Time.now - tickets.first.created_at)/1.days).to_i
-         segment = find_segment(days)
-         gamer.update_attributes(segment: segment)
+   def perform()
+      Gamer.find_each(batch_size: 1000) do |gamer|
+         tickets = Ticket.where(gamer_id: id).order("created_at DESC")
+         if tickets.blank?
+            gamer.update_attributes(segment: "G")
+         else
+            days = ((Time.now - tickets.first.created_at)/1.days).to_i
+            segment = find_segment(days)
+            gamer.update_attributes(segment: segment)
+         end
       end
    end
 
