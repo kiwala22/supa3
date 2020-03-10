@@ -6,9 +6,9 @@ class SegmentPredictionWorker
 
    def perform()
       Gamer.find_each(batch_size: 1000) do |gamer|
-         tickets = Ticket.where(gamer_id: id).order("created_at DESC")
+         tickets = Ticket.where("gamer_id = ? AND created_at").order("created_at DESC")
          if tickets.blank?
-            gamer.update_attributes(segment: "G")
+            gamer.update_attributes(segment: "F")
          else
             days = ((Time.now - tickets.first.created_at)/1.days).to_i
             segment = find_segment(days)
