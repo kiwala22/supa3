@@ -114,38 +114,38 @@ module MobileMoney
 		# 	false
 		# end
 
-		def self.transaction_status(ext_reference_id)
-			url = "https://f5.mtn.co.ug:8006/poextvip/v1/gettransactionstatus"
-			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:gettransactionstatusrequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_1'><referenceid>#{ext_reference_id}</referenceid></ns2:gettransactionstatusrequest>"
-			uri = URI.parse(url)
-			http = Net::HTTP.new(uri.host, uri.port)
-			request = Net::HTTP::Post.new(uri.request_uri)
-			request.basic_auth(@@username, @@password)
-			request.content_type = 'text/xml'
-			request.body = req_xml
-			http.use_ssl = true
-			http.ssl_version = :TLSv1_2
-			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-			http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
-			http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
-			http.ca_file = Rails.root.join("config/prod/m3_EXTERNAL_ca_UG.crt").to_s
-			#http.set_debug_output($stdout)
-			res = http.request(request)
-			result = Hash.from_xml(res.body)
-			if result.has_key?("gettransactionstatusresponse")
-				return {ext_transaction_id: result['gettransactionstatusresponse']['financialtransactionid'], status: result['gettransactionstatusresponse']['status']}
-			elsif result.has_key?("errorResponse")
-				@@logger.error(res.body)
-				return nil
-			else
-				@@logger.error(result)
-				return nil
-			end
-
-		rescue StandardError => e
-			@@logger.error(e.message)
-			false
-		end
+		# def self.transaction_status(ext_reference_id)
+		# 	url = "https://f5.mtn.co.ug:8006/poextvip/v1/gettransactionstatus"
+		# 	req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns2:gettransactionstatusrequest xmlns:ns2='http://www.ericsson.com/em/emm/financial/v1_1'><referenceid>#{ext_reference_id}</referenceid></ns2:gettransactionstatusrequest>"
+		# 	uri = URI.parse(url)
+		# 	http = Net::HTTP.new(uri.host, uri.port)
+		# 	request = Net::HTTP::Post.new(uri.request_uri)
+		# 	request.basic_auth(@@username, @@password)
+		# 	request.content_type = 'text/xml'
+		# 	request.body = req_xml
+		# 	http.use_ssl = true
+		# 	http.ssl_version = :TLSv1_2
+		# 	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+		# 	http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
+		# 	http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
+		# 	http.ca_file = Rails.root.join("config/prod/m3_EXTERNAL_ca_UG.crt").to_s
+		# 	#http.set_debug_output($stdout)
+		# 	res = http.request(request)
+		# 	result = Hash.from_xml(res.body)
+		# 	if result.has_key?("gettransactionstatusresponse")
+		# 		return {ext_transaction_id: result['gettransactionstatusresponse']['financialtransactionid'], status: result['gettransactionstatusresponse']['status']}
+		# 	elsif result.has_key?("errorResponse")
+		# 		@@logger.error(res.body)
+		# 		return nil
+		# 	else
+		# 		@@logger.error(result)
+		# 		return nil
+		# 	end
+		#
+		# rescue StandardError => e
+		# 	@@logger.error(e.message)
+		# 	false
+		# end
 
 		def self.get_account_info(phone_number)
 			url = "https://f5.mtn.co.ug:8006/poextvip/v1_1/getaccountholderinfo"

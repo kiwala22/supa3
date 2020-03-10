@@ -34,8 +34,8 @@ class TicketsController < ApplicationController
 
      #check which network ticket belongs to before checking transaction status
      if network == "MTN Uganda"
-       result = MobileMoney::MtnEcw.transaction_status(transaction_id)
-       #implementation here for mtn transactions
+       @disbursement.update_attributes(status: "FAILED")
+       DisbursementWorker.perform_async(gamer_id, win_amount, ticket_id)
      elsif network == "Airtel Uganda"
        result = MobileMoney::AirtelUganda.check_transaction_status(transaction_id)
        if result[:status] == "TF"
