@@ -13,7 +13,6 @@ class UpdateGamerInfoWorker
    require "mobile_money/mtn_ecw"
 
    def perform(id)
-     gamer = Gamer.find(id)
       # Gamer.where(first_name: nil, last_name: nil).find_in_batches(batch_size: 500) do |gamers|
       #    Gamer.transaction do
       #       gamers.each do |gamer|
@@ -26,8 +25,10 @@ class UpdateGamerInfoWorker
       #       end
       #    end
       # end
-      (Ticket.where.not(time: nil) && Ticket.where("time != created_at and gamer_id = #{gamer.id}")).each do |ticket|
+    Ticket.transaction do
+      (Ticket.where.not(time: nil) && Ticket.where("time != created_at and gamer_id = #{id}")).each do |ticket|
          ticket.update_attributes(created_at: ticket.time)
       end
+    end
    end
 end
