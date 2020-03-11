@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_09_092206) do
+ActiveRecord::Schema.define(version: 2020_03_11_152602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,8 @@ ActiveRecord::Schema.define(version: 2020_03_09_092206) do
     t.string "segment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "multiplier_four"
+    t.integer "multiplier_five"
   end
 
   create_table "draws", force: :cascade do |t|
@@ -158,6 +160,9 @@ ActiveRecord::Schema.define(version: 2020_03_09_092206) do
     t.integer "new_users"
     t.integer "undefined_tickets"
     t.string "winning_number"
+    t.string "game", default: "Supa3"
+    t.integer "four_match"
+    t.integer "five_match"
   end
 
   create_table "gamers", force: :cascade do |t|
@@ -256,11 +261,8 @@ ActiveRecord::Schema.define(version: 2020_03_09_092206) do
     t.string "last_name"
     t.string "winning_number"
     t.string "keyword"
-<<<<<<< HEAD
-    t.string "game", default: "Supa3"
-=======
     t.string "disbursement_reference"
->>>>>>> origin/feature_updates
+    t.string "game", default: "Supa3"
     t.index ["amount"], name: "index_tickets_on_amount"
     t.index ["data"], name: "index_tickets_on_data"
     t.index ["draw_id"], name: "index_tickets_on_draw_id"
