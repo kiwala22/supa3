@@ -61,7 +61,9 @@ class AutoJobsController < ApplicationController
    end
 
    def update_user_info
-      UpdateGamerInfoWorker.perform_async
+      Gamer.find_each(batch_size: 1000) do |gamer|
+        UpdateGamerInfoWorker.perform_async(gamer.id)
+      end
       render body: nil
    end
 
