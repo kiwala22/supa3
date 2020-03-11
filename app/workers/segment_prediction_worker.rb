@@ -1,19 +1,25 @@
 class SegmentPredictionWorker
    include Sidekiq::Worker
+   include Sidekiq::Throttled::Worker
+
+   sidekiq_throttle({
+       # Allow maximum 10 concurrent jobs of this class at a time.
+       :concurrency => { :limit => 10 }
+     })
+
    sidekiq_options queue: "low"
    sidekiq_options retry: 3
    require "httparty"
 
-   def perform()
-      Gamer.find_each(batch_size: 1000) do |gamer|
-         tickets = Ticket.where("gamer_id = ? AND created_at >= ?", gamer.id, (Time.now - 90.days)).order("created_at DESC")
-         if tickets.blank?
-            gamer.update_attributes(segment: "F")
-         else
-            days = ((Time.now - tickets.first.created_at)/1.days).to_i
-            segment = find_segment(days)
-            gamer.update_attributes(segment: segment)
-         end
+   def perform(id)
+      gamer = Gamer.find(id)
+      tickets = Ticket.where("phone_number = ? and created_at >= ?", gamer.phone_number, (Time.now - 90.days)).order("created_at DESC")
+      if tickets.blank?
+        gamer.update_attributes(segment: "F")
+      else
+        days = ((Time.now - tickets.first.time)/1.days).to_i
+        segment = find_segment(days)
+        gamer.update_attributes(segment: segment)
       end
    end
 

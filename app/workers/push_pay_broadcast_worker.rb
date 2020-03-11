@@ -7,9 +7,9 @@ class PushPayBroadcastWorker
 
 	sidekiq_throttle({
 	    # Allow maximum 10 concurrent jobs of this class at a time.
-	    :concurrency => { :limit => 2 },
+	    :concurrency => { :limit => 5 },
 	    # Allow maximum 3 jobs being processed within one second window.
-	    :threshold => { :limit => 3, :period => 1.second }
+	    :threshold => { :limit => 5, :period => 1.second }
   	})
 
 

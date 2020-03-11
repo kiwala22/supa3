@@ -1,5 +1,12 @@
 class UpdateGamerInfoWorker
    include Sidekiq::Worker
+   include Sidekiq::Throttled::Worker
+
+   sidekiq_throttle({
+       # Allow maximum 10 concurrent jobs of this class at a time.
+       :concurrency => { :limit => 10 }
+     })
+     
    sidekiq_options queue: "low"
    sidekiq_options retry: false
 
@@ -18,7 +25,7 @@ class UpdateGamerInfoWorker
       #       end
       #    end
       # end
-      Ticket.where.not(time: nil).find_each(batch_size: 1000) do |ticket|
+      (Ticket.where.not(time: nil) && Ticket.where("time != created_at")).find_each(batch_size: 1000) do |ticket|
          ticket.update_attributes(created_at: ticket.time)
       end
    end
