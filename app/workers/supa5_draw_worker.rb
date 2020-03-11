@@ -4,10 +4,10 @@ class DrawWorker
    sidekiq_options retry: false
 
    require 'send_sms'
-   MATCHED_FIVE = 200
-   MATCHED_FOUR = 2
-   MATCHED_THREE = 0
-   MATCHED_TWO = 0
+   MATCHED_FIVE = 500
+   MATCHED_FOUR = 400
+   MATCHED_THREE = 200
+   MATCHED_TWO = 2
    MATCHED_ONE = 0
 
 
@@ -37,10 +37,10 @@ class DrawWorker
             segment_offers = DrawOffer.where("expiry_time > ? AND segment = ? ",Time.now,gamer_segment)
             if segment_offers.present?
                #load new multipliers and execute
-               process_ticket(draw_id, draw_numbers, ticket, segment_offers.multiplier_three, segment_offers.multiplier_two, segment_offers.multiplier_one)
+               process_ticket(draw_id, draw_numbers, ticket, segment_offers.multiplier_five,segment_offers.multiplier_four,segment_offers.multiplier_three, segment_offers.multiplier_two, segment_offers.multiplier_one)
             else
               #execute the draw
-              process_ticket(draw_id, draw_numbers, ticket, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
+              process_ticket(draw_id, draw_numbers, ticket, MATCHED_FIVE , MATCHED_FOUR, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
 
             end
 
@@ -50,7 +50,7 @@ class DrawWorker
          #run normally
          Ticket.where("created_at <= ? AND created_at >= ? AND game = ?", end_time, start_time, "Supa5").find_each(batch_size: 1000) do |ticket|
             #execute the draw
-            process_ticket(draw_id, draw_numbers, ticket, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
+            process_ticket(draw_id, draw_numbers, ticket, MATCHED_FIVE , MATCHED_FOUR, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
 
          end
 
@@ -89,40 +89,42 @@ class DrawWorker
       number_matches = (draw_numbers & ticket_numbers).count()
       winning_number = draw_numbers.join("")
 
-      if number_matches == 5 && draw_numbers == ticket_numbers
-         win = (ticket.amount).to_i * matched_three
+      if ticket_numbers == draw_numbers #number_matches == 5 && draw_numbers == ticket_numbers
+         win = (ticket.amount).to_i * matched_five
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
-         message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the Supa Jackpot"
-         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+         message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5 Jackpot"
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID']) #change this
          #process payments
          win_after_taxes = (win.to_i * 0.85)
          DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
-      elsif number_matches == 4 && draw_numbers != ticket_numbers
-         win = (ticket.amount).to_i * matched_two
+      elsif (ticket_numbers[0..3] == draw_numbers[0..3]) &&  (ticket_numbers[0..4] != draw_numbers[0..4])
+         win = (ticket.amount).to_i * matched_four
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
-         message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers without sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the Supa Jackpot"
-         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+         message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers without sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5 Jackpot"
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
          #process payment
-         DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
+         win_after_taxes = (win.to_i * 0.85)
+         DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
-      elsif number_matches == 3
-         win = (ticket.amount).to_i * matched_two
+      elsif ticket_numbers[0..2] == draw_numbers[0..2]) &&  (ticket_numbers[0..3] != draw_numbers[0..3])
+         win = (ticket.amount).to_i * matched_three
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
-         message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the Supa Jackpot"
-         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+         message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5 Jackpot"
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
          #process payment
-         DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
+         win_after_taxes = (win.to_i * 0.85)
+         DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
-      elsif number_matches == 2
-         win = (ticket.amount).to_i * matched_one
+      elsif ticket_numbers[0..1] == draw_numbers[0..1]) &&  (ticket_numbers[0..2] != draw_numbers[0..2])
+         win = (ticket.amount).to_i * matched_two
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "Hi,#{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers this time. Play Now & win in the next 10mins + increase your Jackpot Entries"
-         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
          #process payment
          if win > 0
             DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
@@ -133,7 +135,7 @@ class DrawWorker
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "Hi,#{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers this time. Play Now & win in the next 10mins + increase your Jackpot Entries"
-         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
          #process payment
 
       end
