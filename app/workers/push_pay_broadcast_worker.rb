@@ -2,7 +2,7 @@ class PushPayBroadcastWorker
 	include Sidekiq::Worker
 	include Sidekiq::Throttled::Worker
 
-	sidekiq_options queue: "low"
+	sidekiq_options queue: "default"
 	sidekiq_options retry: false
 
 	sidekiq_throttle({

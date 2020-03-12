@@ -15,25 +15,28 @@ class SegmentPredictionWorker
       gamer = Gamer.find(id)
       tickets = Ticket.where("phone_number = ? and created_at >= ?", gamer.phone_number, (Time.now - 90.days)).order("created_at DESC")
       if tickets.blank?
-        gamer.update_attributes(segment: "F")
+        gamer.update_attributes(segment: "G")
       else
-        days = ((Time.now - tickets.first.time)/1.days).to_i
-        segment = find_segment(days)
+        ticket_time = tickets.first.time
+        segment = find_segment(ticket_time)
         gamer.update_attributes(segment: segment)
       end
    end
 
-   def find_segment(days)
-      case days
-      when 0..7
+   def find_segment(ticket_time)
+      days = ((Time.now - ticket_time)/1.days).to_i
+      start_of_week = Time.now.beginning_of_week
+      this_week = true if ticket_time >= start_of_week else false
+      case
+      when days <= 7 && this_week == true
          return "A"
-      when 8..14
+      when days <= 7 && this_week == false
          return "B"
-      when 15..30
+      when days >= 8 && days <= 14
          return "C"
-      when 31..60
+      when days >= 15 && days <= 30
          return "D"
-      when 61..90
+      when days >= 31 && days <= 60
          return "E"
       else
          return "F"
