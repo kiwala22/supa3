@@ -17,7 +17,7 @@ class SegmentPredictionWorker
       if tickets.blank?
         gamer.update_attributes(segment: "G")
       else
-        ticket_time = tickets.first.time
+        ticket_time = tickets.first.created_at
         segment = find_segment(ticket_time)
         gamer.update_attributes(segment: segment)
       end
