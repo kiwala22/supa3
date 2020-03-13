@@ -26,7 +26,7 @@ class SegmentPredictionWorker
    def find_segment(ticket_time)
       days = ((Time.now - ticket_time)/1.days).to_i
       start_of_week = Time.now.beginning_of_week
-      this_week = true if ticket_time >= start_of_week else false
+      this_week = ticket_time >= start_of_week
       case
       when days <= 7 && this_week == true
          return "A"
