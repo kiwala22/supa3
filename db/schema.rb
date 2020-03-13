@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_13_064159) do
+ActiveRecord::Schema.define(version: 2020_03_13_064944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -264,6 +264,7 @@ ActiveRecord::Schema.define(version: 2020_03_13_064159) do
     t.string "keyword"
     t.string "disbursement_reference"
     t.string "game", default: "Supa3"
+    t.string "segment"
     t.index ["amount"], name: "index_tickets_on_amount"
     t.index ["data"], name: "index_tickets_on_data"
     t.index ["draw_id"], name: "index_tickets_on_draw_id"
@@ -274,6 +275,7 @@ ActiveRecord::Schema.define(version: 2020_03_13_064159) do
     t.index ["paid"], name: "index_tickets_on_paid"
     t.index ["phone_number"], name: "index_tickets_on_phone_number"
     t.index ["reference"], name: "index_tickets_on_reference"
+    t.index ["segment"], name: "index_tickets_on_segment"
     t.index ["time"], name: "index_tickets_on_time"
     t.index ["win_amount"], name: "index_tickets_on_win_amount"
   end
