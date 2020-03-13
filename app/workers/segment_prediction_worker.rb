@@ -4,7 +4,7 @@ class SegmentPredictionWorker
 
    sidekiq_throttle({
        # Allow maximum 10 concurrent jobs of this class at a time.
-       :concurrency => { :limit => 10 }
+       :concurrency => { :limit => 20 }
      })
 
    sidekiq_options queue: "low"
