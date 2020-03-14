@@ -17,6 +17,7 @@ Rails.application.routes.draw do
    resources :gamers, only: [:index]
    resources :tickets, only: [:index, :update]
    resources :draws, only: [:index]
+   match 'supa5_draws' => "jackpot#supa5_draws", via: [:get]
    match 'jackpot' => "jackpot#index", via: [:get, :post]
    match 'jackpot_draws' => "jackpot#draws", via: [:get, :post]
    match 'download_tickets' => "jackpot#download_tickets", via: [:get, :post]
