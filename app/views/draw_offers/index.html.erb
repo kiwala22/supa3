@@ -11,6 +11,7 @@
         <th>Multiplier One</th>
         <th>Multiplier Two</th>
         <th>Multiplier Three</th>
+        <th>Segment</th>
         <th>Expiry Time</th>
         <th>Create Time</th>
       </tr>
@@ -22,6 +23,7 @@
           <th><%= offer.multiplier_one %></th>
           <th><%= offer.multiplier_two %></th>
           <th><%= offer.multiplier_three %></th>
+          <th><%= offer.segment %></th>
           <th><%= offer.expiry_time.to_datetime.strftime("%b %d, %Y %I:%M%P") %></th>
           <th><%= offer.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P") %></th>
         </tr>

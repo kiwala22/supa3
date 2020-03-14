@@ -32,7 +32,7 @@ class DrawWorker
          Ticket.where("created_at <= ? AND created_at >= ?", end_time, start_time).find_each(batch_size: 1000) do |ticket|
             #find the gamer segment
             gamer_segment = Gamer.find(ticket.gamer_id).segment
-            segment_offers = DrawOffer.where("expiry_time > ? AND segment = ? ",Time.now,gamer_segment)
+            segment_offers = DrawOffer.where("expiry_time > ? AND segment = ? ",Time.now, gamer_segment).last
             if segment_offers.present?
                #load new multipliers and execute
                process_ticket(draw_id, draw_numbers, ticket, segment_offers.multiplier_three, segment_offers.multiplier_two, segment_offers.multiplier_one)
