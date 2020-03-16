@@ -13,35 +13,65 @@
 </head>
 
 <body class="jackpot">
-   <div class="">
-      <div class="">
-         <div class="">
-
+   <div class="wrapper">
+      <div class="row">
+         <div class="col-md-2">
+            <%= image_tag("/supa5_logo.png", width: "100%" ,:alt => "Supa 5 Logo") %>
          </div>
-         <div class="">
+         <div class="col-md-10">
 
          </div>
       </div>
-      <div class="">
-         <div class="md-2">
-
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="panel panel-default jackpot">
+               <div class="panel-body">
+                  <!-- add the form for search -->
+                  <%= form_tag(big_five_path, :method => "post", remote: true) do %>
+                  <%= label_tag "Start"%>
+                  <%= text_field_tag :start_date, params[:start_date],  class: 'form-control', id: "broadcast_schedule", required: true%>
+                  <br>
+                  <%= label_tag "End"%>
+                  <%= text_field_tag :end_date, params[:end_date], class: 'form-control', id: "broadcast_schedule_cp", required: true%>
+                  <br>
+                  <%= label_tag "Winners"%>
+                  <%= number_field_tag :gamers, params[:gamers], class: 'form-control', required: true  %>
+                  <br>
+                  <br>
+                  <%= submit_tag "Run Draw",class: 'btn-lg btn btn-default jackpot', id: "supa_draw_button", :name => nil %>
+                  <% end %>
+               </div>
+            </div>
          </div>
-         <div class="md-10">
-            <div class="row">
+         <div class="col-lg-8">
+            <div class="panel panel-default jackpot">
+               <div class="panel-body">
+                  <div id="big_five">
 
+                  </div>
+                  <div class="panel panel-default jackpot">
+                     <div class="panel-body">
+                        <div id="jackpot_picker">
+                           <!-- add the form for search -->
+                           <%= form_tag(big_five_path, :method => "post", class: "form-inline", remote: true) do %>
+                           <%= text_field_tag :gamers, params[:gamers], class: 'form-control jackpot-num', required: true  %>
+                           <%= text_field_tag :gamers, params[:gamers], class: 'form-control jackpot-num', required: true  %>
+                           <%= text_field_tag :gamers, params[:gamers], class: 'form-control jackpot-num', required: true  %>
+                           <%= text_field_tag :gamers, params[:gamers], class: 'form-control jackpot-num', required: true  %>
+                           <%= text_field_tag :gamers, params[:gamers], class: 'form-control jackpot-num', required: true  %>
+                           <%= submit_tag "Draw",class: 'form-control jackpot-num' %>
+                           <% end %>
+                        </div>
+                     </div>
+                  </div>
+               </div>
             </div>
-            <div class="row">
 
-            </div>
          </div>
       </div>
    </div>
    <!-- =============== APP SCRIPTS ===============-->
    <%= javascript_include_tag 'application' %>
-   <%= javascript_include_tag 'echarts.min' %>
-   <%= javascript_include_tag 'analytics' %>
-   <%= javascript_include_tag 'revenues' %>
-   <%= javascript_include_tag 'ticket_analytics' %>
 </body>
 
 </html>

@@ -18,6 +18,17 @@ class JackpotController < ApplicationController
       render layout: false
    end
 
+   def big_five_winners
+      start_date = DateTime.strptime(params[:start_date],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S")
+      end_date = DateTime.strptime(params[:end_date],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S")
+      gamers = (params[:gamers]).to_i
+      @tickets = Ticket.where("created_at >= ? and created_at <= ? AND game = ?", start_date, end_date, "Supa5").order("RANDOM()").limit(gamers)
+      #persist the winners
+      respond_to do |format|
+         format.js
+       end
+   end
+
    def download_tickets
       #pass whole tickets object for download
       respond_to do |format|
