@@ -31,7 +31,7 @@
 							<td><%= broadcast.predicted_revenue_lower %>,
 							<%= broadcast.predicted_revenue_upper %></td>
 						<% end %>
-						<% if broadcast.status == "PENDING" %>
+						<% if (broadcast.status == "PENDING" || broadcast.status == "PROCESSING") %>
 							<td>
 								<div class="label label-warning">
 									<%= broadcast.status%>
