@@ -1,46 +1,45 @@
 class SegmentPredictionWorker
-    include Sidekiq::Worker
-    sidekiq_options queue: "low"
-    sidekiq_options retry: 3
-    require "httparty"
+   include Sidekiq::Worker
+   include Sidekiq::Throttled::Worker
 
-    def perform(id)
-       user = Gamer.find(id)
-       base_url = "http://167.71.136.242/predict"
-       time_limit = (Time.now - 90.days)
-       segment_check_time = (Time.now - 30.days)
-       tickets = Ticket.select("phone_number, amount, time").where("phone_number = ? and time >= ?", user.phone_number, time_limit).order(time: :desc) # do not use select, just pull all of them, and simply remove unwanted columns
-       results = Result.select("phone_number, matches, time").where("phone_number = ? and time >= ?", user.phone_number, time_limit).order(time: :desc) # same as above since not indexed
-       bulk = Bulk.select("phone_number, time").where("phone_number = ? and time >= ?", user.phone_number, time_limit).order(time: :desc)
-       if tickets.blank? && user.created_at < segment_check_time
-         user.update_attributes(segment: "F", predicted_revenue: 0)
-       else
-         #convert tickets and results to json
-         payload = {'tickets' => tickets, 'results' => results, 'bulk' => bulk}.to_json(:except => :id)
-         #make request to AI server
-         response = HTTParty.post(base_url, {body: payload ,headers: { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}})
-         result = JSON.parse(response.body)
-         probability = result["probability"].round(2)
-         revenue = (result["revenue"]).to_i
-         segment = find_segment(probability)
-         user.update_attributes(segment: segment, predicted_revenue: revenue)
-       end
-    end
+   sidekiq_throttle({
+       # Allow maximum 10 concurrent jobs of this class at a time.
+       :concurrency => { :limit => 10 }
+     })
 
-    def find_segment(probability)
-       case
-       when probability >= 0.80
+   sidekiq_options queue: "low"
+   sidekiq_options retry: 3
+   require "httparty"
+
+   def perform(id)
+      gamer = Gamer.find(id)
+      tickets = Ticket.where("phone_number = ? and created_at >= ?", gamer.phone_number, (Time.now - 90.days)).order("created_at DESC")
+      if tickets.blank?
+        gamer.update_attributes(segment: "G")
+      else
+        ticket_time = tickets.first.time
+        segment = find_segment(ticket_time)
+        gamer.update_attributes(segment: segment)
+      end
+   end
+
+   def find_segment(ticket_time)
+      days = ((Time.now - ticket_time)/1.days).to_i
+      start_of_week = Time.now.beginning_of_week
+      this_week = true if ticket_time >= start_of_week else false
+      case
+      when days <= 7 && this_week == true
          return "A"
-       when probability < 0.80 && probability >= 0.60
+      when days <= 7 && this_week == false
          return "B"
-       when probability < 0.60 && probability >= 0.40
+      when days >= 8 && days <= 14
          return "C"
-       when probability < 0.40 && probability >= 0.20
+      when days >= 15 && days <= 30
          return "D"
-       when probability < 0.2
+      when days >= 31 && days <= 60
          return "E"
-       else
+      else
          return "F"
-       end
-    end
- end
+      end
+   end
+end

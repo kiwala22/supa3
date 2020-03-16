@@ -1,4 +1,4 @@
-class DrawWorker
+class Supa5DrawWorker
    include Sidekiq::Worker
    sidekiq_options queue: "high"
    sidekiq_options retry: false
@@ -20,7 +20,7 @@ class DrawWorker
       draw_id = @draw.id
       #generate random number for winnings
       draw_numbers = []
-      while draw_numbers.length != 5
+      while (draw_numbers.length != 5 || draw_numbers == [1,2,3,4,5] || Draw.where("winning_number = ? AND created_at >= ?", draw_numbers.join(""), Time.now-24.hours).exists?)
            draw_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(5).map(&:to_i)
       end
 
@@ -74,11 +74,13 @@ class DrawWorker
       one_match = Ticket.where(draw_id: draw_id, number_matches: 1).count()
       two_match = Ticket.where(draw_id: draw_id, number_matches: 2).count()
       three_match = Ticket.where(draw_id: draw_id, number_matches: 3).count()
+      four_match = Ticket.where(draw_id: draw_id, number_matches: 4).count()
+      five_match = Ticket.where(draw_id: draw_id, number_matches: 5).count()
       new_users = Gamer.where("created_at <= ? AND created_at >= ?", end_time, start_time).count()
       winning_number = draw_numbers.join("")
 
-      @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match, ticket_count: ticket_count, mtn_tickets: mtn_tickets,
-      airtel_tickets: airtel_tickets, users: unique_users, rtp: rtp, winning_number: winning_number, new_users: new_users)
+      @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match, four_match: four_match, five_match: five_match, ticket_count: ticket_count, mtn_tickets: mtn_tickets,
+      airtel_tickets: airtel_tickets, users: unique_users, rtp: rtp, winning_number: winning_number, new_users: new_users, game: "Supa5")
 
    end
 
@@ -109,7 +111,7 @@ class DrawWorker
          win_after_taxes = (win.to_i * 0.85)
          DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
-      elsif ticket_numbers[0..2] == draw_numbers[0..2]) &&  (ticket_numbers[0..3] != draw_numbers[0..3])
+      elsif (ticket_numbers[0..2] == draw_numbers[0..2]) &&  (ticket_numbers[0..3] != draw_numbers[0..3])
          win = (ticket.amount).to_i * matched_three
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
@@ -119,7 +121,7 @@ class DrawWorker
          win_after_taxes = (win.to_i * 0.85)
          DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
-      elsif ticket_numbers[0..1] == draw_numbers[0..1]) &&  (ticket_numbers[0..2] != draw_numbers[0..2])
+      elsif (ticket_numbers[0..1] == draw_numbers[0..1]) &&  (ticket_numbers[0..2] != draw_numbers[0..2])
          win = (ticket.amount).to_i * matched_two
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message

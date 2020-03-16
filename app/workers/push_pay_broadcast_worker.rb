@@ -1,6 +1,6 @@
 class PushPayBroadcastWorker
 	include Sidekiq::Worker
-	sidekiq_options queue: "low"
+	sidekiq_options queue: "default"
 	sidekiq_options retry: false
 
 	require "mobile_money/mtn_ecw"

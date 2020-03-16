@@ -20,7 +20,7 @@ class AutoJobsController < ApplicationController
 
    def run_predictions
       Gamer.find_each(batch_size: 1000) do |user|
-         SegmentPredictionWorker.perform_async(user.phone_number)
+         SegmentPredictionWorker.perform_async(user.id)
       end
       render body: nil
    end
@@ -42,6 +42,7 @@ class AutoJobsController < ApplicationController
       end_time = Time.now.localtime
 
       DrawWorker.perform_async(start_time, end_time)
+      Supa5DrawWorker.perform_async(start_time, end_time)
       render body: nil
    end
 
