@@ -30,8 +30,8 @@ server '134.209.22.183', user: 'deploy', roles: %w{app db web}
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-set :deploy_to, '/var/www/html/supa_ai'
-set :branch, "master"
+set :deploy_to, '/var/www/html/test_supa'
+set :branch, "staging"
 
 
 # Custom SSH Options
