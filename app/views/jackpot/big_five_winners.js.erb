@@ -1,2 +1,3 @@
 $('#supa_draw_button').remove()
 $('#big_five').append("<%= j render 'big_five_winners', winners: @tickets %>")
+$('#jackpot_picker').append("<%= j render 'supa_five_jackpot_form', locals: {start: @start_date, end: @stop_date} %>")

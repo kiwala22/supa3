@@ -49,24 +49,22 @@
                   <div id="big_five">
 
                   </div>
-                  <div class="panel panel-default jackpot">
-                     <div class="panel-body">
-                        <div id="jackpot_picker">
-                           <!-- add the form for search -->
-                           <%= form_tag(big_five_path, :method => "post", class: "form-inline", remote: true) do %>
-                           <%= text_field_tag :gamers, params[:gamers], class: 'form-control jackpot-num', required: true  %>
-                           <%= text_field_tag :gamers, params[:gamers], class: 'form-control jackpot-num', required: true  %>
-                           <%= text_field_tag :gamers, params[:gamers], class: 'form-control jackpot-num', required: true  %>
-                           <%= text_field_tag :gamers, params[:gamers], class: 'form-control jackpot-num', required: true  %>
-                           <%= text_field_tag :gamers, params[:gamers], class: 'form-control jackpot-num', required: true  %>
-                           <%= submit_tag "Draw",class: 'form-control jackpot-num' %>
-                           <% end %>
-                        </div>
-                     </div>
+               </div>
+            </div>
+            <div class="panel panel-default jackpot">
+               <div class="panel-body">
+                  <div id="jackpot_picker">
+
                   </div>
                </div>
             </div>
+            <div class="panel panel-default jackpot">
+               <div class="panel-body">
+                  <div id="jackpot_results">
 
+                  </div>
+               </div>
+            </div>
          </div>
       </div>
    </div>

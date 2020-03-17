@@ -23,10 +23,22 @@ class JackpotController < ApplicationController
       end_date = DateTime.strptime(params[:end_date],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S")
       gamers = (params[:gamers]).to_i
       @tickets = Ticket.where("created_at >= ? and created_at <= ? AND game = ?", start_date, end_date, "Supa5").order("RANDOM()").limit(gamers)
+      @start = params[:start_date]
+      @end  = params[:end_date]
       #persist the winners
       respond_to do |format|
          format.js
        end
+   end
+
+   def supa_five_jackpot
+      winning_number = params[:first] + params[:second] + params[:third] + params[:fourth] + params[:fifth]
+      winning_number = winning_number.gsub(/\s+/, '')
+      @winners = Ticket.where("created_at >= ? and created_at <= ? AND game = ? AND data = ?", params[:start_date], params[:end_date], "Supa5", winning_number)
+      respond_to do |format|
+         format.js
+       end
+
    end
 
    def download_tickets
