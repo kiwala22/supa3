@@ -96,3 +96,4 @@ gem 'scout_apm'
 gem 'openssl'
 gem "audited", "~> 4.9"
 gem "roo", "~> 2.8.0"
+gem "sidekiq-throttled"
