@@ -6,7 +6,7 @@ class Disbursement < ApplicationRecord
 
 	def self.send_daily_report
 		disbursements = Disbursement.where("created_at <= ? AND created_at >= ?", Date.yesterday.end_of_day, Date.yesterday.beginning_of_day)
-		file_name =  "#{Rails.root}/public/reports/disbursements-#{Date.yesterday.strftime('%d-%m-%Y')}.csv"
+		file_name =  "/var/www/html/supa_ai/shared/public/reports/disbursements-#{Date.yesterday.strftime('%d-%m-%Y')}.csv"
 		pp file_name
 		CSV.open(file_name, 'w') do |csv|
 			csv << ["Id","Ext Transaction","Transaction","Currency","Amount","Phone Number","Status","Created At","Updated At","Network"]

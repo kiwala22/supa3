@@ -10,8 +10,12 @@ class TicketWorker
 
       case
       when amount.to_i >= 0 && amount.to_i < 1000
-         #keep the money and sms the user
-         message_content = "Your recent wager of UGX.#{amount} is below the minimum of UGX.1000. Please increase the amount and try again"
+         #keep the money and sms the user and add name if gamer number is for MTN
+         if @@gamer.phone_number =~ /^(25677|25678|25639)/
+           message_content = @@gamer.first_name + " Your recent wager of UGX.#{amount} is below the minimum of UGX.1000. Please increase the amount and try again"
+         else
+           message_content = "Your recent wager of UGX.#{amount} is below the minimum of UGX.1000. Please increase the amount and try again"
+         end
          SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
       when amount.to_i > 50000
@@ -49,8 +53,12 @@ class TicketWorker
       if data.length == 3 #should also check that its below 10
          ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword, segment: @@gamer.segment)
          if ticket.save
-            #Send SMS with confirmation
-            message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
+            #Send SMS with confirmation and add gamer name if number is for MTN
+            if @@gamer.phone_number =~ /^(25677|25678|25639)/
+              message_content = @@gamer.first_name + " Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
+            else
+              message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
+            end
             if SendSMS.process_sms_now(receiver: @@gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
                ticket.update_attributes(confirmation: true)
             end
@@ -61,8 +69,12 @@ class TicketWorker
          random_data = generate_random_data
          ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword, segment: @@gamer.segment)
          if ticket.save
-            #Send SMS with the confirmation and random number
-            message_content = "We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}, Ticket ID: #{reference} Thank you for playing #{ENV['GAME']}."
+            #Send SMS with the confirmation and random number and add gamer name if number is for MTN
+            if @@gamer.phone_number =~ /^(25677|25678|25639)/
+              message_content = @@gamer.first_name + " We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}, Ticket ID: #{reference} Thank you for playing #{ENV['GAME']}."
+            else
+              message_content = "We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}, Ticket ID: #{reference} Thank you for playing #{ENV['GAME']}."
+            end
             if SendSMS.process_sms_now(receiver: @@gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
                ticket.update_attributes(confirmation: true)
             end
