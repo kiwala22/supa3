@@ -1,42 +1,10 @@
 class AutoJobsController < ApplicationController
    before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :create_gamers, :update_tickets, :update_results, :update_user_info, :generate_daily_reports, :low_credit_notification]
    skip_before_action :verify_authenticity_token
-
-   require 'mobile_money/mtn_ecw'
-   require 'mobile_money/airtel_uganda'
    require 'send_sms'
 
    def process_broadcasts
-      jobs = Broadcast.where('status = ? AND execution_time <= ?', "PENDING", Time.now)
-      if !jobs.empty?
-         jobs.each do |job|
-            #first update the status of the message and then push it to the worker
-            job.update_attribute(:status, "PROCESSING")
-            if !job.segment.nil?
-              gamers = Gamer.where(segment: job.segment.split(","))
-            end
-            if !job.predicted_revenue_lower.nil? && job.predicted_revenue_upper.nil?
-              lower = job.predicted_revenue_lower
-              gamers = Gamer.where("predicted_revenue >= ?",lower)
-            end
-            if !job.predicted_revenue_lower.nil? && !job.predicted_revenue_upper.nil?
-              lower = job.predicted_revenue_lower
-              upper = job.predicted_revenue_upper
-              gamers = Gamer.where("predicted_revenue >= ? and predicted_revenue <= ?",lower, upper)
-            end
-            contacts = 0
-            gamers.each do |gamer|
-              if gamer.phone_number =~ /^(25677|25678|25639)/
-                message = gamer.first_name + ", " + job.message
-              else
-                message = job.message
-              end
-              BroadcastWorker.perform_async(gamer.phone_number, message)
-              contacts = (contacts + 1)
-            end
-            job.update_attributes(contacts: contacts, status: "SUCCESS")
-         end
-      end
+      BroadcastProcessWorker.perform_async
       render body: nil
    end
 
@@ -91,21 +59,7 @@ class AutoJobsController < ApplicationController
 
    def low_credit_notification
       #check balances on both payout accounts and check if any of them is below threshold level
-      threshold = 200000
-      message_content = "Hello BetCity, your payout balances are currently below threshold level, please top up. Thank you."
-      users = ["256786481312", "256776582036", "256785724466", "256754400108"]
-      mtn_balance = MobileMoney::MtnEcw.get_payout_balance
-      airtel_balance = MobileMoney::AirtelUganda.get_payout_balance
-      if (mtn_balance != nil || mtn_balance != false || mtn_balance != true ) && (airtel_balance != nil || airtel_balance != false || airtel_balance != true)
-        @mtn_balance = mtn_balance[:amount]
-        @airtel_balance = airtel_balance[:amount]
-        if @mtn_balance.to_i < threshold || @airtel_balance.gsub(/,/, '').to_i < threshold
-          users.each do |user|
-            #send a notification message to each user
-            SendSMS.process_sms_now(transaction: false, receiver: user, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
-          end
-        end
-      end
+      BalanceNotificationWorker.perform_async
       render body: nil
    end
 end
