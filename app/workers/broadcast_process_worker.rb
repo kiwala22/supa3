@@ -23,7 +23,7 @@ class BroadcastProcessWorker
           end
           contacts = 0
           gamers.each do |gamer|
-            if gamer.phone_number =~ /^(25677|25678|25639)/
+            if !gamer.first_name.nil?
               message = gamer.first_name + ", " + job.message
             else
               message = job.message
