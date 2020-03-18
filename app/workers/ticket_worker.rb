@@ -53,7 +53,7 @@ class TicketWorker
          if ticket.save
             #Send SMS with confirmation
             message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
-            if SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
+            if SendSMS.process_sms_now(receiver: @@gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
                ticket.update_attributes(confirmation: true)
             end
          end
@@ -62,8 +62,8 @@ class TicketWorker
          ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword, game: "Supa5")
          if ticket.save
             #Send SMS with confirmation
-            message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
-            if SendSMS.process_sms_now(receiver: @@gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
+            message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME5']}"
+            if SendSMS.process_sms_now(receiver: @@gamer.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID']) == true
                ticket.update_attributes(confirmation: true)
             end
          end
