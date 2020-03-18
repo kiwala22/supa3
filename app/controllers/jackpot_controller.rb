@@ -1,6 +1,6 @@
 class JackpotController < ApplicationController
    before_action :authenticate_user!
-   authorize_resource :class => false
+   # authorize_resource :class => false
    #assign tickets object to global variable
    $tickets
    def index
@@ -26,6 +26,9 @@ class JackpotController < ApplicationController
       @start = params[:start_date]
       @end  = params[:end_date]
       #persist the winners
+      @tickets.each do |winner|
+        Jackpot.create(first_name: winner.first_name, last_name: winner.last_name, phone_number: winner.phone_number, ticket_id: winner.id, ticket_reference: winner.reference, game: "Supa5")
+      end
       respond_to do |format|
          format.js
        end
@@ -35,6 +38,9 @@ class JackpotController < ApplicationController
       winning_number = params[:first] + params[:second] + params[:third] + params[:fourth] + params[:fifth]
       winning_number = winning_number.gsub(/\s+/, '')
       @winners = Ticket.where("created_at >= ? and created_at <= ? AND game = ? AND data = ?", params[:start_date], params[:end_date], "Supa5", winning_number)
+      @winners.each do |winner|
+        Jackpot.create(first_name: winner.first_name, last_name: winner.last_name, phone_number: winner.phone_number, ticket_id: winner.id, ticket_reference: winner.reference, game: "Supa5", jackpot: true)
+      end
       respond_to do |format|
          format.js
        end
