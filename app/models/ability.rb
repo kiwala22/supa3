@@ -11,7 +11,7 @@ class Ability
 
 
       if user.role == "manager"
-         can :manage, :jackpot
+         can :manage, Jackpot
          can :manage, Ticket
          can :manage, DrawOffer
          can :manage, Gamer

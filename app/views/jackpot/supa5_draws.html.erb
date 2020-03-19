@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+
+   <title>SUPA 5 |  JackPot Draw </title>
+   <%= stylesheet_link_tag  "application", :media => "all" %>
+   <%= csrf_meta_tags %>
+
+</head>
+
+<body class="jackpot">
+   <div class="wrapper">
+      <div class="row">
+         <div class="col-md-2">
+            <%= image_tag("/supa5_logo.png", width: "100%" ,:alt => "Supa 5 Logo") %>
+         </div>
+         <div class="col-md-10">
+
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="panel panel-default jackpot">
+               <div class="panel-body">
+                  <!-- add the form for search -->
+                  <%= form_tag(big_five_path, :method => "post", remote: true) do %>
+                  <%= label_tag "Start"%>
+                  <%= text_field_tag :start_date, params[:start_date],  class: 'form-control', id: "broadcast_schedule", required: true%>
+                  <br>
+                  <%= label_tag "End"%>
+                  <%= text_field_tag :end_date, params[:end_date], class: 'form-control', id: "broadcast_schedule_cp", required: true%>
+                  <br>
+                  <%= label_tag "Winners"%>
+                  <%= number_field_tag :gamers, params[:gamers], class: 'form-control', required: true  %>
+                  <br>
+                  <br>
+                  <%= submit_tag "Run Draw",class: 'btn-lg btn btn-default jackpot', id: "supa_draw_button", :name => nil %>
+                  <% end %>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-8">
+            <div class="panel panel-default jackpot">
+               <div class="panel-body">
+                  <div id="big_five">
+
+                  </div>
+               </div>
+            </div>
+            <div class="panel panel-default jackpot">
+               <div class="panel-body">
+                  <div id="jackpot_picker">
+
+                  </div>
+               </div>
+            </div>
+            <div class="panel panel-default jackpot">
+               <div class="panel-body">
+                  <div id="jackpot_results">
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- =============== APP SCRIPTS ===============-->
+   <%= javascript_include_tag 'application' %>
+</body>
+</html>

@@ -74,11 +74,23 @@
                <span data-localize="sidebar.nav.DASHBOARD">Gamers</span>
             </a>
          </li>
-         <li class="<%= 'active' if controller.controller_name == 'jackpot' %>" data-step="1" >
-            <a href="<%= jackpot_path %>">
+         <li class="<%= 'active' if controller.controller_name == 'jackpot' %>" data-step="2" >
+            <a href="#ai_jackpot" title="Layouts" data-toggle="collapse">
                <em class="fa fa-trophy" aria-hidden="true"></em>
-               <span data-localize="sidebar.nav.DASHBOARD">Jackpot</span>
+               <span>Jackpot</span>
             </a>
+            <ul id="ai_jackpot" class="nav sidebar-subnav collapse">
+               <li>
+                  <a href="<%=jackpot_path %>">
+                     <span>Supa3</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="<%= supa5_draws_path %>">
+                     <span>Supa5</span>
+                  </a>
+               </li>
+            </ul>
          </li>
          <li class="<%= 'active' if controller.controller_name == 'draw_offers' %>" data-step="2" >
             <a href="#ai_promotions" title="Layouts" data-toggle="collapse">

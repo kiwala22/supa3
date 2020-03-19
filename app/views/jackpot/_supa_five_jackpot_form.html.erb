@@ -1,0 +1,11 @@
+<!-- add the form for search -->
+<%= form_tag(supa_five_jackpot_path, :method => "post", class: "form-inline", id: "jackpot_form", remote: true) do %>
+   <%= hidden_field_tag :start_date, @start, class: 'form-control jackpot-num', required: true  %>
+   <%= hidden_field_tag :end_date, @end, class: 'form-control jackpot-num', required: true  %>
+   <%= text_field_tag :first, 0, class: 'form-control jackpot-num', required: true  %>
+   <%= text_field_tag :second, 0, class: 'form-control jackpot-num', required: true  %>
+   <%= text_field_tag :third, 0, class: 'form-control jackpot-num', required: true  %>
+   <%= text_field_tag :fourth, 0, class: 'form-control jackpot-num', required: true  %>
+   <%= text_field_tag :fifth, 0, class: 'form-control jackpot-num', required: true  %>
+   <%= submit_tag "Draw",class: 'btn-lg btn btn-default big_jackpot' %>
+<% end %>

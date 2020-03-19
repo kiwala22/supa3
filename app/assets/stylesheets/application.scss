@@ -27,3 +27,74 @@
 .rtp_red {
   color: red;
 }
+
+body.jackpot {
+   background-image: linear-gradient(90deg, #f45e50, #ffd80f) !important;
+}
+
+.jackpot > .wrapper {
+   padding-bottom: 5%;
+}
+
+.panel.jackpot {
+  margin-bottom: 21px;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 4px;
+  margin-left: 15px !important;
+  color: #ffff !important;
+  box-shadow: none !important;
+}
+
+.btn.jackpot {
+
+    width: 100%;
+    font-size: 1.2em;
+    border-color: #ed1c24;
+    color: #ed1c24;
+    background-color: #fff200;
+    font-weight: bolder;
+    border-radius: 6px;
+    padding: 15px 10px !important;
+    border-width: 2px;
+}
+
+.btn.big_jackpot {
+
+    width: 12%;
+    font-size: 1.2em;
+    border-color: #ed1c24;
+    color: #ed1c24;
+    background-color: #fff200;
+    font-weight: bolder;
+    border-radius: 6px;
+    padding: 15px 10px !important;
+    border-width: 2px;
+}
+
+table.winner_table  {
+   border: none;
+   color: #ffff !important;
+   text-align: center;
+}
+
+table.winner_table  > thead > tr > th {
+   color: #ffff !important;
+   text-align: center;
+   border: none;
+}
+
+.form-control.jackpot-num {
+   width: 12%;
+   padding-top: 6%; /* 1:1 Aspect Ratio */
+   position: relative;
+   margin: 2%;
+   text-align: center;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 6%;
+    font-weight: 900;
+    font-size: 2.5em;
+    border-color: #ed1c24;
+    border-width: 2px;
+}

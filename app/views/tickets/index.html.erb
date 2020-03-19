@@ -102,6 +102,7 @@
 				<th>Last Name</th>
 				<th>Phone Number</th>
 				<th>Segment</th>
+				<th>Disbursement Reference</th>
 				<th>Ticket ID</th>
 				<th>Selection</th>
 				<th>Winning Number</th>
@@ -123,6 +124,7 @@
 				<td><%= ticket.last_name %></td>
 				<td><%= ticket.phone_number %></td>
 				<td><%= ticket.segment %></td>
+				<td><%= ticket.disbursement_reference %></td>
 				<td><%= ticket.reference %></td>
 				<td><%= ticket.data %></td>
 				<td><%= ticket.winning_number %></td>
@@ -161,7 +163,7 @@
 				<% end %>
 				<td>
 					<% if ticket.win_amount > 0 && ticket.paid == false %>
-					<%= link_to "Pay", ticket_path(id: ticket.id, amount: ticket.win_amount, gamer: ticket.gamer_id), method: :put, :remote => true, :class => 'btn btn-info payment' %>
+					<%= link_to "Pay", ticket_path(id: ticket.id, amount: ticket.win_amount, gamer: ticket.gamer_id, network: ticket.network, transaction_id: ticket.disbursement_reference), method: :put, :remote => true, :class => 'btn btn-info payment' %>
 					<!-- <#%= link_to "Pay", ticket_path(id: ticket.id, amount: ticket.win_amount, gamer: ticket.gamer_id), method: :put, :class => 'btn btn-info' %> -->
 					<% end %>
 				</td>

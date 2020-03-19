@@ -41,8 +41,10 @@ class TicketWorker
       #remove all spaces, leading, trailing and between spaces
       message = message.gsub(/\s+/, '')
       data = message.scan(/\d/).join('')
-      if data.length > 3
+      if data.length >= 3 && data.length < 5
          data = data[0..2]
+      elsif data.length >= 5
+         data = data[0..4]
       end
       keyword = message.gsub(/\d+/, '')
 
@@ -51,7 +53,7 @@ class TicketWorker
       max_win = amount.to_i * 200
 
       if data.length == 3 #should also check that its below 10
-         ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword, segment: @@gamer.segment)
+         ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword, game: "Supa3",segment: @@gamer.segment)
          if ticket.save
             #Send SMS with confirmation and add gamer name if number is for MTN
             if !@@gamer.first_name.nil?
@@ -64,10 +66,20 @@ class TicketWorker
             end
          end
 
+      elsif data.length == 5
+         ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword, game: "Supa5")
+         if ticket.save
+            #Send SMS with confirmation
+            message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME5']}"
+            if SendSMS.process_sms_now(receiver: @@gamer.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID']) == true
+               ticket.update_attributes(confirmation: true)
+            end
+         end
+
       else
          #generate random numbers
          random_data = generate_random_data
-         ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword, segment: @@gamer.segment)
+         ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword, game: "Supa3",segment: @@gamer.segment)
          if ticket.save
             #Send SMS with the confirmation and random number and add gamer name if number is for MTN
             if !@@gamer.first_name.nil?

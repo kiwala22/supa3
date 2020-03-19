@@ -26,6 +26,7 @@ class AutoJobsController < ApplicationController
       end_time = Time.now.localtime
 
       DrawWorker.perform_async(start_time, end_time)
+      Supa5DrawWorker.perform_async(start_time, end_time)
       render body: nil
    end
 
