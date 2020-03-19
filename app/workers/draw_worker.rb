@@ -76,7 +76,7 @@ class DrawWorker
       winning_number = draw_numbers.join("")
 
       @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match, ticket_count: ticket_count, mtn_tickets: mtn_tickets,
-      airtel_tickets: airtel_tickets, users: unique_users, rtp: rtp, winning_number: winning_number, new_users: new_users)
+      airtel_tickets: airtel_tickets, users: unique_users, rtp: rtp, winning_number: winning_number, new_users: new_users, game: "Supa3")
 
    end
 
