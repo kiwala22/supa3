@@ -31,24 +31,24 @@ class TicketsController < ApplicationController
      end
 
      #find the disbursement
-     @disbursement = Disbursement.where(transaction_id: transaction_id)
+     #@disbursement = Disbursement.where(transaction_id: transaction_id)
 
      #find the ticket
      @ticket = Ticket.find(ticket_id)
 
      #check which network ticket belongs to before checking transaction status
      if network == "MTN Uganda"
-       @disbursement.update_attributes(status: "FAILED")
+       #@disbursement.update_attributes(status: "FAILED")
        DisbursementWorker.perform_async(gamer_id, win_amount, ticket_id)
      elsif network == "Airtel Uganda"
        result = MobileMoney::AirtelUganda.check_transaction_status(transaction_id)
        if result[:status] == "TF"
          #call disbursement worker and update pending disbursement to failed
-         @disbursement.update_attributes(status: "FAILED")
+         #@disbursement.update_attributes(status: "FAILED")
          DisbursementWorker.perform_async(gamer_id, win_amount, ticket_id)
        elsif result[:status] == "TS"
          #update ticket to paid true and update disbursement to success
-         @disbursement.update_attributes(status: "SUCCESS")
+         #@disbursement.update_attributes(status: "SUCCESS")
          @ticket.update_attributes(paid: true)
        end
      end
