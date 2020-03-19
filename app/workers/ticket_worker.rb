@@ -67,6 +67,7 @@ class TicketWorker
          end
 
       elsif data.length == 5
+         max_win = amount.to_i * 500
          ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword, game: "Supa5")
          if ticket.save
             #Send SMS with confirmation
