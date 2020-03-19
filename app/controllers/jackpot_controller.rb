@@ -35,9 +35,11 @@ class JackpotController < ApplicationController
    end
 
    def supa_five_jackpot
+      start_date = DateTime.strptime(params[:start_date],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S")
+      end_date = DateTime.strptime(params[:end_date],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S")
       winning_number = params[:first] + params[:second] + params[:third] + params[:fourth] + params[:fifth]
       winning_number = winning_number.gsub(/\s+/, '')
-      @winners = Ticket.where("created_at >= ? and created_at <= ? AND game = ? AND data = ?", params[:start_date], params[:end_date], "Supa5", winning_number)
+      @winners = Ticket.where("created_at >= ? and created_at <= ? AND game = ? AND data = ?", start_date, end_date, "Supa5", winning_number)
       @winners.each do |winner|
         Jackpot.create(first_name: winner.first_name, last_name: winner.last_name, phone_number: winner.phone_number, ticket_id: winner.id, ticket_reference: winner.reference, game: "Supa5", jackpot: true)
       end
