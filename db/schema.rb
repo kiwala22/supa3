@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_13_072208) do
+ActiveRecord::Schema.define(version: 2020_03_19_065743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,6 +175,18 @@ ActiveRecord::Schema.define(version: 2020_03_13_072208) do
     t.string "first_name"
     t.string "last_name"
     t.index ["phone_number"], name: "index_gamers_on_phone_number", unique: true
+  end
+
+  create_table "jackpots", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone_number"
+    t.string "ticket_id"
+    t.string "game"
+    t.boolean "jackpot", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "ticket_reference"
   end
 
   create_table "messages", force: :cascade do |t|
