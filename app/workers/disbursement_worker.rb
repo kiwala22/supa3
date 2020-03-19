@@ -11,7 +11,7 @@ class DisbursementWorker
 		@ticket = Ticket.find(ticket_id)
 		@disbursement = Disbursement.new(phone_number: @gamer.phone_number, currency: "UGX", amount: amount, status: "PENDING")
 		if @gamer && @disbursement.save
-			@ticket.update_attributes(disbursement_reference: @disbusement.transaction_id)
+			@ticket.update_attributes(disbursement_reference: @disbursement.transaction_id)
 			case @gamer.phone_number
 
 			when /^(25678|25677|25639)/
