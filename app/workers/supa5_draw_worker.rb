@@ -96,9 +96,9 @@ class Supa5DrawWorker
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          if !ticket.first_name.nil?
-           message_content = ticket.first_name + ", CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5 Jackpot"
+           message_content = ticket.first_name + ", CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
          else
-           message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5 Jackpot"
+           message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
          end
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID']) #change this
          #process payments
@@ -110,9 +110,9 @@ class Supa5DrawWorker
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          if !ticket.first_name.nil?
-           message_content = ticket.first_name + ", CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers without sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5 Jackpot"
+           message_content = ticket.first_name + ", CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
          else
-           message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers without sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5 Jackpot"
+           message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
          end
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
          #process payment
@@ -124,9 +124,9 @@ class Supa5DrawWorker
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          if !ticket.first_name.nil?
-           message_content = ticket.first_name + ", CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5 Jackpot"
+           message_content = ticket.first_name + ", CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
          else
-           message_content = "CONGRATS! Your ticket #{ticket.reference} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5 Jackpot"
+           message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
          end
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
          #process payment
@@ -138,18 +138,53 @@ class Supa5DrawWorker
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          if !ticket.first_name.nil?
-           message_content = ticket.first_name + ",#{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers this time. Play Now & win in the next 10mins + increase your Jackpot Entries"
+           message_content = ticket.first_name + ", CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
          else
-           message_content = "Hi,#{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers this time. Play Now & win in the next 10mins + increase your Jackpot Entries"
+           message_content = "Hi, CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
          end
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
          #process payment
          if win > 0
             DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
          end
-
+       elsif (number_matches == 5 && ticket_numbers[0..4] != draw_numbers[0..4])
+         win = (ticket.amount).to_i * matched_one
+         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
+         #send confirmation message
+         if !ticket.first_name.nil?
+           message_content = ticket.first_name + ", #{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers without order. Play Now & win in the next 10mins + increase your BIG 5 Entries."
+         else
+           message_content = "Hi, #{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers without order. Play Now & win in the next 10mins + increase your BIG 5 Entries."
+         end
+       elsif (number_matches == 4 && ticket_numbers[0..3] != draw_numbers[0..3])
+         win = (ticket.amount).to_i * matched_one
+         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
+         #send confirmation message
+         if !ticket.first_name.nil?
+           message_content = ticket.first_name + ", #{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers without order. Play Now & win in the next 10mins + increase your BIG 5 Entries."
+         else
+           message_content = "Hi, #{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers without order. Play Now & win in the next 10mins + increase your BIG 5 Entries."
+         end
+       elsif (number_matches == 3 && ticket_numbers[0..2] != draw_numbers[0..2])
+         win = (ticket.amount).to_i * matched_one
+         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
+         #send confirmation message
+         if !ticket.first_name.nil?
+           message_content = ticket.first_name + ", #{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers without order. Play Now & win in the next 10mins + increase your BIG 5 Entries."
+         else
+           message_content = "Hi, #{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers without order. Play Now & win in the next 10mins + increase your BIG 5 Entries."
+         end
+       elsif (number_matches == 2 && ticket_numbers[0..1] != draw_numbers[0..1])
+         win = (ticket.amount).to_i * matched_one
+         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
+         #send confirmation message
+         if !ticket.first_name.nil?
+           message_content = ticket.first_name + ", #{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers without order. Play Now & win in the next 10mins + increase your BIG 5 Entries."
+         else
+           message_content = "Hi, #{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You matched #{number_matches} numbers without order. Play Now & win in the next 10mins + increase your BIG 5 Entries."
+         end
       else
-         win = (ticket.amount).to_i * 0
+         win = (ticket.amount).to_i * matched_one
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          if !ticket.first_name.nil?

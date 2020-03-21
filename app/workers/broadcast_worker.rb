@@ -4,9 +4,7 @@ class BroadcastWorker
 
    sidekiq_throttle({
        # Allow maximum 10 concurrent jobs of this class at a time.
-       :concurrency => { :limit => 10 },
- 	    # Allow maximum 40 jobs being processed within one second window.
- 	    :threshold => { :limit => 40, :period => 1.second }
+       :concurrency => { :limit => 10 }
      })
 
 

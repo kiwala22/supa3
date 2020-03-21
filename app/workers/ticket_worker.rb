@@ -68,13 +68,13 @@ class TicketWorker
 
       elsif data.length == 5
          max_win = amount.to_i * 500
-         ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword, game: "Supa5")
+         ticket = @@gamer.tickets.new(phone_number: @@gamer.phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: @@gamer.first_name, last_name: @@gamer.last_name, keyword: keyword, game: "Supa5", segment: @@gamer.segment)
          if ticket.save
             #Send SMS with confirmation
             if !@@gamer.first_name.nil?
-              message_content = @@gamer.first_name + ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME5']}"
+              message_content = @@gamer.first_name + ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the BIG 5."
             else
-              message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME5']}"
+              message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the BIG 5."
             end
             if SendSMS.process_sms_now(receiver: @@gamer.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID']) == true
                ticket.update_attributes(confirmation: true)
