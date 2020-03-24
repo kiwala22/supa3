@@ -38,7 +38,7 @@ module SendSMS
         http.request(request)
       end
 
-      if response.code == 200
+      if response.code == '200'
          return true
       else
          return false
