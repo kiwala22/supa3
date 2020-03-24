@@ -13,7 +13,7 @@ set :repo_url, "git@bitbucket.org:skylinesmslimited/supa_ai.git"
 # Default value for :scm is :git
 set :scm, :git
 
-set :ssh_options, {:forward_agent => true}
+set :ssh_options, {:forward_agent => true, port: 2022}
 
 set :deploy_via, :copy
 
