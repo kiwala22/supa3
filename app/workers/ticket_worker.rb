@@ -53,10 +53,10 @@ class TicketWorker
       max_win = amount.to_i * 200
 
       if data.length == 3 #should also check that its below 10
-         ticket = Tickets.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa3",segment: segment)
+         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa3",segment: segment)
          if ticket.save
             #Send SMS with confirmation and add gamer name if number is for MTN
-            if first_name == nil
+            if first_name != nil
               message_content = first_name + ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
             else
               message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
@@ -71,7 +71,7 @@ class TicketWorker
          ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa5", segment: segment)
          if ticket.save
             #Send SMS with confirmation
-            if first_name == nil
+            if first_name != nil
               message_content = first_name + ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the BIG 5."
             else
               message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the BIG 5."
@@ -87,7 +87,7 @@ class TicketWorker
          ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa3",segment: segment)
          if ticket.save
             #Send SMS with the confirmation and random number and add gamer name if number is for MTN
-            if first_name == nil
+            if first_name != nil
               message_content = first_name + ", We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}, Ticket ID: #{reference} Thank you for playing #{ENV['GAME']}."
             else
               message_content = "We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}, Ticket ID: #{reference} Thank you for playing #{ENV['GAME']}."

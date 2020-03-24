@@ -35,7 +35,7 @@ module SendSMS
       uri = URI(message_url)
       request = Net::HTTP::Get.new(uri)
       response  = Net::HTTP.start(uri.host, uri.port) do |http|
-        http.request(request) 
+        http.request(request)
       end
 
       if response.code == 200
