@@ -30,7 +30,13 @@ module SendSMS
          #save message as a broadcast message
          Message.create(to: receiver, from: sender_id, message: content, sms_type: "Broadcast")
       end
-      response = HTTParty.get(message_url)
+
+      ##use net http
+      uri = URI(message_url)
+      request = Net::HTTP::Get.new(uri)
+      response  = Net::HTTP.start(uri.host, uri.port) do |http|
+        http.request(request) 
+      end
 
       if response.code == 200
          return true
