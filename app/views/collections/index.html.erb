@@ -147,7 +147,7 @@
 					<td><%= collection.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P") %></td>
 					<td>
 						<% if collection.status == "PENDING" %>
-							<%= link_to "Reprocess", collection_path(id: collection.transaction_id, ext_id: collection.ext_transaction_id), method: :put, :remote => true, :class => 'btn btn-info payment' %>
+							<%= link_to "Reprocess", collection_path(id: collection.id, trans_id: collection.transaction_id, ext_id: collection.ext_transaction_id), method: :put, :remote => true, :class => 'btn btn-info payment' %>
 						<% end %>
 					</td>
 				</tr>

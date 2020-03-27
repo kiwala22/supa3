@@ -7,7 +7,7 @@ class AnalyticsController < ApplicationController
       gon.counts = gamers.values
 
       segment_labels = Segment.column_names
-      segment_labels = segment_labels.delete_if{ |i| ["id", "created_at", "updated_at"].include?(i)}
+      segment_labels = segment_labels.delete_if{ |i| ["g", "id", "created_at", "updated_at"].include?(i)}
       gon.segment_labels = segment_labels.map(&:upcase)
 
       segments = Segment.order("created_at ASC").last(30)

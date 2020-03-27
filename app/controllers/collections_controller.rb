@@ -30,7 +30,7 @@ class CollectionsController < ApplicationController
   #update method to reprocess pending collections
   def update
     #receive parameters from view and call the mtn collection worker
-    transaction_id = params[:id]
+    transaction_id = params[:trans_id]
     external_transaction_id = params[:ext_id]
     #make a call to the mtn collection worker
     MtnCollectionWorker.perform_async(transaction_id, external_transaction_id, "SUCCESS")
