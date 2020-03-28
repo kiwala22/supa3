@@ -30,10 +30,10 @@ class CollectionsController < ApplicationController
   #update method to reprocess pending collections
   def update
     #receive parameters from view and call the mtn collection worker
-    transaction_id = params[:trans_id]
-    external_transaction_id = params[:ext_id]
+    # transaction_id = params[:trans_id]
+    # external_transaction_id = params[:ext_id]
     #make a call to the mtn collection worker
-    MtnCollectionWorker.perform_async(transaction_id, external_transaction_id, "SUCCESS")
+    MtnCollectionWorker.perform_async(@collecton.transaction_id, @collecton.external_transaction_id, "SUCCESS")
     respond_to do |format|
       flash.now[:notice] = "Collection Reprocessed."
       format.html
