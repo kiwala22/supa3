@@ -21,7 +21,7 @@ class TicketWorker
       when amount.to_i > 50000
          #play 50000 and refund the excess
          refund_amount = (amount.to_i - 50000)
-         ticket_id = process_ticket(phone_number, message, 50000)
+         ticket_id = process_ticket(phone_number: phone_number, message: message, amount: 50000, first_name: gamer.first_name, last_name: gamer.last_name, gamer_id: gamer.id, segment: gamer.segment )
          DisbursementWorker.perform_async(gamer.id, refund_amount, ticket_id)
 
       when amount.to_i >= 1000 && amount.to_i <= 50000
