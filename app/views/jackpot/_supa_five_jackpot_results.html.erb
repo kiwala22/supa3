@@ -2,24 +2,22 @@
    <table class="table table-hoverlarge-12 columns large-centered winner_table" id="winners_table">
       <thead>
          <tr>
-            <th>No</th>
+            <th>WINNER</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Phone Number</th>
             <th>Ticket ID</th>
-            <th>Number</th>
+            <th>Draw Matches</th>
          </tr>
       </thead>
       <tbody>
-         <% @winners.each_with_index do |ticket, i| %>
          <tr>
-            <td><%= (i+1) %></td>
-            <td><%= ticket.first_name %></td>
-            <td><%= ticket.last_name %></td>
-            <td><%= ticket.phone_number %></td>
-            <td><%= ticket.reference %></td>
-            <td><%= ticket.data %></td>
+            <td>1</td>
+            <td><%= @winner.first_name %></td>
+            <td><%= @winner.last_name %></td>
+            <td><%= @winner.phone_number %></td>
+            <td><%= @winner.reference %></td>
+            <td><%= @match_count %></td>
          </tr>
-         <% end %>
       </tbody>
    </table>
