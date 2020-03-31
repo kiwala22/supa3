@@ -11,7 +11,7 @@ class MtnCollectionWorker
 	require "send_sms"
 
 	@@logger ||= Logger.new("#{Rails.root}/log/mobile_money.log")
-	@@logger.level = Logger::ERROR
+	@@logger.level = Logger::DEBUG
 
 	def perform(transaction_id, ext_transaction_id, status)
 		@username = ENV['COLLECTION_USERNAME']
@@ -34,7 +34,7 @@ class MtnCollectionWorker
 				http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
 				http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
 				http.ca_file = Rails.root.join("config/prod/m3_EXTERNAL_ca_UG.crt").to_s
-				#http.set_debug_output($stdout)
+				http.set_debug_output($stdout)
 				res = http.request(request)
 				result = Hash.from_xml(res.body)
 				if res.code == '200' && result.has_key?("paymentcompletedresponse")
