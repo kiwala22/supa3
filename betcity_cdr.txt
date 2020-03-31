@@ -1,0 +1,88 @@
+2020-03-30 17:00:23 [7201] [14] DEBUG:   type_name: deliver_sm
+2020-03-30 17:00:23 [7201] [14] DEBUG:   command_id: 5 = 0x00000005
+2020-03-30 17:00:23 [7201] [14] DEBUG:   command_status: 0 = 0x00000000
+2020-03-30 17:00:23 [7201] [14] DEBUG:   sequence_number: 47784 = 0x0000baa8
+2020-03-30 17:00:23 [7201] [14] DEBUG:   service_type: NULL
+2020-03-30 17:00:23 [7201] [14] DEBUG:   source_addr_ton: 0 = 0x00000000
+2020-03-30 17:00:23 [7201] [14] DEBUG:   source_addr_npi: 1 = 0x00000001
+2020-03-30 17:00:23 [7201] [14] DEBUG:   source_addr: "256772228609"
+2020-03-30 17:00:23 [7201] [14] DEBUG:   dest_addr_ton: 5 = 0x00000005
+2020-03-30 17:00:23 [7201] [14] DEBUG:   dest_addr_npi: 0 = 0x00000000
+2020-03-30 17:00:23 [7201] [14] DEBUG:   destination_addr: "SUPA3"
+2020-03-30 17:00:23 [7201] [14] DEBUG:   esm_class: 4 = 0x00000004
+2020-03-30 17:00:23 [7201] [14] DEBUG:   protocol_id: 0 = 0x00000000
+2020-03-30 17:00:23 [7201] [14] DEBUG:   priority_flag: 0 = 0x00000000
+2020-03-30 17:00:23 [7201] [14] DEBUG:   schedule_delivery_time: NULL
+2020-03-30 17:00:23 [7201] [14] DEBUG:   validity_period: NULL
+2020-03-30 17:00:23 [7201] [14] DEBUG:   registered_delivery: 0 = 0x00000000
+2020-03-30 17:00:23 [7201] [14] DEBUG:   replace_if_present_flag: 0 = 0x00000000
+2020-03-30 17:00:23 [7201] [14] DEBUG:   data_coding: 0 = 0x00000000
+2020-03-30 17:00:23 [7201] [14] DEBUG:   sm_default_msg_id: 0 = 0x00000000
+2020-03-30 17:00:23 [7201] [14] DEBUG:   sm_length: 124 = 0x0000007c
+2020-03-30 17:00:23 [7201] [14] DEBUG:   short_message:
+2020-03-30 17:00:23 [7201] [14] DEBUG:    Octet string at 0x7f8818007c70:
+2020-03-30 17:00:23 [7201] [14] DEBUG:      len:  124
+2020-03-30 17:00:23 [7201] [14] DEBUG:      size: 125
+2020-03-30 17:00:23 [7201] [14] DEBUG:      immutable: 0
+2020-03-30 17:00:23 [7201] [15] DEBUG: column=mask buffer_type=3 max_length=0 length=11
+2020-03-30 17:00:23 [7201] [14] DEBUG:      data: 69 64 3a 38 31 36 34 38 38 34 31 30 37 38 31 38   id:8164884107818
+2020-03-30 17:00:23 [7201] [15] DEBUG: column=service buffer_type=253 max_length=0 length=255
+2020-03-30 17:00:23 [7201] [14] DEBUG:      data: 39 31 37 32 34 33 20 73 75 62 3a 30 30 31 20 64   917243 sub:001 d
+2020-03-30 17:00:23 [7201] [14] DEBUG:      data: 6c 76 72 64 3a 30 30 31 20 73 75 62 6d 69 74 20   lvrd:001 submit
+2020-03-30 17:00:23 [7201] [14] DEBUG:      data: 64 61 74 65 3a 32 30 30 33 33 30 31 37 30 30 20   date:2003301700
+2020-03-30 17:00:23 [7201] [14] DEBUG:      data: 64 6f 6e 65 20 64 61 74 65 3a 32 30 30 33 33 30   done date:200330
+2020-03-30 17:00:23 [7201] [15] DEBUG: column=url buffer_type=253 max_length=0 length=255
+2020-03-30 17:00:23 [7201] [14] DEBUG:      data: 31 37 30 30 20 73 74 61 74 3a 44 45 4c 49 56 52   1700 stat:DELIVR
+2020-03-30 17:00:23 [7201] [14] DEBUG:      data: 44 20 65 72 72 3a 30 30 30 20 74 65 78 74 3a 4e   D err:000 text:N
+2020-03-30 17:00:23 [7201] [15] DEBUG: column=source buffer_type=253 max_length=0 length=255
+2020-03-30 17:00:23 [7201] [15] DEBUG: column=destination buffer_type=253 max_length=0 length=255
+2020-03-30 17:00:23 [7201] [14] DEBUG:      data: 6f 77 2c 20 59 61 6e 67 75 77 61 21               ow, Yanguwa!
+2020-03-30 17:00:23 [7201] [14] DEBUG:    Octet string dump ends.
+2020-03-30 17:00:23 [7201] [15] DEBUG: column=boxc buffer_type=253 max_length=0 length=255
+2020-03-30 17:00:23 [7201] [14] DEBUG:   message_state: 2 = 0x00000002
+2020-03-30 17:00:23 [7201] [14] DEBUG:   receipted_message_id: "8164884107818917243"
+2020-03-30 17:00:23 [7201] [14] DEBUG: SMPP PDU dump ends.
+
+
+2020-03-30 17:00:24 [7201] [14] DEBUG: SMPP[mtn_bet]: Got PDU:
+2020-03-30 17:00:24 [7201] [14] DEBUG: SMPP PDU 0x7f8818005f50 dump:
+2020-03-30 17:00:24 [7201] [14] DEBUG:   type_name: deliver_sm
+2020-03-30 17:00:24 [7201] [14] DEBUG:   command_id: 5 = 0x00000005
+2020-03-30 17:00:24 [7201] [14] DEBUG:   command_status: 0 = 0x00000000
+2020-03-30 17:00:24 [7201] [14] DEBUG:   sequence_number: 47785 = 0x0000baa9
+2020-03-30 17:00:24 [7201] [14] DEBUG:   service_type: NULL
+2020-03-30 17:00:24 [7201] [14] DEBUG:   source_addr_ton: 0 = 0x00000000
+2020-03-30 17:00:24 [7201] [14] DEBUG:   source_addr_npi: 1 = 0x00000001
+2020-03-30 17:00:24 [7201] [14] DEBUG:   source_addr: "256775692776"
+2020-03-30 17:00:24 [7201] [14] DEBUG:   dest_addr_ton: 5 = 0x00000005
+2020-03-30 17:00:24 [7201] [14] DEBUG:   dest_addr_npi: 0 = 0x00000000
+2020-03-30 17:00:24 [7201] [14] DEBUG:   destination_addr: "SUPA3"
+2020-03-30 17:00:24 [7201] [14] DEBUG:   esm_class: 4 = 0x00000004
+2020-03-30 17:00:24 [7201] [14] DEBUG:   protocol_id: 0 = 0x00000000
+2020-03-30 17:00:24 [7201] [14] DEBUG:   priority_flag: 0 = 0x00000000
+2020-03-30 17:00:24 [7201] [14] DEBUG:   schedule_delivery_time: NULL
+2020-03-30 17:00:24 [7201] [14] DEBUG:   validity_period: NULL
+2020-03-30 17:00:24 [7201] [14] DEBUG:   registered_delivery: 0 = 0x00000000
+2020-03-30 17:00:24 [7201] [14] DEBUG:   replace_if_present_flag: 0 = 0x00000000
+2020-03-30 17:00:24 [7201] [14] DEBUG:   data_coding: 0 = 0x00000000
+2020-03-30 17:00:24 [7201] [14] DEBUG:   sm_default_msg_id: 0 = 0x00000000
+2020-03-30 17:00:24 [7201] [14] DEBUG:   sm_length: 131 = 0x00000083
+2020-03-30 17:00:24 [7201] [14] DEBUG:   short_message:
+2020-03-30 17:00:24 [7201] [14] DEBUG:    Octet string at 0x7f88180009a0:
+2020-03-30 17:00:24 [7201] [14] DEBUG:      len:  131
+2020-03-30 17:00:24 [7201] [14] DEBUG:      size: 132
+2020-03-30 17:00:24 [7201] [14] DEBUG:      immutable: 0
+2020-03-30 17:00:24 [7201] [14] DEBUG:      data: 69 64 3a 38 31 36 34 38 38 34 31 31 31 33 36 34   id:8164884111364
+2020-03-30 17:00:24 [7201] [14] DEBUG:      data: 31 36 35 35 32 37 20 73 75 62 3a 30 30 31 20 64   165527 sub:001 d
+2020-03-30 17:00:24 [7201] [14] DEBUG:      data: 6c 76 72 64 3a 30 30 31 20 73 75 62 6d 69 74 20   lvrd:001 submit
+2020-03-30 17:00:24 [7201] [14] DEBUG:      data: 64 61 74 65 3a 32 30 30 33 33 30 31 37 30 30 20   date:2003301700
+2020-03-30 17:00:24 [7201] [14] DEBUG:      data: 64 6f 6e 65 20 64 61 74 65 3a 32 30 30 33 33 30   done date:200330
+2020-03-30 17:00:24 [7201] [14] DEBUG:      data: 31 37 30 30 20 73 74 61 74 3a 44 45 4c 49 56 52   1700 stat:DELIVR
+2020-03-30 17:00:24 [7201] [14] DEBUG:      data: 44 20 65 72 72 3a 30 30 30 20 74 65 78 74 3a 48   D err:000 text:H
+2020-03-30 17:00:24 [7201] [14] DEBUG:      data: 4f 50 45 20 47 4c 4f 52 49 41 2c 20 41 76 6f 69   OPE GLORIA, Avoi
+2020-03-30 17:00:24 [7201] [14] DEBUG:      data: 64 20 74                                          d t
+2020-03-30 17:00:24 [7201] [14] DEBUG:    Octet string dump ends.
+2020-03-30 17:00:24 [7201] [14] DEBUG:   message_state: 2 = 0x00000002
+2020-03-30 17:00:24 [7201] [14] DEBUG:   receipted_message_id: "8164884111364165527"
+2020-03-30 17:00:24 [7201] [14] DEBUG: SMPP PDU dump ends.
+2020-03-30 17:00:24 [7201] [14] DEBUG: 

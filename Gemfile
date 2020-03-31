@@ -97,3 +97,5 @@ gem 'openssl'
 gem "audited", "~> 4.9"
 gem "roo", "~> 2.8.0"
 gem "sidekiq-throttled"
+gem "brakeman"
+gem "sentry-raven"

@@ -7,7 +7,8 @@ class ReportsController < ApplicationController
    end
 
    def download_report
-      report = Report.find(params[:report_id])
+      report_id = params[:report_id]
+      report = Report.find(report_id)
       send_file(
          report.file_path,
          filename: report.file_name,
