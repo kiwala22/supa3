@@ -19,18 +19,18 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every 1.minute do
-  runner "Broadcast.process_broadcasts"
-end
-
-every 1.day, at: '00:05 am' do
-  runner "Gamer.run_predictions"
-end
-
-every 1.day, at: '08:05 am' do
-  runner "Segment.update_segments"
-end
-
-every '0,10,20,30,40,50 * * * *' do
-  runner "Ticket.run_draws"
-end
+# every 1.minute do
+#   runner "Broadcast.process_broadcasts"
+# end
+#
+# every 1.day, at: '00:05 am' do
+#   runner "Gamer.run_predictions"
+# end
+#
+# every 1.day, at: '08:05 am' do
+#   runner "Segment.update_segments"
+# end
+#
+# every '0,10,20,30,40,50 * * * *' do
+#   runner "Ticket.run_draws"
+# end
