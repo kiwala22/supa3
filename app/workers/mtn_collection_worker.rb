@@ -11,7 +11,7 @@ class MtnCollectionWorker
 	require "send_sms"
 
 	@@logger ||= Logger.new("#{Rails.root}/log/mobile_money.log")
-	@@logger.level = Logger::DEBUG
+	@@logger.level = Logger::ERROR
 
 	def perform(transaction_id, ext_transaction_id, status)
 		@username = ENV['COLLECTION_USERNAME']
