@@ -35,9 +35,9 @@ module SupaAi
 
     config.time_zone = 'Nairobi'
     config.active_record.default_timezone = :local
-  end
-end
 
-Raven.configure do |config|
-  config.dsn = 'https://54f134d1e64046b6b942458154069f20:13216c81d8f14d20a215b66fcde61e3b@sentry.io/5182746'
+    Raven.configure do |config|
+      config.dsn = 'https://54f134d1e64046b6b942458154069f20:13216c81d8f14d20a215b66fcde61e3b@sentry.io/5182746'
+    end
+  end
 end
