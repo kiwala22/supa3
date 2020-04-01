@@ -24,9 +24,9 @@ class Confirmation::MtnUgandaController < ApplicationController
 				MtnCollectionWorker.perform_async(@transaction.transaction_id, @transaction.ext_transaction_id, "SUCCESS")
 			else
 				#check if it is existing
-				collecton = Collection.find_by(ext_transaction_id: @transaction.ext_transaction_id)
+				collection = Collection.find_by(ext_transaction_id: @transaction.ext_transaction_id)
 				if collection.present?
-					MtnCollectionWorker.perform_async(collecton.transaction_id, collecton.ext_transaction_id, "EXISTING")
+					MtnCollectionWorker.perform_async(collection.transaction_id, collection.ext_transaction_id, "EXISTING")
 				else
 					MtnCollectionWorker.perform_async(@transaction.transaction_id, @transaction.ext_transaction_id, "FAILED")
 					#log the error
