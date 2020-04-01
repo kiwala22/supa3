@@ -99,3 +99,4 @@ gem "roo", "~> 2.8.0"
 gem "sidekiq-throttled"
 gem "brakeman"
 gem "sentry-raven"
+gem 'rack-attack'
