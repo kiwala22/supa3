@@ -22,18 +22,18 @@ class Confirmation::MtnUgandaController < ApplicationController
 			@transaction.network = "MTN Uganda"
 			if @transaction.save
 				MtnCollectionWorker.perform_async(@transaction.transaction_id, @transaction.ext_transaction_id, "SUCCESS")
+					render xml: "<?xml version='1.0' encoding='UTF-8'?><ns0:paymentresponse xmlns:ns0='http://www.ericsson.com/em/emm/sp/backend'><providertransactionid>#{@transaction.transaction_id}</providertransactionid><message>PENDING</message><status>PENDING</status></ns0:paymentresponse>"
 			else
 				#check if it is existing
 				collecton = Collection.find_by(ext_transaction_id: @transaction.ext_transaction_id)
 				if collection.present?
-					MtnCollectionWorker.perform_async(collecton.transaction_id, collecton.ext_transaction_id, "EXISTING")
+					render xml: "<?xml version='1.0' encoding='UTF-8'?><ns0:paymentresponse xmlns:ns0='http://www.ericsson.com/em/emm/sp/backend'><providertransactionid>#{collecton.transaction_id}</providertransactionid><message>COMPLETED</message><status>COMPLETED</status></ns0:paymentresponse>"
 				else
-					MtnCollectionWorker.perform_async(@transaction.transaction_id, @transaction.ext_transaction_id, "FAILED")
 					#log the error
 					@@logger.error(@transaction.errors.full_messages)
+					render xml: "<?xml version='1.0' encoding='UTF-8'?><ns0:paymentresponse xmlns:ns0='http://www.ericsson.com/em/emm/sp/backend'><providertransactionid>#{@transaction.transaction_id}</providertransactionid><message>FAILED</message><status>FAILED</status></ns0:paymentresponse>"
 				end
 			end
-			render xml: "<?xml version='1.0' encoding='UTF-8'?><ns0:paymentresponse xmlns:ns0='http://www.ericsson.com/em/emm/sp/backend'><providertransactionid>#{@transaction.ext_transaction_id}</providertransactionid><message>pending</message><status>PENDING</status></ns0:paymentresponse>"
 		end
 	rescue StandardError => e
   			@@logger.error(e.message)
