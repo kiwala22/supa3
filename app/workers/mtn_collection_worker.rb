@@ -62,8 +62,7 @@ class MtnCollectionWorker
 			http.set_debug_output($stdout)
 			res = http.request(request)
 
-		elsif == 'FAILED'
-			@collection =  Collection.find_by(transaction_id: transaction_id)
+		elsif status == 'FAILED'
 			#send request and mark status as successful
 			url = "https://f5.mtn.co.ug:8006/poextvip/v1/paymentcompleted"
 			req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns4:paymentcompletedrequest xmlns:ns4='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend' xmlns:op='http://www.ericsson.com/em/emm/v1_0/common' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='1.0'><transactionid>#{ext_transaction_id}</transactionid><providertransactionid>#{transaction_id}</providertransactionid><status>FAILED</status></ns4:paymentcompletedrequest>"
