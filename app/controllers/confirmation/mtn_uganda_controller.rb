@@ -22,22 +22,22 @@ class Confirmation::MtnUgandaController < ApplicationController
 			@transaction.network = "MTN Uganda"
 			if @transaction.save
 				status = "PENDING"
-				transaction_id = @transaction.transaction_id
+				transaction_id = @transaction.ext_transaction_id
 				MtnCollectionWorker.perform_async(@transaction.transaction_id, @transaction.ext_transaction_id, "SUCCESS")
 			else
 				#check if it is existing
 				collection = Collection.find_by(ext_transaction_id: @transaction.ext_transaction_id)
 				if collection.present?
 					status = "COMPLETED"
-					transaction_id = collection.transaction_id
+					transaction_id = collection.ext_transaction_id
 				else
 					status = "FAILED"
-					transaction_id = @transaction.transaction_id
+					transaction_id = @transaction.ext_transaction_id
 					#log the error
 					@@logger.error(@transaction.errors.full_messages)
 				end
 			end
-			render xml: "<?xml version='1.0' encoding='UTF-8'?><ns0:paymentresponse xmlns:ns0='http://www.ericsson.com/em/emm/sp/backend'><providertransactionid>#{transaction_id}</providertransactionid><message>#{status}</message><status>#{status}</status></ns0:paymentresponse>"
+			render xml: "<?xml version='1.0' encoding='UTF-8'?><ns0:paymentresponse xmlns:ns0='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend/client'><providertransactionid>#{transaction_id}</providertransactionid><message>#{status}</message><status>#{status}</status></ns0:paymentresponse>"
 		end
 	rescue StandardError => e
   			@@logger.error(e.message)
