@@ -7,7 +7,13 @@ class TicketWorker
    def perform(phone_number, message, amount)
       #Check if gamer exists or create with segment A and return gamer
       gamer = Gamer.create_with(segment: 'A').find_or_create_by(phone_number: phone_number)
-
+      message = message.gsub(/\s+/, '')
+      data = message.scan(/\d/).join('')
+      if data.length >= 3 && data.length < 5
+         game = 'Supa3'
+      elsif data.length >= 5
+         game = 'Supa5'
+      end
       case
       when amount.to_i >= 0 && amount.to_i < 1000
          #keep the money and sms the user and add name if gamer number is for MTN
@@ -18,13 +24,19 @@ class TicketWorker
          end
          SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
-      when amount.to_i > 50000
+      when game == 'Supa3' && amount.to_i > 50000
          #play 50000 and refund the excess
          refund_amount = (amount.to_i - 50000)
          ticket_id = process_ticket(phone_number: phone_number, message: message, amount: 50000, first_name: gamer.first_name, last_name: gamer.last_name, gamer_id: gamer.id, segment: gamer.segment )
          DisbursementWorker.perform_async(gamer.id, refund_amount, ticket_id)
 
-      when amount.to_i >= 1000 && amount.to_i <= 50000
+      when game == 'Supa5' && amount.to_i > 30000
+         #play 50000 and refund the excess
+         refund_amount = (amount.to_i - 30000)
+         ticket_id = process_ticket(phone_number: phone_number, message: message, amount: 30000, first_name: gamer.first_name, last_name: gamer.last_name, gamer_id: gamer.id, segment: gamer.segment )
+         DisbursementWorker.perform_async(gamer.id, refund_amount, ticket_id)
+
+      else
          process_ticket(phone_number: phone_number, message: message, amount: amount, first_name: gamer.first_name, last_name: gamer.last_name, gamer_id: gamer.id, segment: gamer.segment )
       end
 
