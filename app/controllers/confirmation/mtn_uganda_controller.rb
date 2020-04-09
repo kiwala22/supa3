@@ -11,6 +11,7 @@ class Confirmation::MtnUgandaController < ApplicationController
 		Rails.logger.debug(request_body)
 		#check the incoming body
 		if request_body.has_key?("paymentrequest")
+			namespace = request_body['paymentrequest']["xmlns:ns0"]
 			@transaction = Collection.new()
 			@transaction.ext_transaction_id = request_body['paymentrequest']["transactionid"]
 			@transaction.phone_number = request_body['paymentrequest']["accountholderid"][3..-8]
@@ -21,13 +22,23 @@ class Confirmation::MtnUgandaController < ApplicationController
 			@transaction.status = 'PENDING'
 			@transaction.network = "MTN Uganda"
 			if @transaction.save
+				status = "PENDING"
+				transaction_id = @transaction.ext_transaction_id
 				MtnCollectionWorker.perform_async(@transaction.transaction_id, @transaction.ext_transaction_id, "SUCCESS")
 			else
-				MtnCollectionWorker.perform_async(@transaction.transaction_id, @transaction.ext_transaction_id, "FAILED")
-				#log the error
-				@@logger.error(@transaction.errors.full_messages)
+				#check if it is existing
+				collection = Collection.find_by(ext_transaction_id: @transaction.ext_transaction_id)
+				if collection.present?
+					status = "COMPLETED"
+					transaction_id = collection.ext_transaction_id
+				else
+					status = "FAILED"
+					transaction_id = @transaction.ext_transaction_id
+					#log the error
+					@@logger.error(@transaction.errors.full_messages)
+				end
 			end
-			render xml: "<?xml version='1.0' encoding='UTF-8'?><ns0:paymentresponse xmlns:ns0='http://www.ericsson.com/em/emm/sp/backend'><providertransactionid>#{@transaction.ext_transaction_id}</providertransactionid><message>pending</message><status>PENDING</status></ns0:paymentresponse>"
+			render xml: "<?xml version='1.0' encoding='UTF-8'?><ns0:paymentresponse xmlns:ns0='#{namespace}'><providertransactionid>#{transaction_id}</providertransactionid><message>#{status}</message><status>#{status}</status></ns0:paymentresponse>"
 		end
 	rescue StandardError => e
   			@@logger.error(e.message)

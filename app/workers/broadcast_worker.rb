@@ -5,7 +5,7 @@ class BroadcastWorker
    sidekiq_options queue: "default"
    sidekiq_options retry: false
 
-   require 'send_sms'
+   #require 'send_sms'
 
    # sidekiq_throttle({
    #    # Allow maximum 10 concurrent jobs of this class at a time.
@@ -34,10 +34,9 @@ class BroadcastWorker
          else
            message = @broadcast.message
          end
-         #send the message to message library
-         if SendSMS.process_sms_now(transaction: false, receiver: gamer.phone_number, content: message, sender_id: ENV['DEFAULT_SENDER_ID'])
-            contacts = (contacts + 1)
-         end
+         #send the message to message library through sms worker
+         SmsWorker.perform_async(gamer.phone_number, message)
+         contacts = (contacts + 1)
       end
       @broadcast.update_attributes(contacts: contacts, status: "SUCCESS")
    end

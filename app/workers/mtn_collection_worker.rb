@@ -16,9 +16,9 @@ class MtnCollectionWorker
 	def perform(transaction_id, ext_transaction_id, status)
 		@username = ENV['COLLECTION_USERNAME']
 		@password = ENV['COLLECTION_PASSWORD']
-		@collection =  Collection.find_by(transaction_id: transaction_id)
-		if @collection && @collection.status != "SUCCESSFUL"
-			if status == 'SUCCESS'
+		if status == 'SUCCESS'
+			@collection =  Collection.find_by(transaction_id: transaction_id)
+			if @collection && @collection.status != "SUCCESSFUL"
 				#send request and mark status as successful
 				url = "https://f5.mtn.co.ug:8006/poextvip/v1/paymentcompleted"
 				req_xml = "<?xml version='1.0' encoding='UTF-8'?><ns4:paymentcompletedrequest xmlns:ns4='http://www.ericsson.com/em/emm/serviceprovider/v1_0/backend' xmlns:op='http://www.ericsson.com/em/emm/v1_0/common' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='1.0'><transactionid>#{@collection.ext_transaction_id}</transactionid><providertransactionid>#{@collection.transaction_id}</providertransactionid><status>COMPLETED</status></ns4:paymentcompletedrequest>"
@@ -42,8 +42,8 @@ class MtnCollectionWorker
 					TicketWorker.perform_async(@collection.phone_number,@collection.message, @collection.amount)
 				end
 			end
-
 		end
+
 	rescue StandardError => e
 		@@logger.error(e.message)
 		false
