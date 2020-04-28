@@ -1,6 +1,7 @@
 class ComparisonsController < ApplicationController
   before_action :authenticate_user!
 
+  authorize_resource :class => false
   def index
     @series = []
     # reference = Draw.where("draw_time > ? AND draw_time <= ?", Date.today.to_time, Time.now).sum(:ticket_count)
