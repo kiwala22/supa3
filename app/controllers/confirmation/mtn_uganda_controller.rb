@@ -12,15 +12,16 @@ class Confirmation::MtnUgandaController < ApplicationController
 		#check the incoming body
 		if request_body.has_key?("paymentrequest")
 			namespace = request_body['paymentrequest']["xmlns:ns0"]
-			@transaction = Collection.new()
-			@transaction.ext_transaction_id = request_body['paymentrequest']["transactionid"]
-			@transaction.phone_number = request_body['paymentrequest']["accountholderid"][3..-8]
-			@transaction.receiving_fri = request_body['paymentrequest']["receivingfri"][4..-4]
-			@transaction.amount = request_body['paymentrequest']["amount"]["amount"]
-			@transaction.currency = request_body['paymentrequest']["amount"]["currency"]
-			@transaction.message = request_body['paymentrequest']["message"]
-			@transaction.status = 'PENDING'
-			@transaction.network = "MTN Uganda"
+			@transaction = Collection.new(
+				ext_transaction_id: request_body['paymentrequest']["transactionid"],
+				phone_number: request_body['paymentrequest']["accountholderid"][3..-8],
+				receiving_fri: request_body['paymentrequest']["receivingfri"][4..-4],
+				amount: request_body['paymentrequest']["amount"]["amount"],
+				currency: request_body['paymentrequest']["amount"]["currency"],
+				message: request_body['paymentrequest']["message"],
+				status: 'PENDING',
+				network: "MTN Uganda"
+			)
 			if @transaction.save
 				status = "PENDING"
 				transaction_id = @transaction.ext_transaction_id

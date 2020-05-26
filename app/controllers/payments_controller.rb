@@ -46,6 +46,21 @@ class PaymentsController < ApplicationController
       end
    end
 
+##CANCEL PAYMENT WITH ERROR
+   def cancel_payment
+     @payment = Payment.find(params[:id])
+     if @payment
+        @payment.update_attributes(approved_by: payment_params[:approved_by], status: "CANCELLED")
+        #after cancelling the payment use js to rerender the same page
+        respond_to do |format|
+          flash.now[:notice] = "Payment cancelled..."
+          format.html
+          format.json
+          format.js  { render :layout => false }
+        end
+     end
+   end
+
    private
 
    def open_spreadsheet(file)

@@ -6,7 +6,7 @@ class DisbursementsController < ApplicationController
 
   def index
     @q = Disbursement.all.ransack(params[:q])
-    @disbursements = @q.result(distinct: true).order("created_at DESC").page params[:page]
+    @disbursements = @q.result.order("created_at DESC").page params[:page]
     @search_params = params[:q]
 
     mtn_balance = MobileMoney::MtnEcw.get_payout_balance

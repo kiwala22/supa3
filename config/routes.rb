@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
    resources :push_pay_broadcasts, only: [:new, :index, :create]
    resources :payments, only: [:new, :index, :update, :create]
+   match 'cancel_payment' => "payments#cancel_payment", via: [:put]
    resources :reports, only: [:index]
    match "download_report" => "reports#download_report", via: [:get]
    namespace :confirmation do

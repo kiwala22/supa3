@@ -10,16 +10,16 @@ class Confirmation::AirtelUgandaController < ApplicationController
 		request_body = Hash.from_xml(request.body.read)
 		Rails.logger.debug(request_body)
 		if request_body['COMMAND']['TYPE'] == "STANPAY"
-			@transaction = Collection.new()
-			@transaction.ext_transaction_id = request_body['COMMAND']["MOBTXNID"]
-			@transaction.phone_number = request_body['COMMAND']["MSISDN"]
-			@transaction.receiving_fri = request_body['COMMAND']["BILLERCODE"]
-			@transaction.amount = request_body['COMMAND']["AMOUNT"]
-			@transaction.currency = "UGX"
-			@transaction.message = request_body['COMMAND']["REFERENCE"]
-			@transaction.status = 'SUCCESS'
-			@transaction.network = "Airtel Uganda"
-
+			@transaction = Collection.new(
+				ext_transaction_id: request_body['COMMAND']["MOBTXNID"],
+				phone_number: request_body['COMMAND']["MSISDN"],
+				receiving_fri: request_body['COMMAND']["BILLERCODE"],
+				amount: request_body['COMMAND']["AMOUNT"],
+				currency: "UGX",
+				message: request_body['COMMAND']["REFERENCE"],
+				status: 'SUCCESS',
+				network: "Airtel Uganda"
+			)
 			if @transaction.save
 				## perhaps check that transaction is not a duplicate # done with uniqueness on ext_transaction_id
 				AirtelCollectionWorker.perform_async(@transaction.transaction_id)

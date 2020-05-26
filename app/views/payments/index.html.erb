@@ -40,7 +40,7 @@
             <th>Amount</th>
             <th>Status</th>
             <th>Initiated By</th>
-            <th>Approved By</th>
+            <th>Approved/Cancelled By</th>
             <th>Time</th>
             <th>Actions</th>
          </tr>
@@ -67,7 +67,7 @@
   							</div>
   						</td>
   					<% end %>
-  					<% if payment.status == "FAILED" %>
+  					<% if (payment.status == "FAILED" || payment.status == "CANCELLED") %>
   						<td>
   							<div class="label label-danger">
   								<%= payment.status%>
@@ -79,7 +79,10 @@
             <td><%= (payment.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P")) %></td>
             <td>
                <% if (can? :update, Payment) && (payment.status == "FAILED" || payment.status == "PENDING") %>
-                  <%= link_to "Approve", payment_path(id: payment.id, approved_by: @current_user.id), method: :put, remote: true, :class => 'btn btn-info payment' %>
+                  <%= link_to "Approve", payment_path(id: payment.id, approved_by: @current_user.id), method: :put, remote: true, :class => 'btn btn-info btn-sm float-left payment' %>
+               <% end %>
+               <% if (can? :update, Payment) && (payment.status == "PENDING") %>
+                  <%= link_to "Cancel", cancel_payment_path(id: payment.id, approved_by: @current_user.id), method: :put, remote: true, :class => 'btn btn-danger btn-sm float-right payment' %>
                <% end %>
             </td>
 

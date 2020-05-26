@@ -6,7 +6,7 @@ class CollectionsController < ApplicationController
 
   def index
     @q = Collection.all.ransack(params[:q])
-    @collections = @q.result(distinct: true).order("created_at DESC").page params[:page]
+    @collections = @q.result.order("created_at DESC").page params[:page]
     @search_params = params[:q]
 
     mtn_balance = MobileMoney::MtnEcw.get_collection_balance
