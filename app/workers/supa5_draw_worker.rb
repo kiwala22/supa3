@@ -105,7 +105,7 @@ class Supa5DrawWorker
          win = (ticket.amount).to_i * matched_four
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
-         message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
+         message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched 4 numbers in sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
          #process payment
          win_after_taxes = (win.to_i * 0.85)
@@ -115,7 +115,7 @@ class Supa5DrawWorker
          win = (ticket.amount).to_i * matched_three
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
-         message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
+         message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched 3 numbers in sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
          #process payment
          win_after_taxes = (win.to_i * 0.85)
@@ -125,7 +125,7 @@ class Supa5DrawWorker
          win = (ticket.amount).to_i * matched_two
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
-         message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
+         message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched 2 numbers in sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
          #process payment
          if win > 0
