@@ -99,6 +99,8 @@ Rails.application.configure do
   ## setup action_mailer
 
    config.action_mailer.delivery_method = :sendmail
+   config.action_mailer.default_url_options = { :host => 'admin.supa3.info' }
+   Rails.application.routes.default_url_options[:host] = 'admin.supa3.info'
 
    config.action_mailer.perform_deliveries = true
 end

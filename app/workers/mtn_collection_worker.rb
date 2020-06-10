@@ -31,8 +31,8 @@ class MtnCollectionWorker
 				http.use_ssl = true
 				http.ssl_version = :TLSv1_2
 				http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-				http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/www.admin.supa3.info.crt")))
-				http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/www.admin.supa3.info.key")))
+				http.cert = OpenSSL::X509::Certificate.new(File.read(Rails.root.join("config/prod/134_209_22_183.crt")))
+				http.key = http.key = OpenSSL::PKey::RSA.new(File.read(Rails.root.join("config/prod/134_209_22_183.key")))
 				http.ca_file = Rails.root.join("config/prod/m3_EXTERNAL_ca_UG.crt").to_s
 				http.set_debug_output($stdout)
 				res = http.request(request)
