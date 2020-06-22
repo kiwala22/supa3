@@ -13,6 +13,7 @@
           <th># Contacts</th>
           <th>Message</th>
           <th>Segments/Predicted Revenue</th>
+					<th>Network</th>
           <th>Status</th>
           <th>Create Time</th>
           <th>Excecution Time</th>
@@ -31,6 +32,7 @@
 							<td><%= broadcast.predicted_revenue_lower %>,
 							<%= broadcast.predicted_revenue_upper %></td>
 						<% end %>
+						<td><%= broadcast.network %></td>
 						<% if (broadcast.status == "PENDING" || broadcast.status == "PROCESSING") %>
 							<td>
 								<div class="label label-warning">
