@@ -59,24 +59,28 @@
               </ul>
            </li>
          <% end %>
-         <li class="<%= 'active' if controller.controller_name == 'payments' %>" data-step="2" >
-            <a href="#ai_payments" title="Layouts" data-toggle="collapse">
-               <em class="fa fa-share" aria-hidden="true"></em>
-               <span>Payments</span>
-            </a>
-            <ul id="ai_payments" class="nav sidebar-subnav collapse">
-               <li>
-                  <a href="<%= payments_path %>">
-                     <span>Payments</span>
-                  </a>
-               </li>
-               <li>
-                  <a href="<%= new_payment_path %>">
-                     <span>New Payments</span>
-                  </a>
-               </li>
-            </ul>
-         </li>
+
+         <% if can? :manage, Payment %>
+           <li class="<%= 'active' if controller.controller_name == 'payments' %>" data-step="2" >
+              <a href="#ai_payments" title="Layouts" data-toggle="collapse">
+                 <em class="fa fa-share" aria-hidden="true"></em>
+                 <span>Payments</span>
+              </a>
+              <ul id="ai_payments" class="nav sidebar-subnav collapse">
+                 <li>
+                    <a href="<%= payments_path %>">
+                       <span>Payments</span>
+                    </a>
+                 </li>
+                 <li>
+                    <a href="<%= new_payment_path %>">
+                       <span>New Payments</span>
+                    </a>
+                 </li>
+              </ul>
+           </li>
+         <% end %>
+
          <li class="<%= 'active' if controller.controller_name == 'gamers' %>" data-step="1" >
             <a href="<%= gamers_path %>">
                <em class="icon-user"></em>
