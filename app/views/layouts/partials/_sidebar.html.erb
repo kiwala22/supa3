@@ -9,47 +9,56 @@
                <span>Analytics</span>
             </a>
             <ul id="ai_analytics" class="nav sidebar-subnav collapse">
-               <li class="<%= 'active' if controller.controller_name == 'comparisons' %>">
-                 <a href="<%= comparisons_path %>">
-                   <span>Daily Analytics</span>
-                 </a>
-               </li>
+               <% if can? :manage, "comparisons" %>
+                 <li class="<%= 'active' if controller.controller_name == 'comparisons' %>">
+                   <a href="<%= comparisons_path %>">
+                     <span>Daily Analytics</span>
+                   </a>
+                 </li>
+               <% end %>
                <li class="<%= 'active' if controller.controller_name == 'analytics' %>">
                   <a href="<%= analytics_path %>">
                      <span>User Analytics</span>
                   </a>
                </li>
-               <li class="<%= 'active' if controller.controller_name == 'ticket_analytics' %>">
-                  <a href="<%= ticket_analytics_path %>">
-                     <span>Ticket Analytics</span>
-                  </a>
-               </li>
-               <li class="<%= 'active' if controller.controller_name == 'revenues' %>">
-                  <a href="<%= revenues_path %>">
-                     <span>Revenue Analytics</span>
-                  </a>
-               </li>
+               <% if can? :manage, Ticket %>
+                 <li class="<%= 'active' if controller.controller_name == 'ticket_analytics' %>">
+                    <a href="<%= ticket_analytics_path %>">
+                       <span>Ticket Analytics</span>
+                    </a>
+                 </li>
+               <% end %>
+
+               <% if can? :manage, "revenues" %>
+                 <li class="<%= 'active' if controller.controller_name == 'revenues' %>">
+                    <a href="<%= revenues_path %>">
+                       <span>Revenue Analytics</span>
+                    </a>
+                 </li>
+               <% end %>
 
             </ul>
          </li>
-         <li data-step="2" >
-            <a href="#ai_finances" title="Layouts" data-toggle="collapse">
-               <em class="fa fa-money" aria-hidden="true"></em>
-               <span>Finances</span>
-            </a>
-            <ul id="ai_finances" class="nav sidebar-subnav collapse">
-               <li class="<%= 'active' if controller.controller_name == 'collections' %>">
-                  <a href="<%= collections_path %>">
-                     <span>Collections</span>
-                  </a>
-               </li>
-               <li class="<%= 'active' if controller.controller_name == 'disbursements' %>">
-                  <a href="<%= disbursements_path %>">
-                     <span>Disbursements</span>
-                  </a>
-               </li>
-            </ul>
-         </li>
+         <% if can? :manage, Collection %>
+           <li data-step="2" >
+              <a href="#ai_finances" title="Layouts" data-toggle="collapse">
+                 <em class="fa fa-money" aria-hidden="true"></em>
+                 <span>Finances</span>
+              </a>
+              <ul id="ai_finances" class="nav sidebar-subnav collapse">
+                 <li class="<%= 'active' if controller.controller_name == 'collections' %>">
+                    <a href="<%= collections_path %>">
+                       <span>Collections</span>
+                    </a>
+                 </li>
+                 <li class="<%= 'active' if controller.controller_name == 'disbursements' %>">
+                    <a href="<%= disbursements_path %>">
+                       <span>Disbursements</span>
+                    </a>
+                 </li>
+              </ul>
+           </li>
+         <% end %>
          <li class="<%= 'active' if controller.controller_name == 'payments' %>" data-step="2" >
             <a href="#ai_payments" title="Layouts" data-toggle="collapse">
                <em class="fa fa-share" aria-hidden="true"></em>
@@ -191,19 +200,22 @@
 
             </ul>
          </li>
-         <li class="<%= 'active' if controller.controller_name == 'reports' %>" data-step="2" >
-            <a href="#ai_reports" title="Layouts" data-toggle="collapse">
-               <em class="fa fa-line-chart" aria-hidden="true"></em>
-               <span>Reports</span>
-            </a>
-            <ul id="ai_reports" class="nav sidebar-subnav collapse">
-               <li>
-                  <a href="<%= reports_path %>">
-                     <span>View Reports</span>
-                  </a>
-               </li>
-            </ul>
-         </li>
+
+        <% if can? :manage, Report %>
+          <li class="<%= 'active' if controller.controller_name == 'reports' %>" data-step="2" >
+             <a href="#ai_reports" title="Layouts" data-toggle="collapse">
+                <em class="fa fa-line-chart" aria-hidden="true"></em>
+                <span>Reports</span>
+             </a>
+             <ul id="ai_reports" class="nav sidebar-subnav collapse">
+                <li>
+                   <a href="<%= reports_path %>">
+                      <span>View Reports</span>
+                   </a>
+                </li>
+             </ul>
+          </li>
+        <% end %>
 
       </ul>
    </nav>
