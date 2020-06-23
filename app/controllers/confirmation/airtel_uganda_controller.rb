@@ -1,5 +1,5 @@
 class Confirmation::AirtelUgandaController < ApplicationController
-	#before_action :authenticate_source, :if => proc {Rails.env.production?}
+	before_action :authenticate_source, :if => proc {Rails.env.production?}
 	skip_before_action :verify_authenticity_token, raise: false
 
 	require 'logger'
@@ -7,9 +7,7 @@ class Confirmation::AirtelUgandaController < ApplicationController
 	@@logger.level = Logger::ERROR
 
 	def create
-		req = (request.body.read).gsub('&', '')
-		Rails.logger.debug(req)
-		request_body = Hash.from_xml(req)
+		request_body = Hash.from_xml(request.body.read)
 		Rails.logger.debug(request_body)
 		if request_body['COMMAND']['TYPE'] == "STANPAY"
 			@transaction = Collection.new(
