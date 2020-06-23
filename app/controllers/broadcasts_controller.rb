@@ -21,7 +21,6 @@ class BroadcastsController < ApplicationController
            predicted_revenue_upper: broadcast_params['predicted_revenue_upper'],
            status: "PENDING",
            method:  broadcast_params['method'],
-           network: broadcast_params['network'],
            user_id: current_user.id)
        end
        if broadcast_params[:method] == "Segments"
@@ -31,7 +30,6 @@ class BroadcastsController < ApplicationController
             segment: broadcast_params['segment'].join(","),
             status: "PENDING",
             method:  broadcast_params['method'],
-            network: broadcast_params['network'],
             user_id: current_user.id)
        end
       if @broadcast.save
@@ -71,6 +69,6 @@ class BroadcastsController < ApplicationController
    private
    def broadcast_params
       params.require(:broadcast).permit(:message, :execution_time, :status, :predicted_revenue_lower,
-        :predicted_revenue_upper, :method, :network, :segment => [])
+        :predicted_revenue_upper, :method, :segment => [])
    end
 end
