@@ -7,7 +7,8 @@ class Confirmation::AirtelUgandaController < ApplicationController
 	@@logger.level = Logger::ERROR
 
 	def create
-		request_body = Hash.from_xml(request.body.read)
+		req = (request.body.read).gsub('&', '')
+		request_body = Hash.from_xml(req)
 		Rails.logger.debug(request_body)
 		if request_body['COMMAND']['TYPE'] == "STANPAY"
 			@transaction = Collection.new(
