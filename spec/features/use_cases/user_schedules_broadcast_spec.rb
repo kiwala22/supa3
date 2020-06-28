@@ -7,10 +7,11 @@ def login_form(email, password)
     click_button "Login"
 end
 
+
 describe "user broadcast", type: :request, js: true  do
     include_context 'User Sessions'
 
-    it "successfully schedules a broadcast with status PENDING" do
+    it "successfully schedules a Supa3 segment broadcast for all networks with status PENDING" do
         visit '/'
         login_form(valid_user_params[:email], valid_user_params[:password])
 
@@ -18,62 +19,191 @@ describe "user broadcast", type: :request, js: true  do
         expect(page).to have_content("Signed in successfully.")
 
         visit '/broadcasts/new'
-        select "A", :from => "Segment"
+        select "SUPA 3", from: "game"
+        select "Segments", from: "selector"
+        find('a[id="add_user_lists"]').click
+        2.times {
+          check((('A'..'F').to_a).sample(1).join())
+        }
+        select "ALL", from: "network"
         fill_in "broadcast_compose_message", with: 'This is to test the broadcast'
-        page.execute_script("$('#broadcast_schedule').val('25 June 2019 - 10:15 AM')")
+        page.execute_script("$('#broadcast_schedule').val('25 June 2021 - 10:15 AM')")
+        click_button "Schedule"
+
+        expect(page).to have_content('Broadcast Successful. Processing.....')
+        expect(page.current_path).to eq '/broadcasts'
+        expect(Broadcast.last.status).to eq('PENDING')
+    end
+
+    it "successfully schedules a Supa5 segment broadcast for all networks with status PENDING" do
+        visit '/'
+        login_form(valid_user_params[:email], valid_user_params[:password])
+
+        expect(page.current_path).to eq '/'
+        expect(page).to have_content("Signed in successfully.")
+
+        visit '/broadcasts/new'
+        select "SUPA 5", from: "game"
+        select "Segments", from: "selector"
+        find('a[id="add_user_lists"]').click
+        2.times {
+          check((('A'..'F').to_a).sample(1).join())
+        }
+        select "ALL", from: "network"
+        fill_in "broadcast_compose_message", with: 'This is to test the broadcast'
+        page.execute_script("$('#broadcast_schedule').val('25 June 2021 - 10:15 AM')")
+        click_button "Schedule"
+
+        expect(page).to have_content('Broadcast Successful. Processing.....')
+        expect(page.current_path).to eq '/broadcasts'
+        expect(Broadcast.last.status).to eq('PENDING')
+    end
+
+    it "successfully schedules a Supa3 segment broadcast for MTN with status PENDING" do
+        visit '/'
+        login_form(valid_user_params[:email], valid_user_params[:password])
+
+        expect(page.current_path).to eq '/'
+        expect(page).to have_content("Signed in successfully.")
+
+        visit '/broadcasts/new'
+        select "SUPA 3", from: "game"
+        select "Segments", from: "selector"
+        find('a[id="add_user_lists"]').click
+        2.times {
+          check((('A'..'F').to_a).sample(1).join())
+        }
+        select "MTN", from: "network"
+        fill_in "broadcast_compose_message", with: 'This is to test the broadcast'
+        page.execute_script("$('#broadcast_schedule').val('25 June 2021 - 10:15 AM')")
+        click_button "Schedule"
+
+        expect(page).to have_content('Broadcast Successful. Processing.....')
+        expect(page.current_path).to eq '/broadcasts'
+        expect(Broadcast.last.status).to eq('PENDING')
+    end
+
+    it "successfully schedules a Supa5 segment broadcast for AIRTEL with status PENDING" do
+        visit '/'
+        login_form(valid_user_params[:email], valid_user_params[:password])
+
+        expect(page.current_path).to eq '/'
+        expect(page).to have_content("Signed in successfully.")
+
+        visit '/broadcasts/new'
+        select "SUPA 5", from: "game"
+        select "Segments", from: "selector"
+        find('a[id="add_user_lists"]').click
+        2.times {
+          check((('A'..'F').to_a).sample(1).join())
+        }
+        select "AIRTEL", from: "network"
+        fill_in "broadcast_compose_message", with: 'This is to test the broadcast'
+        page.execute_script("$('#broadcast_schedule').val('25 June 2021 - 10:15 AM')")
+        click_button "Schedule"
+
+        expect(page).to have_content('Broadcast Successful. Processing.....')
+        expect(page.current_path).to eq '/broadcasts'
+        expect(Broadcast.last.status).to eq('PENDING')
+    end
+
+
+    it "successfully schedules a Supa5 segment broadcast for all networks with status SUCCESS" do
+        visit '/'
+        login_form(valid_user_params[:email], valid_user_params[:password])
+
+        expect(page.current_path).to eq '/'
+        expect(page).to have_content("Signed in successfully.")
+
+        visit '/broadcasts/new'
+        select "SUPA 5", from: "game"
+        select "Segments", from: "selector"
+        find('a[id="add_user_lists"]').click
+        2.times {
+          check((('A'..'F').to_a).sample(1).join())
+        }
+        select "ALL", from: "network"
+        fill_in "broadcast_compose_message", with: 'This is to test the broadcast'
+        page.execute_script("$('#broadcast_schedule').val('25 June 2021 - 10:15 AM')")
         click_button "Schedule"
 
         expect(page).to have_content('Broadcast Successful. Processing.....')
         expect(page.current_path).to eq '/broadcasts'
         expect(Broadcast.last.status).to eq('PENDING')
 
-    end
-
-    it "successfully schedules a broadcast with status PROCESSING" do
-        visit '/'
-        login_form(valid_user_params[:email], valid_user_params[:password])
-
-        expect(page.current_path).to eq '/'
-        expect(page).to have_content("Signed in successfully.")
-
-        visit '/broadcasts/new'
-        select "B", :from => "Segment"
-        fill_in "broadcast_compose_message", with: 'This is to test the broadcast'
-        page.execute_script("$('#broadcast_schedule').val('21 June 2019 - 10:15 AM')")
-        click_button "Schedule"
-
-        get '/process_broadcasts'
-        expect(Broadcast.last.status).to eq('PROCESSING')
-
-        expect(page).to have_content('Broadcast Successful. Processing.....')
-        expect(page.current_path).to eq '/broadcasts'
-    end
-
-    it "successfully schedules a broadcast with status SUCCESS" do
-        visit '/'
-        login_form(valid_user_params[:email], valid_user_params[:password])
-
-        expect(page.current_path).to eq '/'
-        expect(page).to have_content("Signed in successfully.")
-
-        visit '/broadcasts/new'
-        select "C", :from => "Segment"
-        fill_in "broadcast_compose_message", with: 'This is to test the broadcast'
-        page.execute_script("$('#broadcast_schedule').val('21 June 2019 - 10:15 AM')")
-        click_button "Schedule"
-
         expect {
-            get '/process_broadcasts'
+          BroadcastWorker.perform_async(Broadcast.last.id)
         }.to change(BroadcastWorker.jobs, :size).by(1)
 
+        Sidekiq::Testing.inline! do
+          BroadcastWorker.drain
+        end
+        expect(Broadcast.last.status).to eq('SUCCESS')
+    end
+
+    it "successfully schedules a Supa3 segment broadcast for MTN with status SUCCESS" do
+        visit '/'
+        login_form(valid_user_params[:email], valid_user_params[:password])
+
+        expect(page.current_path).to eq '/'
+        expect(page).to have_content("Signed in successfully.")
+
+        visit '/broadcasts/new'
+        select "SUPA 3", from: "game"
+        select "Segments", from: "selector"
+        find('a[id="add_user_lists"]').click
+        2.times {
+          check((('A'..'F').to_a).sample(1).join())
+        }
+        select "MTN", from: "network"
+        fill_in "broadcast_compose_message", with: 'This is to test the broadcast'
+        page.execute_script("$('#broadcast_schedule').val('25 June 2021 - 10:15 AM')")
+        click_button "Schedule"
+
         expect(page).to have_content('Broadcast Successful. Processing.....')
         expect(page.current_path).to eq '/broadcasts'
+        expect(Broadcast.last.status).to eq('PENDING')
 
-        # Sidekiq::Testing.inline! do
-        #    BroadcastWorker.drain
-        # end
+        expect {
+          BroadcastWorker.perform_async(Broadcast.last.id)
+        }.to change(BroadcastWorker.jobs, :size).by(1)
 
-        #expect(Broadcast.last.status).to eq('SUCCESS')
+        Sidekiq::Testing.inline! do
+          BroadcastWorker.drain
+        end
+        expect(Broadcast.last.status).to eq('SUCCESS')
+    end
 
+    it "successfully schedules a Supa5 segment broadcast for AIRTEL with status SUCCESS" do
+        visit '/'
+        login_form(valid_user_params[:email], valid_user_params[:password])
+
+        expect(page.current_path).to eq '/'
+        expect(page).to have_content("Signed in successfully.")
+
+        visit '/broadcasts/new'
+        select "SUPA 5", from: "game"
+        select "Segments", from: "selector"
+        find('a[id="add_user_lists"]').click
+        2.times {
+          check((('A'..'F').to_a).sample(1).join())
+        }
+        select "AIRTEL", from: "network"
+        fill_in "broadcast_compose_message", with: 'This is to test the broadcast'
+        page.execute_script("$('#broadcast_schedule').val('25 June 2021 - 10:15 AM')")
+        click_button "Schedule"
+
+        expect(page).to have_content('Broadcast Successful. Processing.....')
+        expect(page.current_path).to eq '/broadcasts'
+        expect(Broadcast.last.status).to eq('PENDING')
+
+        expect {
+          BroadcastWorker.perform_async(Broadcast.last.id)
+        }.to change(BroadcastWorker.jobs, :size).by(1)
+
+        Sidekiq::Testing.inline! do
+          BroadcastWorker.drain
+        end
+        expect(Broadcast.last.status).to eq('SUCCESS')
     end
 end

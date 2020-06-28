@@ -10,7 +10,7 @@
           <%= f.label :game, "Select Game Type", class: "text-muted" %>
           <div>
             <%= f.select :game, options_for_select([["SUPA 3", "Supa3"], ["SUPA 5", "Supa5"]]),
-            {:prompt => "Select One"},{class: "form-control", required: true} %>
+            {:prompt => "Select One"},{class: "form-control", :id => "game", required: true} %>
           </div>
         </div>
         <div class="form-group">
@@ -50,7 +50,7 @@
           </p>
           <div>
             <%= f.select :network, options_for_select(["ALL","MTN","AIRTEL"]),
-            {:prompt => 'Select One'} ,{class: "form-control", required: true} %>
+            {:prompt => 'Select One'} ,{class: "form-control", :id => "network", required: true} %>
           </div>
         </div>
 

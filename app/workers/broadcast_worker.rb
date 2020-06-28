@@ -12,12 +12,12 @@ class BroadcastWorker
       if @broadcast.network == "MTN"
         if !@broadcast.segment.nil?
           if @broadcast.game == "Supa3"
-            @gamers = Gamer.where("supa3_segment = ? and phone_number ~* ?",  @broadcast.segment.split(","), "^(25677|25678|25639)")
+            @gamers = Gamer.where("supa3_segment IN (?) and phone_number ~* ?",  @broadcast.segment.split(","), "^(25677|25678|25639)")
             sender_id = ENV['DEFAULT_SENDER_ID']
           end
           if @broadcast.game == "Supa5"
-            @gamers = Gamer.where("supa5_segment = ? and phone_number ~* ?",  @broadcast.segment.split(","), "^(25677|25678|25639)")
-            sender_id = ENV['SUPA5_SENDER_ID'])
+            @gamers = Gamer.where("supa5_segment IN (?) and phone_number ~* ?",  @broadcast.segment.split(","), "^(25677|25678|25639)")
+            sender_id = ENV['SUPA5_SENDER_ID']
           end
         end
 
@@ -51,12 +51,12 @@ class BroadcastWorker
       if @broadcast.network == "AIRTEL"
         if !@broadcast.segment.nil?
           if @broadcast.game == "Supa3"
-            @gamers = Gamer.where("supa3_segment = ? and phone_number ~* ?",  @broadcast.segment.split(","), "^(25670|25675)")
+            @gamers = Gamer.where("supa3_segment IN (?) and phone_number ~* ?",  @broadcast.segment.split(","), "^(25670|25675)")
             sender_id = ENV['DEFAULT_SENDER_ID']
           end
           if @broadcast.game == "Supa5"
-            @gamers = Gamer.where("supa5_segment = ? and phone_number ~* ?",  @broadcast.segment.split(","), "^(25670|25675)")
-            sender_id = ENV['SUPA5_SENDER_ID'])
+            @gamers = Gamer.where("supa5_segment IN (?) and phone_number ~* ?",  @broadcast.segment.split(","), "^(25670|25675)")
+            sender_id = ENV['SUPA5_SENDER_ID']
           end
         end
 
@@ -92,7 +92,7 @@ class BroadcastWorker
           end
           if @broadcast.game == "Supa5"
             @gamers = Gamer.where(supa5_segment: @broadcast.segment.split(","))
-            sender_id = ENV['SUPA5_SENDER_ID'])
+            sender_id = ENV['SUPA5_SENDER_ID']
           end
         end
         if !@broadcast.predicted_revenue_lower.nil? && @broadcast.predicted_revenue_upper.nil?
