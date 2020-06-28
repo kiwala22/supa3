@@ -12,7 +12,7 @@ class SmsWorker
      :concurrency => { :limit => 20 }
   })
 
-  def perform(phone_number, message)
-    SendSMS.process_sms_now(transaction: false, receiver: phone_number, content: message, sender_id: ENV['DEFAULT_SENDER_ID'])
+  def perform(phone_number, message, sender_id)
+    SendSMS.process_sms_now(transaction: false, receiver: phone_number, content: message, sender_id: sender_id)
   end
 end

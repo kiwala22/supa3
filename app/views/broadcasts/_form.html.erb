@@ -7,6 +7,13 @@
       <div class="panel-body">
         <%= form_for( @broadcast , :html => {:"data-parsley-validate" => ''}) do |f| %>
         <div class="form-group">
+          <%= f.label :game, "Select Game Type", class: "text-muted" %>
+          <div>
+            <%= f.select :game, options_for_select([["SUPA 3", "Supa3"], ["SUPA 5", "Supa5"]]),
+            {:prompt => "Select One"},{class: "form-control", required: true} %>
+          </div>
+        </div>
+        <div class="form-group">
           <%= f.label :method, "Select Broadcast Method", class: "text-muted" %>
           <div>
             <%= f.select :method, options_for_select([["Segments", "Segments"], ["Predicted Revenue", "PredictedRevenue"]]),
@@ -24,6 +31,7 @@
               <% end %>
           </div>
         </div>
+
         <div class="row colors" id="PredictedRevenue">
           <div class="form-group col-md-6">
             <%= f.label :predicted_revenue_lower, "Predicted Revenue Lower", class: "text-muted" %>

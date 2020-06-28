@@ -30,11 +30,16 @@ $(document).ready(function(){
       todayBtn: true
 	}),
   $('#all_user_lists').hide();
+  //$('#all_user_lists1').hide();
   $("#transactionAlert").hide()
   $('#add_user_lists').click( function(event){
       event.stopPropagation();
       $('#all_user_lists').toggle();
   });
+  // $('#add_user_lists1').click( function(event){
+  //     event.stopPropagation();
+  //     $('#all_user_lists1').toggle();
+  // });
 });
 
 $(function(){
@@ -51,6 +56,41 @@ $(function(){
    var selected = $(this).val();
    var matched = items.indexOf(selected);
    var checkbox_required = $('input[type="checkbox"]');
+
+   // if (matched == 0) {
+   //   $('#all_user_lists1').children().prop('disabled', true).prop('required', false);
+   //   $('#data1').prop('disabled', true).prop('required', false);
+   //   $('#data2').prop('disabled', true);
+   //
+   //   checkbox_required.prop('disabled', false).prop('required', true);
+   //
+   //   checkbox_required.on('click', function(){
+   //       if (checkbox_required.is(':checked')) {
+   //           checkbox_required.prop('disabled', false).prop('required', false);
+   //       } else {
+   //           checkbox_required.prop('disabled', false).prop('required', true);
+   //       }
+   //   });
+   // }else if (matched == 1) {
+   //   $('#all_user_lists').children().prop('disabled', true).prop('required', false);
+   //   $('#data1').prop('disabled', true).prop('required', false);
+   //   $('#data2').prop('disabled', true);
+   //
+   //   checkbox_required.prop('disabled', false).prop('required', true);
+   //
+   //   checkbox_required.on('click', function(){
+   //       if (checkbox_required.is(':checked')) {
+   //           checkbox_required.prop('disabled', false).prop('required', false);
+   //       } else {
+   //           checkbox_required.prop('disabled', false).prop('required', true);
+   //       }
+   //   });
+   // }else {
+   //   $('#all_user_lists').children().prop('disabled', true).prop('required', false);
+   //   $('#all_user_lists1').children().prop('disabled', true).prop('required', false);
+   //   $('#data1').prop('disabled', false).prop('required', true);
+   //   $('#data2').prop('disabled', false);
+   // }
    if (matched != 0){
      $('#all_user_lists').children().prop('disabled', true).prop('required', false);
      $('#data1').prop('disabled', false).prop('required', true);

@@ -23,7 +23,9 @@ class AutoJobsController < ApplicationController
    end
 
    def update_segments
-      Segment.update_segments
+      #Segment.update_segments
+      Supa3Segment.update_segments
+      Supa5Segment.update_segments
       render body: nil
    end
 
