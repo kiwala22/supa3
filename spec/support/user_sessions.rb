@@ -14,17 +14,17 @@ RSpec.shared_context 'User Sessions' do
             password_confirmation: "password"
         }
     end
-  
+
     def authenticate
-        visit '/admin/login'
+        visit '/squirrel/login'
 
         fill_in "Email", with: "admin@example.com"
         fill_in "Password", with: "password"
         click_button "Login"
-        
-        visit "/admin/users"
 
-        visit "/admin/users/new"
+        visit "/squirrel/users"
+
+        visit "/squirrel/users/new"
 
         fill_in "Email", with: valid_user_params[:email]
         fill_in "First name", with: valid_user_params[:first_name]
@@ -32,11 +32,8 @@ RSpec.shared_context 'User Sessions' do
         fill_in "Password", with: valid_user_params[:password]
         fill_in "Confirmation", with: valid_user_params[:password_confirmation]
 
-        click_button "Create User" 
+        click_button "Create User"
 
-        visit '/admin/logout'
+        visit '/squirrel/logout'
     end
   end
-
-
-  

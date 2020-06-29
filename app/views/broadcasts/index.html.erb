@@ -12,7 +12,9 @@
           <th>No</th>
           <th># Contacts</th>
           <th>Message</th>
-          <th>Segments/Predicted Revenue</th>
+          <th>Game</th>
+					<th>Segments/Revenue</th>
+					<th>Network</th>
           <th>Status</th>
           <th>Create Time</th>
           <th>Excecution Time</th>
@@ -25,12 +27,14 @@
               <td><%= (i+1) %></td>
               <td><%= broadcast.contacts %></td>
               <td><%= broadcast.message %></td>
+							<td><%= broadcast.game %></td>
 							<% if !broadcast.segment.nil? %>
-							<td><%= broadcast.segment %></td>
-						<% elsif !broadcast.predicted_revenue_lower.nil? %>
-							<td><%= broadcast.predicted_revenue_lower %>,
-							<%= broadcast.predicted_revenue_upper %></td>
-						<% end %>
+								<td><%= broadcast.segment %></td>
+							<% elsif !broadcast.predicted_revenue_lower.nil? %>
+								<td><%= broadcast.predicted_revenue_lower %>,
+								<%= broadcast.predicted_revenue_upper %></td>
+							<% end %>
+						<td><%= broadcast.network %></td>
 						<% if (broadcast.status == "PENDING" || broadcast.status == "PROCESSING") %>
 							<td>
 								<div class="label label-warning">

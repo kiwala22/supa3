@@ -13,13 +13,23 @@ class SegmentPredictionWorker
 
    def perform(id)
       gamer = Gamer.find(id)
-      tickets = Ticket.where("phone_number = ? and created_at >= ?", gamer.phone_number, (Time.now - 90.days)).order("created_at DESC")
-      if tickets.blank?
-        gamer.update_attributes(segment: "G")
+      supa3_tickets = Ticket.where("phone_number = ? and created_at >= ? and game = ?", gamer.phone_number, (Time.now - 90.days), "Supa3").order("created_at DESC")
+      supa5_tickets = Ticket.where("phone_number = ? and created_at >= ? and game = ?", gamer.phone_number, (Time.now - 90.days), "Supa5").order("created_at DESC")
+      
+      if supa3_tickets.blank?
+        gamer.update_attributes(supa3_segment: "G")
       else
-        ticket_time = tickets.first.created_at
+        ticket_time = supa3_tickets.first.created_at
         segment = find_segment(ticket_time)
-        gamer.update_attributes(segment: segment)
+        gamer.update_attributes(supa3_segment: segment)
+      end
+
+      if supa5_tickets.blank?
+        gamer.update_attributes(supa5_segment: "G")
+      else
+        ticket_time = supa5_tickets.first.created_at
+        segment = find_segment(ticket_time)
+        gamer.update_attributes(supa5_segment: segment)
       end
    end
 

@@ -4,93 +4,73 @@ $(document).ready(function(){
    var yMax = 500;
    var dataShadow = [];
    option = {
-      title: {
-         text: 'User Segments',
-         subtext: 'Distribution of User Segments'
-      },
-      tooltip : {
-            trigger: 'axis',
-            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                  type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-            }
-      },
-      xAxis: {
-         data: gon.labels,
-         axisTick: {
-            show: false
-         },
-         axisLine: {
-            show: false
-         },
-         z: 10
-      },
-      yAxis: {
-         axisLine: {
-            show: false
-         },
-         axisTick: {
-            show: false
-         },
-         axisLabel: {
-            textStyle: {
-               color: '#999'
-            }
-         }
-      },
-      dataZoom: [
-         {
-            type: 'inside'
-         }
-      ],
-      series: [
-         { // For shadow
-            type: 'bar',
-            itemStyle: {
-               normal: {color: 'rgba(0,0,0,0.05)'}
-            },
-            barGap:'-100%',
-            barCategoryGap:'40%',
-            data: dataShadow,
-            animation: false
-         },
-         {
-            type: 'bar',
-            itemStyle: {
-               normal: {
-                  color: new echarts.graphic.LinearGradient(
-                     0, 0, 0, 1,
-                     [
-                        {offset: 0, color: '#83bff6'},
-                        {offset: 0.5, color: '#188df0'},
-                        {offset: 1, color: '#188df0'}
-                     ]
-                  )
-               },
-               emphasis: {
-                  color: new echarts.graphic.LinearGradient(
-                     0, 0, 0, 1,
-                     [
-                        {offset: 0, color: '#2378f7'},
-                        {offset: 0.7, color: '#2378f7'},
-                        {offset: 1, color: '#83bff6'}
-                     ]
-                  )
-               }
-            },
-            data: gon.counts
-         }
-      ]
-   };
+     title: {
+        text: 'User Segments',
+        subtext: 'Distribution of User Segments'
+     },
+     tooltip : {
+           trigger: 'axis',
+           axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                 type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+           }
+     },
+     legend: {
+         data: ['Supa 3', 'Supa 5']
+     },
+     xAxis: {
+        data: gon.labels,
+        axisTick: {
+           show: false
+        },
+        axisLine: {
+           show: false
+        },
+        z: 10
+     },
+     yAxis: {
+        axisLine: {
+           show: false
+        },
+        axisTick: {
+           show: false
+        },
+        axisLabel: {
+           textStyle: {
+              color: '#999'
+           }
+        }
+     },
+     dataZoom: [
+        {
+           type: 'inside'
+        }
+     ],
+     series: [
+
+        {
+           type: 'bar',
+           name: 'Supa 3',
+           data: gon.supa3_counts,
+        },
+        {
+           type: 'bar',
+           name: 'Supa 5',
+           data: gon.supa5_counts,
+        }
+     ]
+  };
    // use configuration item and data specified to show chart
    myChart.setOption(option);
 });
 
+
+//Supa3 graph
 $(document).ready(function(){
-   var myChart = echarts.init(document.getElementById('segment_trends_graph'), 'walden');
+   var myChart = echarts.init(document.getElementById('supa3_segment_trends_graph'), 'walden');
    var option = {
       title : {
-            text: 'Segments',
-            subtext: 'Segment Trends'
+            text: 'Supa 3 Segments',
+            subtext: 'Supa 3 Segment Trends'
       },
       tooltip : {
             trigger: 'axis'
@@ -123,7 +103,53 @@ $(document).ready(function(){
                }
             }
       ],
-      series : gon.series
+      series : gon.supa3_series
+   };
+   // use configuration item and data specified to show chart
+   myChart.setOption(option);
+});
+
+
+//Supa 5 graph
+$(document).ready(function(){
+   var myChart = echarts.init(document.getElementById('supa5_segment_trends_graph'), 'walden');
+   var option = {
+      title : {
+            text: 'Supa 5 Segments',
+            subtext: 'Supa 5 Segment Trends'
+      },
+      tooltip : {
+            trigger: 'axis'
+      },
+      legend: {
+            data: gon.segment_labels
+      },
+      toolbox: {
+            show : true,
+            feature : {
+               //mark : {show: true},
+               //dataView : {show: true, readOnly: false},
+               //restore : {show: true},
+               //saveAsImage : {show: true}
+            }
+      },
+      calculable : true,
+      xAxis : [
+            {
+               type : 'category',
+               boundaryGap : false,
+               data : gon.dates
+            }
+      ],
+      yAxis : [
+            {
+               type : 'value',
+               axisLabel : {
+                  formatter: '{value} Users'
+               }
+            }
+      ],
+      series : gon.supa5_series
    };
    // use configuration item and data specified to show chart
    myChart.setOption(option);

@@ -24,13 +24,28 @@ class BroadcastsController < ApplicationController
            user_id: current_user.id)
        end
        if broadcast_params[:method] == "Segments"
-         @broadcast = Broadcast.new(
-            message: broadcast_params['message'],
-            execution_time: DateTime.strptime(broadcast_params[:execution_time],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S"),
-            segment: broadcast_params['segment'].join(","),
-            status: "PENDING",
-            method:  broadcast_params['method'],
-            user_id: current_user.id)
+         if broadcast_params[:game] == "Supa3"
+           @broadcast = Broadcast.new(
+              message: broadcast_params['message'],
+              execution_time: DateTime.strptime(broadcast_params[:execution_time],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S"),
+              segment: broadcast_params['segment'].join(","),
+              status: "PENDING",
+              game: broadcast_params['game'],
+              method:  broadcast_params['method'],
+              network: broadcast_params['network'],
+              user_id: current_user.id)
+         end
+         if broadcast_params[:game] == "Supa5"
+           @broadcast = Broadcast.new(
+              message: broadcast_params['message'],
+              execution_time: DateTime.strptime(broadcast_params[:execution_time],'%d %B %Y - %I:%M %p').to_datetime.strftime("%Y-%m-%d %H:%M:%S"),
+              segment: broadcast_params['segment'].join(","),
+              status: "PENDING",
+              game: broadcast_params['game'],
+              method:  broadcast_params['method'],
+              network: broadcast_params['network'],
+              user_id: current_user.id)
+         end
        end
       if @broadcast.save
          flash[:notice] = 'Broadcast Successful. Processing.....'
@@ -69,6 +84,6 @@ class BroadcastsController < ApplicationController
    private
    def broadcast_params
       params.require(:broadcast).permit(:message, :execution_time, :status, :predicted_revenue_lower,
-        :predicted_revenue_upper, :method, :segment => [])
+        :predicted_revenue_upper, :method, :network, :game, :segment => [])
    end
 end

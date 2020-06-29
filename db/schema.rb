@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_10_140355) do
+ActiveRecord::Schema.define(version: 2020_06_28_125323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,8 @@ ActiveRecord::Schema.define(version: 2020_06_10_140355) do
     t.decimal "predicted_revenue_lower", precision: 8, scale: 2
     t.decimal "predicted_revenue_upper", precision: 8, scale: 2
     t.string "method"
+    t.string "network"
+    t.string "game"
     t.index ["user_id"], name: "index_broadcasts_on_user_id"
   end
 
@@ -175,6 +177,8 @@ ActiveRecord::Schema.define(version: 2020_06_10_140355) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.string "supa3_segment"
+    t.string "supa5_segment"
     t.index ["phone_number"], name: "index_gamers_on_phone_number", unique: true
   end
 
@@ -256,6 +260,30 @@ ActiveRecord::Schema.define(version: 2020_06_10_140355) do
     t.integer "g"
   end
 
+  create_table "supa3_segments", force: :cascade do |t|
+    t.integer "a"
+    t.integer "b"
+    t.integer "c"
+    t.integer "d"
+    t.integer "e"
+    t.integer "f"
+    t.integer "g"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "supa5_segments", force: :cascade do |t|
+    t.integer "a"
+    t.integer "b"
+    t.integer "c"
+    t.integer "d"
+    t.integer "e"
+    t.integer "f"
+    t.integer "g"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tickets", force: :cascade do |t|
     t.string "phone_number"
     t.decimal "amount", precision: 10, scale: 2
@@ -275,8 +303,8 @@ ActiveRecord::Schema.define(version: 2020_06_10_140355) do
     t.string "last_name"
     t.string "winning_number"
     t.string "keyword"
+    t.string "game", default: "Supa3"
     t.string "disbursement_reference"
-    t.string "game"
     t.string "segment"
     t.index ["amount"], name: "index_tickets_on_amount"
     t.index ["data"], name: "index_tickets_on_data"
