@@ -6,7 +6,7 @@ class TicketWorker
 
    def perform(phone_number, message, amount)
       #Check if gamer exists or create with segment A and return gamer
-      gamer = Gamer.create_with(segment: 'A').find_or_create_by(phone_number: phone_number)
+      gamer = Gamer.create_with(supa3_segment: 'A', supa5_segment: 'A').find_or_create_by(phone_number: phone_number)
       message = message.gsub(/\s+/, '')
       data = message.scan(/\d/).join('')
       if data.length >= 3 && data.length < 5

@@ -82,6 +82,24 @@
 				</div>
 			</div>
 		</fieldset>
+		<fieldset>
+			<div class="col-md-6">
+				<div class="form-group">
+					<%= f.label :win_amount_gteq, "Win Amount Min", class:"col-lg-2 control-label" %>
+					<div class="col-sm-6">
+						<%= f.search_field :win_amount_gteq,  :class=>"form-control", id: "amount_grt" %>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<%= f.label :win_amount_lteq, "Win Amount Max", class:"col-lg-2 control-label" %>
+					<div class="col-sm-6">
+						<%= f.search_field :win_amount_lteq, :class=>"form-control", id: "amount_ls" %>
+					</div>
+				</div>
+			</div>
+		</fieldset>
 		<div class="pannel-footer">
 			<div class="clearfix">
 				<div class="pull-right">
