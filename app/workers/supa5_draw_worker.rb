@@ -29,33 +29,39 @@ class Supa5DrawWorker
 
 
       # check if the there is an existing offer or bonus
-      if DrawOffer.where("expiry_time > ? ",Time.now).exists?
-         #run special bonus draws
-         Ticket.where("created_at <= ? AND created_at >= ? AND game = ?", end_time, start_time, "Supa5").find_each(batch_size: 1000) do |ticket|
-            #find the gamer segment
-            gamer_segment = Gamer.find(ticket.gamer_id).segment
-            segment_offers = DrawOffer.where("expiry_time > ? AND segment = ? ",Time.now,gamer_segment)
-            if segment_offers.present?
-               #load new multipliers and execute
-               process_ticket(draw_id, draw_numbers, ticket, segment_offers.multiplier_five,segment_offers.multiplier_four,segment_offers.multiplier_three, segment_offers.multiplier_two, segment_offers.multiplier_one)
-            else
-              #execute the draw
-              process_ticket(draw_id, draw_numbers, ticket, MATCHED_FIVE , MATCHED_FOUR, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
-
-            end
-
-         end
-
-      else
-         #run normally
-         Ticket.where("created_at <= ? AND created_at >= ? AND game = ?", end_time, start_time, "Supa5").find_each(batch_size: 1000) do |ticket|
-            #execute the draw
-            process_ticket(draw_id, draw_numbers, ticket, MATCHED_FIVE , MATCHED_FOUR, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
-
-         end
+      # if DrawOffer.where("expiry_time > ? ",Time.now).exists?
+      #    #run special bonus draws
+      #    Ticket.where("created_at <= ? AND created_at >= ? AND game = ?", end_time, start_time, "Supa5").find_each(batch_size: 1000) do |ticket|
+      #       #find the gamer segment
+      #       gamer_segment = Gamer.find(ticket.gamer_id).segment
+      #       segment_offers = DrawOffer.where("expiry_time > ? AND segment = ? ",Time.now,gamer_segment)
+      #       if segment_offers.present?
+      #          #load new multipliers and execute
+      #          process_ticket(draw_id, draw_numbers, ticket, segment_offers.multiplier_five,segment_offers.multiplier_four,segment_offers.multiplier_three, segment_offers.multiplier_two, segment_offers.multiplier_one)
+      #       else
+      #         #execute the draw
+      #         process_ticket(draw_id, draw_numbers, ticket, MATCHED_FIVE , MATCHED_FOUR, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
+      #
+      #       end
+      #
+      #    end
+      #
+      # else
+      #    #run normally
+      #    Ticket.where("created_at <= ? AND created_at >= ? AND game = ?", end_time, start_time, "Supa5").find_each(batch_size: 1000) do |ticket|
+      #       #execute the draw
+      #       process_ticket(draw_id, draw_numbers, ticket, MATCHED_FIVE , MATCHED_FOUR, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
+      #
+      #    end
+      #
+      # end
+      #run normally
+      Ticket.where("created_at <= ? AND created_at >= ? AND game = ?", end_time, start_time, "Supa5").find_each(batch_size: 1000) do |ticket|
+         #execute the draw
+         process_ticket(draw_id, draw_numbers, ticket, MATCHED_FIVE , MATCHED_FOUR, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
 
       end
-
+      
       #run stats for the draw and update the status
       #network definations
       mtn = "MTN Uganda"
