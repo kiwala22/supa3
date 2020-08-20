@@ -86,7 +86,6 @@ ActiveRecord::Schema.define(version: 2020_06_28_125323) do
     t.decimal "predicted_revenue_lower", precision: 8, scale: 2
     t.decimal "predicted_revenue_upper", precision: 8, scale: 2
     t.string "method"
-    t.string "network"
     t.string "game"
     t.index ["user_id"], name: "index_broadcasts_on_user_id"
   end
@@ -303,8 +302,8 @@ ActiveRecord::Schema.define(version: 2020_06_28_125323) do
     t.string "last_name"
     t.string "winning_number"
     t.string "keyword"
-    t.string "game", default: "Supa3"
     t.string "disbursement_reference"
+    t.string "game"
     t.string "segment"
     t.index ["amount"], name: "index_tickets_on_amount"
     t.index ["data"], name: "index_tickets_on_data"

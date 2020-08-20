@@ -5,7 +5,7 @@ class DisbursementsController < ApplicationController
   require 'mobile_money/airtel_uganda'
 
   def index
-    @q = Disbursement.all.ransack(params[:q])
+    @q = Disbursement.limit(1000).ransack(params[:q])
     @disbursements = @q.result.order("created_at DESC").page params[:page]
     @search_params = params[:q]
 

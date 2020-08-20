@@ -5,7 +5,7 @@ class CollectionsController < ApplicationController
   require 'mobile_money/airtel_uganda'
 
   def index
-    @q = Collection.all.ransack(params[:q])
+    @q = Collection.limit(1000).ransack(params[:q])
     @collections = @q.result.order("created_at DESC").page params[:page]
     @search_params = params[:q]
 
