@@ -23,7 +23,7 @@ class CollectionsController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.csv { send_data @collections.to_csv, filename: "Collections #{Date.today}.csv" }
+      format.csv { send_data @q.to_csv, filename: "Collections #{Date.today}.csv" }
     end
   end
 

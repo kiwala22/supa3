@@ -23,7 +23,7 @@ class DisbursementsController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.csv { send_data @disbursements.to_csv, filename: "Disbursements #{Date.today}.csv" }
+      format.csv { send_data @q.to_csv, filename: "Disbursements #{Date.today}.csv" }
     end
   end
 end

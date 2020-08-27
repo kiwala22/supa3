@@ -27,23 +27,23 @@ class TicketWorker
       when game == 'Supa3' && amount.to_i > 50000
          #play 50000 and refund the excess
          refund_amount = (amount.to_i - 50000)
-         ticket_id = process_ticket(phone_number: phone_number, message: message, amount: 50000, first_name: gamer.first_name, last_name: gamer.last_name, gamer_id: gamer.id, segment: gamer.segment )
+         ticket_id = process_ticket(phone_number: phone_number, message: message, amount: 50000, first_name: gamer.first_name, last_name: gamer.last_name, gamer_id: gamer.id, supa3_segment: gamer.supa3_segment, supa5_segment: gamer.supa5_segment )
          DisbursementWorker.perform_async(gamer.id, refund_amount, ticket_id)
 
       when game == 'Supa5' && amount.to_i > 30000
          #play 50000 and refund the excess
          refund_amount = (amount.to_i - 30000)
-         ticket_id = process_ticket(phone_number: phone_number, message: message, amount: 30000, first_name: gamer.first_name, last_name: gamer.last_name, gamer_id: gamer.id, segment: gamer.segment )
+         ticket_id = process_ticket(phone_number: phone_number, message: message, amount: 30000, first_name: gamer.first_name, last_name: gamer.last_name, gamer_id: gamer.id, supa3_segment: gamer.supa3_segment, supa5_segment: gamer.supa5_segment )
          DisbursementWorker.perform_async(gamer.id, refund_amount, ticket_id)
 
       else
-         process_ticket(phone_number: phone_number, message: message, amount: amount, first_name: gamer.first_name, last_name: gamer.last_name, gamer_id: gamer.id, segment: gamer.segment )
+         process_ticket(phone_number: phone_number, message: message, amount: amount, first_name: gamer.first_name, last_name: gamer.last_name, gamer_id: gamer.id, supa3_segment: gamer.supa3_segment, supa5_segment: gamer.supa5_segment )
       end
 
 
    end
 
-   def process_ticket(phone_number:, message:, amount:, first_name: nil, last_name: nil, gamer_id:, segment:)
+   def process_ticket(phone_number:, message:, amount:, first_name: nil, last_name: nil, gamer_id:, supa3_segment:, supa5_segment:)
       draw_time = ((Time.now - (Time.now.min % 10).minutes).beginning_of_minute + 10.minutes).strftime("%I:%M %p")
 
       #check if the data is purely numbers and 3 digits long
@@ -65,7 +65,7 @@ class TicketWorker
       max_win = amount.to_i * 200
 
       if data.length == 3 #should also check that its below 10
-         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa3",segment: segment)
+         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa3", supa3_segment: supa3_segment, supa5_segment: supa5_segment)
          if ticket.save
             #Send SMS with confirmation and add gamer name if number is for MTN
             if first_name != nil
@@ -80,7 +80,7 @@ class TicketWorker
 
       elsif data.length == 5
          max_win = amount.to_i * 500
-         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa5", segment: segment)
+         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa5", supa3_segment: supa3_segment, supa5_segment: supa5_segment)
          if ticket.save
             #Send SMS with confirmation
             if first_name != nil
@@ -96,7 +96,7 @@ class TicketWorker
       else
          #generate random numbers
          random_data = generate_random_data
-         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa3",segment: segment)
+         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa3", supa3_segment: supa3_segment, supa5_segment: supa5_segment)
          if ticket.save
             #Send SMS with the confirmation and random number and add gamer name if number is for MTN
             if first_name != nil
