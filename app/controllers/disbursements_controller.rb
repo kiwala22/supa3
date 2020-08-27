@@ -6,7 +6,7 @@ class DisbursementsController < ApplicationController
 
   def index
     @q = Disbursement.limit(1000).ransack(params[:q])
-    @disbursements = @q.result.order("created_at DESC").page params[:page]
+    @disbursements = @q.result.order("created_at DESC")
     @search_params = params[:q]
 
     mtn_balance = MobileMoney::MtnEcw.get_payout_balance
@@ -22,8 +22,8 @@ class DisbursementsController < ApplicationController
       @airtel_payouts = airtel_balance[:amount]
     end
     respond_to do |format|
-      format.html
-      format.csv { send_data @q.to_csv, filename: "Disbursements #{Date.today}.csv" }
+      format.html { @disbursements = @disbursements.page params[:page] }
+      format.csv { send_data @q.to_csv, filename: "Disbursements-#{DateTime.now.strftime("%d%m%Y%H%M")}.csv" }
     end
   end
 end

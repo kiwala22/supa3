@@ -9,13 +9,14 @@ class TicketsController < ApplicationController
    def index
       #consider only the last 10000 tickets for quick results
       @q = Ticket.limit(1000).ransack(params[:q])
-      @tickets = @q.result.order("created_at DESC").page params[:page]
+      @tickets = @q.result.order("created_at DESC")
       @search_params = params[:q]
       respond_to do |format|
-        format.html
-        format.csv { send_data @q.to_csv, filename: "Tickets #{Date.today}.csv" }
+        format.html { @tickets = @tickets.page params[:page] }
+        format.csv { send_data @tickets.to_csv, filename: "Tickets-#{DateTime.now.strftime("%d%m%Y%H%M")}" }
       end
    end
+
 
    def update
      #method to recall disbursement that did not initially process

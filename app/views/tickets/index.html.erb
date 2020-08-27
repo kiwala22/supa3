@@ -195,6 +195,6 @@
 	</table>
 	<%= paginate @tickets %>
 	<p>
-		<%= link_to "Download CSV", "/tickets.csv", class: "button expand pull-right" %>
+		<%= link_to "Download CSV", tickets_path(request.params.merge(format: 'csv')), class: "button expand pull-right" %>
 	</p>
 </div>

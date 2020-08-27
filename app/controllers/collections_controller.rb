@@ -6,7 +6,7 @@ class CollectionsController < ApplicationController
 
   def index
     @q = Collection.limit(1000).ransack(params[:q])
-    @collections = @q.result.order("created_at DESC").page params[:page]
+    @collections = @q.result.order("created_at DESC")
     @search_params = params[:q]
 
     mtn_balance = MobileMoney::MtnEcw.get_collection_balance
@@ -22,8 +22,8 @@ class CollectionsController < ApplicationController
       @airtel_collections = airtel_balance[:amount]
     end
     respond_to do |format|
-      format.html
-      format.csv { send_data @q.to_csv, filename: "Collections #{Date.today}.csv" }
+      format.html { @collections = @collections.page params[:page] }
+      format.csv { send_data @q.to_csv, filename: "Collections-#{DateTime.now.strftime("%d%m%Y%H%M")}.csv" }
     end
   end
 
