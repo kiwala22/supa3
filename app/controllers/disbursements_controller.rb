@@ -23,7 +23,7 @@ class DisbursementsController < ApplicationController
     end
     respond_to do |format|
       format.html { @disbursements = @disbursements.page params[:page] }
-      format.csv { send_data @q.to_csv, filename: "Disbursements-#{DateTime.now.strftime("%d%m%Y%H%M")}.csv" }
+      format.csv { send_data @disbursements.to_csv, filename: "Disbursements-#{DateTime.now.strftime("%d%m%Y%H%M")}.csv" }
     end
   end
 end

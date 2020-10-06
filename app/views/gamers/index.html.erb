@@ -5,26 +5,49 @@
 </h3>
 </h3>
 
-<div class="panel panel-default">
-   <%= search_form_for @q, url: gamers_path, html: { method: :get } do |f| %>
-   <div class="panel-body">
-      <fieldset>
-          <div class="form-group">
-              <%= f.label :phone_number, class:"col-lg-2 control-label" %>
-              <div class="col-sm-6">
-              <%= f.search_field :phone_number_eq, { include_blank: true, :class=>"form-control", id: "phone_number"}%>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+    <%= search_form_for @q, url: gamers_path, html: { method: :get } do |f| %>
+      <div class="panel-body">
+        <fieldset>
+            <div class="col-sm-4">
+              <div class="form-group">
+              <%= f.label :phone_number, "PhoneNumber", class:"col-lg-4 control-label" %>
+                <div class="col-lg-8">
+                  <%= f.search_field :phone_number_eq, { include_blank: true, :class=>"form-control", id: "phone_number"}%>
+                </div>
               </div>
-          </div>
-      </fieldset>
-      <div class="pannel-footer">
-         <div class="clearfix">
-            <div class="pull-right">
-               <%= f.submit 'Search', :class=>'btn btn-primary' %>
             </div>
-         </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <%= f.label :supa3_segment, "Segment", class:"col-lg-4 control-label" %>
+                <div class="col-lg-8">
+                  <%= f.select :supa3_segment_eq, ('A'..'F').to_a, {:prompt => 'Select One'}, { include_blank: true, :class=>"form-control", id: "segment"}%>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <%= f.label :phone_number, "Network", class:"col-lg-4 control-label" %>
+                <div class="col-lg-8">
+                  <%= f.select :phone_number_start, options_for_select([["Airtel", "25675 25670"], ["MTN", "25677 25678 25639"]]), {:prompt => 'Select One'}, {:class=>"form-control", id: "segment"}%>
+                </div>
+              </div>
+            </div>
+        </fieldset>
+
+        <div class="pannel-footer">
+            <div class="clearfix">
+              <div class="pull-right">
+                  <%= f.submit 'Search', :class=>'btn btn-primary' %>
+              </div>
+            </div>
+        </div>
       </div>
-   </div>
-   <% end %>
+    <% end %>
+  </div>
+  </div>
 </div>
 
 <div class="table-responsive">
@@ -56,5 +79,7 @@
       </tbody>
   </table>
   <%= paginate @gamers %>
-
+	<!-- <p>
+		<#%= link_to "Download CSV", gamers_path(request.params.merge(format: 'csv')), class: "button expand pull-right" %>
+	</p> -->
 </div>

@@ -13,7 +13,10 @@ class TicketWorker
          game = 'Supa3'
       elsif data.length >= 5
          game = 'Supa5'
+      else
+         game = 'Supa3'
       end
+      
       case
       when amount.to_i >= 0 && amount.to_i < 1000
          #keep the money and sms the user and add name if gamer number is for MTN

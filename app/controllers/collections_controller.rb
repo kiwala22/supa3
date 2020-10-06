@@ -23,7 +23,7 @@ class CollectionsController < ApplicationController
     end
     respond_to do |format|
       format.html { @collections = @collections.page params[:page] }
-      format.csv { send_data @q.to_csv, filename: "Collections-#{DateTime.now.strftime("%d%m%Y%H%M")}.csv" }
+      format.csv { send_data @collections.to_csv, filename: "Collections-#{DateTime.now.strftime("%d%m%Y%H%M")}.csv" }
     end
   end
 

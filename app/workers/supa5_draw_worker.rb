@@ -5,7 +5,9 @@ class Supa5DrawWorker
 
    require 'send_sms'
    MATCHED_FIVE = 500
+   MATCHED_FIVE_ANY = 10
    MATCHED_FOUR = 400
+   MATCHED_FOUR_ANY = 5
    MATCHED_THREE = 200
    MATCHED_TWO = 2
    MATCHED_ONE = 0
@@ -58,7 +60,7 @@ class Supa5DrawWorker
       #run normally
       Ticket.where("created_at <= ? AND created_at >= ? AND game = ?", end_time, start_time, "Supa5").find_each(batch_size: 1000) do |ticket|
          #execute the draw
-         process_ticket(draw_id, draw_numbers, ticket, MATCHED_FIVE , MATCHED_FOUR, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
+         process_ticket(draw_id, draw_numbers, ticket, MATCHED_FIVE , MATCHED_FIVE_ANY, MATCHED_FOUR, MATCHED_FOUR_ANY, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
 
       end
       
@@ -90,7 +92,7 @@ class Supa5DrawWorker
 
    end
 
-   def process_ticket(draw_id, draw_numbers, ticket, matched_five, matched_four, matched_three, matched_two, matched_one)
+   def process_ticket(draw_id, draw_numbers, ticket, matched_five, matched_five_any, matched_four, matched_four_any, matched_three, matched_two, matched_one)
 
       #check number of matches
       ticket_numbers = ticket.data.split("").map(&:to_i)
@@ -106,6 +108,16 @@ class Supa5DrawWorker
          #process payments
          win_after_taxes = (win.to_i * 0.85)
          DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
+      
+      elsif (number_matches == 5) && (ticket_numbers != draw_numbers)
+         win = (ticket.amount).to_i * matched_five_any
+         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
+         #send confirmation message
+         message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers without sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID']) #change this
+         #process payments
+         win_after_taxes = (win.to_i * 0.85)
+         DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
       elsif (ticket_numbers[0..3] == draw_numbers[0..3]) &&  (ticket_numbers[0..4] != draw_numbers[0..4])
          win = (ticket.amount).to_i * matched_four
@@ -114,6 +126,16 @@ class Supa5DrawWorker
          message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched 4 numbers in sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
          #process payment
+         win_after_taxes = (win.to_i * 0.85)
+         DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
+
+      elsif (number_matches == 4) && (ticket_numbers[0..3] != draw_numbers[0..3])
+         win = (ticket.amount).to_i * matched_four_any
+         ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
+         #send confirmation message
+         message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers without sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID']) #change this
+         #process payments
          win_after_taxes = (win.to_i * 0.85)
          DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 

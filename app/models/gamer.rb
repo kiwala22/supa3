@@ -11,6 +11,16 @@ class Gamer < ApplicationRecord
    after_create :update_user_info
    #after_create :send_welcome_message
 
+   def self.to_csv
+      CSV.generate do |csv|
+        column_names = %w(first_name last_name phone_number supa3_segment)
+        csv << column_names
+        all.each do |result|
+          csv << result.attributes.values_at(*column_names)
+        end
+      end
+    end
+
    #method to send a message to a new gamer
    private
 
