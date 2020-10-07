@@ -17,7 +17,7 @@ class GamersController < ApplicationController
       @search_params = params[:q]
       respond_to do |format|
          format.html { @gamers = @gamers.page params[:page] }
-         format.csv { send_data @gamers.to_csv, filename: "Gamers-first.csv" }
+         format.csv { send_data @gamers.to_csv, filename: "Gamers-#{Time.now.to_datetime}.csv" }
       end
    end
 

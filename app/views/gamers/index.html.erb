@@ -79,7 +79,7 @@
       </tbody>
   </table>
   <%= paginate @gamers %>
-	<!-- <p>
-		<#%= link_to "Download CSV", gamers_path(request.params.merge(format: 'csv')), class: "button expand pull-right" %>
-	</p> -->
+	<p>
+    <%= link_to "Download CSV", request.original_url+"&format=csv", class: "button expand pull-right" %>
+	</p>
 </div>
