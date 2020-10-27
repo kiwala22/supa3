@@ -8,6 +8,17 @@ class Collection < ApplicationRecord
 
 	require 'csv'
 
+	def self.send_weekly_report
+		weekly_collections = Collection.where("created_at <= ? AND created_at >= ?", Date.yesterday.end_of_day, (Date.today.beginning_of_day - 7.days))
+		file_name = "/tmp/collections-#{(Date.today - 7.days).strftime('%d-%m-%Y')}-#{(Date.yesterday.strftime('%d-%m-%Y'))}.csv"
+		CSV.open(file_name, 'w') do |csv|
+			csv << ["Id","Ext Transaction","Transaction","Currency","Amount","Phone Number","Status","Created At","Updated At","Network"]
+			weekly_collections.each do |collection|
+				csv << [ collection.id, collection.ext_transaction_id, collection.transaction_id, collection.currency, collection.amount, collection.phone_number, collection.status, collection.created_at, collection.updated_at, collection.network  ]
+			end
+		end
+	end
+
 	def self.send_daily_report
 		collections = Collection.where("created_at <= ? AND created_at >= ?", Date.yesterday.end_of_day, Date.yesterday.beginning_of_day)
 		file_name =  "/var/www/html/supa_ai/shared/public/reports/collections-#{Date.yesterday.strftime('%d-%m-%Y')}.csv"

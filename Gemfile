@@ -100,3 +100,4 @@ gem "sidekiq-throttled"
 gem "brakeman"
 gem "sentry-raven"
 gem 'rack-attack'
+gem 'rubyzip'

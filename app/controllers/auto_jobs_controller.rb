@@ -1,5 +1,5 @@
 class AutoJobsController < ApplicationController
-   before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :create_gamers, :update_tickets, :update_results, :update_user_info, :generate_daily_reports, :low_credit_notification]
+   before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :create_gamers, :update_tickets, :update_results, :update_user_info, :generate_daily_reports, :low_credit_notification, :extract_ggr_figures, :send_ggr_figures_mail]
    skip_before_action :verify_authenticity_token
    require 'send_sms'
 
@@ -27,6 +27,17 @@ class AutoJobsController < ApplicationController
       Supa3Segment.update_segments
       Supa5Segment.update_segments
       render body: nil
+   end
+
+   def extract_ggr_figures
+     Collection.send_weekly_report
+     Disbursement.send_weekly_report
+     render body: nil
+   end
+
+   def send_ggr_figures_mail
+     NotifierMailer.figures_email.deliver_now
+     render body: nil
    end
 
    def run_draws

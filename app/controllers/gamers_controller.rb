@@ -3,8 +3,8 @@ class GamersController < ApplicationController
    load_and_authorize_resource
 
    def index
-      if params[:q]
-         params[:q][:combinator] = 'or'
+      if params[:q] && (params[:q][:phone_number_start]).present?
+         params[:q][:phone_number_start][:combinator] = 'or'
          params[:q][:groupings] = []
          split_codes = params[:q][:phone_number_start].split(' ')
          params[:q][:phone_number_start].clear

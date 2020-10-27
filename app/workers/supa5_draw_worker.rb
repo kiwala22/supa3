@@ -63,7 +63,7 @@ class Supa5DrawWorker
          process_ticket(draw_id, draw_numbers, ticket, MATCHED_FIVE , MATCHED_FIVE_ANY, MATCHED_FOUR, MATCHED_FOUR_ANY, MATCHED_THREE, MATCHED_TWO, MATCHED_ONE)
 
       end
-      
+
       #run stats for the draw and update the status
       #network definations
       mtn = "MTN Uganda"
@@ -104,17 +104,17 @@ class Supa5DrawWorker
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
-         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID']) #change this
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) #change this
          #process payments
          win_after_taxes = (win.to_i * 0.85)
          DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
-      
+
       elsif (number_matches == 5) && (ticket_numbers != draw_numbers)
          win = (ticket.amount).to_i * matched_five_any
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers without sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
-         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID']) #change this
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) #change this
          #process payments
          win_after_taxes = (win.to_i * 0.85)
          DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
@@ -124,7 +124,7 @@ class Supa5DrawWorker
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched 4 numbers in sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
-         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
          win_after_taxes = (win.to_i * 0.85)
          DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
@@ -134,7 +134,7 @@ class Supa5DrawWorker
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched #{number_matches} numbers without sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
-         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID']) #change this
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) #change this
          #process payments
          win_after_taxes = (win.to_i * 0.85)
          DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
@@ -144,7 +144,7 @@ class Supa5DrawWorker
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched 3 numbers in sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
-         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
          win_after_taxes = (win.to_i * 0.85)
          DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
@@ -154,7 +154,7 @@ class Supa5DrawWorker
          ticket.update_attributes(number_matches: number_matches, win_amount: win, paid: false, winning_number: winning_number)
          #send confirmation message
          message_content = "CONGRATS! Your lucky numbers: #{ticket.data} for ##{draw_id} matched 2 numbers in sequence! You've won UGX.#{win}! Winning numbers: #{draw_numbers.join("")}. Play Again to increase your entries into the BIG 5."
-         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
          if win > 0
             DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
@@ -168,7 +168,7 @@ class Supa5DrawWorker
          else
            message_content = "Hi,#{draw_numbers.join("")} are the winning numbers for draw ##{draw_id}. You have not matched any number in sequence. Play Now & win in the next 10mins + increase your BIG 5 Entries"
          end
-         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID'])
+         SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
 
       end

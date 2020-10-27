@@ -4,6 +4,17 @@ class Disbursement < ApplicationRecord
 	before_create :generate_references, on: [ :create ]
 	require 'csv'
 
+	def self.send_weekly_report
+		weekly_disbursements = Disbursement.where("created_at <= ? AND created_at >= ?", Date.yesterday.end_of_day, (Date.today.beginning_of_day - 7.days))
+		file_name = "/tmp/disbursements-#{(Date.today - 7.days).strftime('%d-%m-%Y')}-#{(Date.yesterday.strftime('%d-%m-%Y'))}.csv"
+		CSV.open(file_name, 'w') do |csv|
+			csv << ["Id","Ext Transaction","Transaction","Currency","Amount","Phone Number","Status","Created At","Updated At","Network"]
+			weekly_disbursements.each do |disbursement|
+				csv << [ disbursement.id, disbursement.ext_transaction_id, disbursement.transaction_id, disbursement.currency, disbursement.amount, disbursement.phone_number, disbursement.status, disbursement.created_at, disbursement.updated_at, disbursement.network  ]
+			end
+		end
+	end
+
 	def self.send_daily_report
 		disbursements = Disbursement.where("created_at <= ? AND created_at >= ?", Date.yesterday.end_of_day, Date.yesterday.beginning_of_day)
 		file_name =  "/var/www/html/supa_ai/shared/public/reports/disbursements-#{Date.yesterday.strftime('%d-%m-%Y')}.csv"
