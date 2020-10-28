@@ -69,22 +69,31 @@ Rails.application.configure do
   config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
 
   ## setup action_mailer
-  config.action_mailer.delivery_method = :sendmail
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
-  config.action_mailer.perform_deliveries = true
+  # config.action_mailer.delivery_method = :sendmail
+  # config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  # Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+  # config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   #config.action_mailer.default_url_options = { :host => 'localhost', protocol: 'http' }
 
   config.action_mailer.perform_caching = false
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = {
-  #   address:              'smtp.elasticemail.com',
-  #   port:                 2525,
-  #   domain:               'skylinesms.com',
-  #   user_name:            'acaciabengo@gmail.com',
-  #   password:             '77eea235-c9b6-40db-8405-30cbafbfb8fb',
-  #   authentication:       'plain',
-  #   enable_starttls_auto: true  }
-  #config.action_mailer.perform_deliveries = true
+
+
+
+
+  #mailer Defaults
+  config.action_mailer.default_url_options = { :host => 'skylinesms.com' }
+  Rails.application.routes.default_url_options[:host] = 'skylinesms.com'
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.elasticemail.com',
+    port:                 2525,
+    domain:               'skylinesms.com',
+    user_name:            'acaciabengo@gmail.com',
+    password:             '77eea235-c9b6-40db-8405-30cbafbfb8fb',
+    authentication:       'plain',
+    enable_starttls_auto: true  }
+  config.action_mailer.perform_deliveries = true
+
 end

@@ -17,7 +17,7 @@ class NotifierMailer < ApplicationMailer
       zipfile.get_output_stream("ReadMe-#{Date.today}.txt") { |f| f.write "Just use the 2 files attached with this." }
     end
 
-    attachments['figures.zip'] = zipfile_name
+    attachments["figures-#{(Date.today - 7.days).strftime('%d-%m-%Y')}-#{(Date.yesterday.strftime('%d-%m-%Y'))}.zip"] = File.read(zipfile_name)
     emails = 'bkayaga@skylinesms.com, mkiwala@skylinesms.com'
     mail(to: emails, subject: "Weekly BetCity GGR Figures", from: "do-not-reply@skylinesms.com", body: "Hello, Attached are the weekly GGR figures for BetCity.")
   end
