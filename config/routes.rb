@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+
+  namespace :api do
+    namespace :v1 do
+      get 'draws/index'
+      get 'tickets/create'
+    end
+  end
    resources :push_pay_broadcasts, only: [:new, :index, :create]
    resources :payments, only: [:new, :index, :update, :create]
    match 'cancel_payment' => "payments#cancel_payment", via: [:put]
