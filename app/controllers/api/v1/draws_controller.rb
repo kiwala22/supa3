@@ -6,12 +6,10 @@ class Api::V1::DrawsController < ApplicationController
 
 
   def index
-    draws = Draw.last(10)
-    #supa5 = Draw.where(game: "Supa5").last(5)
-    @draws = draws.as_json(only: [:id, :winning_number, :draw_time, :game])
-    #supa5_draws = supa5.as_json(root: true, only: [:id, :winning_number, :draw_time, :game])
+    supa3_draws = Draw.where(game: "Supa3").last(5).as_json(only: [:id, :winning_number, :draw_time, :game])
+    supa5_draws = Draw.where(game: "Supa5").last(5).as_json(only: [:id, :winning_number, :draw_time, :game])
 
-    render json: @draws
+    render json: {supa3: supa3_draws, supa5: supa5_draws}
   end
 
 
