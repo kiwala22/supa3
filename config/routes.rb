@@ -2,8 +2,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      get 'draws/index'
-      get 'tickets/create'
+      match 'draws' => "draws#index", via: [:get, :post]
+      match 'tickets' => "tickets#create", via: [:get, :post]
+      # get 'draws/index'
+      # get 'tickets/create'
     end
   end
    resources :push_pay_broadcasts, only: [:new, :index, :create]
