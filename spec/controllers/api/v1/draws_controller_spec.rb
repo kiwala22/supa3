@@ -9,18 +9,18 @@ RSpec.describe Api::V1::DrawsController, type: 'request' do
 
     it "successfully returns draws when both IP and Token are correct" do
       token = AccessUser.last.token
-      post "/api/v1/draws?token=#{token}"
+      get "/api/v1/draws?token=#{token}"
 
       expect(response).to have_http_status(200)
-      result = response.body
-      expect(result["supa3"].length).to eq(5)
-      expect(result["supa5"].length).to eq(5)
+      result = JSON.parse(response.body)
+      expect(result["supa3"].length).to eq(10)
+      expect(result["supa5"].length).to eq(10)
 
     end
 
     it "fails when wrong user Token has been passed" do
       token = "xxxxxxxxxxxxxxxx"
-      post "/api/v1/draws?token=#{token}"
+      get "/api/v1/draws?token=#{token}"
 
       expect(response).to have_http_status(200)
       result = JSON.parse(response.body)

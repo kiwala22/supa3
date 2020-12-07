@@ -6,8 +6,16 @@ class Api::V1::DrawsController < ApplicationController
 
 
   def index
-    supa3_draws = Draw.where(game: "Supa3").last(5).as_json(only: [:id, :winning_number, :draw_time, :game])
-    supa5_draws = Draw.where(game: "Supa5").last(5).as_json(only: [:id, :winning_number, :draw_time, :game])
+    supa3_draws = Draw.where(game: "Supa3").last(10).as_json(only: [:id, :winning_number, :draw_time, :game])
+    supa5_draws = Draw.where(game: "Supa5").last(10).as_json(only: [:id, :winning_number, :draw_time, :game])
+
+    supa3_draws.each do |obj|
+      obj["draw_time"] = obj["draw_time"].iso8601
+    end
+
+    supa5_draws.each do |obj|
+      obj["draw_time"] = obj["draw_time"].iso8601
+    end
 
     render json: {supa3: supa3_draws, supa5: supa5_draws}
   end
