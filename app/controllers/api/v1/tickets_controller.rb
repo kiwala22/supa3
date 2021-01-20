@@ -4,7 +4,7 @@ class Api::V1::TicketsController < ApplicationController
 	require 'uri'
 	require 'cgi'
 
-  
+
   def create
   end
 
@@ -27,7 +27,7 @@ class Api::V1::TicketsController < ApplicationController
   end
 
   def authenticate_source
-    @accepted_ips = []
+    @accepted_ips = ["129.205.27.35", "68.66.248.7"]
     unauthourized_source unless @accepted_ips.include? source_ip
   end
 

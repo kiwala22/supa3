@@ -40,7 +40,7 @@ class Api::V1::DrawsController < ApplicationController
   end
 
   def authenticate_source
-    @accepted_ips = ["129.205.27.35"]
+    @accepted_ips = ["129.205.27.35", "68.66.248.7"]
     unauthourized_source unless @accepted_ips.include? source_ip
   end
 
