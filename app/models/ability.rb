@@ -18,6 +18,7 @@ class Ability
          can :manage, Draw
          can :manage, Report
          can [:read, :create], Payment
+         can :manage, BonusTicket
       end
 
       can :manage, :all if user.role == "admin"

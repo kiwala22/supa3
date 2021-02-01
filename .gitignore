@@ -33,3 +33,5 @@
 .env
 
 /config/initializers/sidekiq.rb
+
+/coverage/*

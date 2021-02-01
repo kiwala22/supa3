@@ -1,0 +1,32 @@
+<%= provide(:title, "Bonus Ticket Promotions") %>
+<h3>
+   <%= "Bonus Ticket Promotions" %>
+</h3>
+
+<div>
+  <table class="table table-striped table-bordered table-hoverlarge-12 columns large-centered">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Segment</th>
+        <th>Multiplier</th>
+        <th>Game</th>
+        <th>Expiry Time</th>
+        <th>Create Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bonus_tickets.each_with_index do |bonus, i| %>
+        <tr>
+          <th><%= (i + 1) %></th>
+          <th><%= bonus.segment %></th>
+          <th><%= bonus.multiplier %></th>
+          <th><%= bonus.game %></th>
+          <th><%= bonus.expiry.to_datetime.strftime("%b %d, %Y %I:%M%P") %></th>
+          <th><%= bonus.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P") %></th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @bonus_tickets %>
+</div>

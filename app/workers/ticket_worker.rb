@@ -68,7 +68,8 @@ class TicketWorker
       max_win = amount.to_i * 200
 
       if data.length == 3 #should also check that its below 10
-         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa3", supa3_segment: supa3_segment, supa5_segment: supa5_segment)
+         game = "Supa3"
+         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: game, supa3_segment: supa3_segment, supa5_segment: supa5_segment)
          if ticket.save
             #Send SMS with confirmation and add gamer name if number is for MTN
             if first_name != nil
@@ -82,8 +83,9 @@ class TicketWorker
          end
 
       elsif data.length == 5
+         game = "Supa5"
          max_win = amount.to_i * 500
-         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa5", supa3_segment: supa3_segment, supa5_segment: supa5_segment)
+         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: game, supa3_segment: supa3_segment, supa5_segment: supa5_segment)
          if ticket.save
             #Send SMS with confirmation
             if first_name != nil
@@ -112,7 +114,68 @@ class TicketWorker
             end
          end
       end
+      process_bonus_ticket(gamer_id, phone_number, first_name, last_name, network, game, reference, draw_time, supa3_segment, supa5_segment, amount)
       return ticket.id
+   end
+
+   def process_bonus_ticket(gamer_id, phone_number, first_name, last_name, network, game, reference, draw_time, supa3_segment, supa5_segment, amount)
+
+     ##Ticket variables
+     bonus_reference = generate_ticket_reference()
+
+     ##First check if there is any Bonus ticket offer
+     bonus = BonusTicket.where("expiry > ? and game = ?", Time.now, game).last
+
+     ##If not nil, This means the bonus offer has the same game type as the ticket
+     if !bonus.nil?
+       ##If the bonus if a SUPA3 bonus, check if its segment is similar to supa3_segment of gamer/ticket
+       if bonus.game == "Supa3" && bonus.segment == supa3_segment
+         max_win = amount.to_i * 200
+         data = generate_random_data()
+
+         #Create the bonus ticket
+         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: bonus_reference, network: network, first_name: first_name, last_name: last_name, game: game, supa3_segment: supa3_segment, supa5_segment: supa5_segment, ticket_type: "Bonus Ticket-##{reference}")
+         if ticket.save
+            #Send SMS with confirmation
+            if first_name != nil
+              message_content = first_name + ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
+            else
+              message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
+            end
+            if SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
+               ticket.update_attributes(confirmation: true)
+            end
+         end
+       end
+
+       ##If the bonus if a SUPA5 bonus, check if its segment is similar to supa5_segment of gamer/ticket
+       if bonus.game == "Supa5" && bonus.segment == supa5_segment
+         max_win = amount.to_i * 500
+         data = generate_supa5_random_data()
+
+         #Create the bonus ticket
+         ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: bonus_reference, network: network, first_name: first_name, last_name: last_name, game: game, supa3_segment: supa3_segment, supa5_segment: supa5_segment, ticket_type: "Bonus Ticket-##{reference}")
+         if ticket.save
+            #Send SMS with confirmation
+            if first_name != nil
+              message_content = first_name + ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the BIG 5."
+            else
+              message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the BIG 5."
+            end
+            if SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
+               ticket.update_attributes(confirmation: true)
+            end
+         end
+       end
+     end
+   end
+
+   def generate_supa5_random_data()
+     random_numbers = []
+     while random_numbers.length != 5
+        random_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(5).map(&:to_i)
+     end
+     return random_numbers.join("")
    end
 
    def ticket_network(phone_number)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_094111) do
+ActiveRecord::Schema.define(version: 2021_01_28_095010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,15 @@ ActiveRecord::Schema.define(version: 2020_12_01_094111) do
     t.index ["created_at"], name: "index_audits_on_created_at"
     t.index ["request_uuid"], name: "index_audits_on_request_uuid"
     t.index ["user_id", "user_type"], name: "user_index"
+  end
+
+  create_table "bonus_tickets", force: :cascade do |t|
+    t.string "segment"
+    t.datetime "expiry"
+    t.integer "multiplier", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "game"
   end
 
   create_table "broadcasts", force: :cascade do |t|
@@ -315,6 +324,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_094111) do
     t.string "segment"
     t.string "supa3_segment"
     t.string "supa5_segment"
+    t.string "ticket_type"
     t.index ["amount"], name: "index_tickets_on_amount"
     t.index ["data"], name: "index_tickets_on_data"
     t.index ["draw_id"], name: "index_tickets_on_draw_id"

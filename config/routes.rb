@@ -23,6 +23,7 @@ Rails.application.routes.draw do
    resources :collections, only: [:index, :update]
    resources :disbursements, only: [:index]
    resources :draw_offers
+   resources :bonus_tickets
    resources :gamers, only: [:index]
    resources :tickets, only: [:index, :update]
    resources :draws, only: [:index]

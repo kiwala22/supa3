@@ -123,6 +123,26 @@
                </li>
             </ul>
          </li>
+         <!-- Bonus Tickets --->
+         <li class="<%= 'active' if controller.controller_name == 'bonus_tickets' %>" data-step="2" >
+            <a href="#ai_bonus_tickets" title="Layouts" data-toggle="collapse">
+               <em class="fa fa-gift" aria-hidden="true"></em>
+               <span>Bonus Tickets Promo</span>
+            </a>
+            <ul id="ai_bonus_tickets" class="nav sidebar-subnav collapse">
+               <li>
+                  <a href="<%= new_bonus_ticket_path %>">
+                     <span>Create Promotion</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="<%= bonus_tickets_path %>">
+                     <span>Created Promotions</span>
+                  </a>
+               </li>
+            </ul>
+         </li>
+         <!-- End of Bonus Tickets --->
          <li class="<%= 'active' if controller.controller_name == 'tickets' %>" data-step="2" >
             <a href="#ai_tickets" title="Layouts" data-toggle="collapse">
                <em class="fa fa-ticket" aria-hidden="true"></em>
