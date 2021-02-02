@@ -138,9 +138,9 @@ class TicketWorker
          if ticket.save
             #Send SMS with confirmation
             if first_name != nil
-              message_content = first_name + ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
+              message_content = first_name + ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{bonus_reference}. You have a BONUS Ticket into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
             else
-              message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
+              message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{bonus_reference}. You have a BONUS Ticket into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
             end
             if SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
                ticket.update_attributes(confirmation: true)
@@ -158,9 +158,9 @@ class TicketWorker
          if ticket.save
             #Send SMS with confirmation
             if first_name != nil
-              message_content = first_name + ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the BIG 5."
+              message_content = first_name + ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{bonus_reference}. You have a BONUS Ticket into the Supa5 Game Show."
             else
-              message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the BIG 5."
+              message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{bonus_reference}. You have a BONUS Ticket into the Supa5 Game Show."
             end
             if SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
                ticket.update_attributes(confirmation: true)
