@@ -60,7 +60,7 @@
            </li>
          <% end %>
 
-         <% if can? :manage, Payment %>
+         <% if can? :read, Payment %>
            <li class="<%= 'active' if controller.controller_name == 'payments' %>" data-step="2" >
               <a href="#ai_payments" title="Layouts" data-toggle="collapse">
                  <em class="fa fa-share" aria-hidden="true"></em>
