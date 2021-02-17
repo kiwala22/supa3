@@ -16,8 +16,8 @@ class SegmentPredictionWorker
      tickets = gamer.tickets.select(:created_at, :game).where("created_at >= ?", (Time.now - 90.days)).order("created_at DESC")
 
      ##Data manipulation
-     supa3 = tickets.where("game = ?",'supa3').first
-     supa5 = tickets.where("game = ?",'supa5').first
+     supa3 = tickets.find { |obj| obj[:game] == "Supa3" }
+     supa5 = tickets.find { |obj| obj[:game] == "Supa5" }
 
      ##Work out segment for supa3
      if supa3.blank?
@@ -25,7 +25,9 @@ class SegmentPredictionWorker
      else
        supa3_ticket_time = supa3.created_at
        segment = find_segment(supa3_ticket_time)
-       gamer.update_attributes(supa3_segment: segment)
+       if gamer.supa3_segment != segment
+         gamer.update_attributes(supa3_segment: segment)
+       end
      end
 
      ##Work out segment for supa5
@@ -34,10 +36,11 @@ class SegmentPredictionWorker
      else
        supa5_ticket_time = supa5.created_at
        segment = find_segment(supa5_ticket_time)
-       gamer.update_attributes(supa5_segment: segment)
+       if gamer.supa5_segment != segment
+         gamer.update_attributes(supa5_segment: segment)
+       end
      end
    end
-
 
    def find_segment(ticket_time)
       days = ((Time.now - ticket_time)/1.days).to_i
