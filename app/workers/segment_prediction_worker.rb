@@ -12,26 +12,32 @@ class SegmentPredictionWorker
    require "httparty"
 
    def perform(id)
-      gamer = Gamer.find(id)
-      supa3_tickets = Ticket.where("phone_number = ? and created_at >= ? and game = ?", gamer.phone_number, (Time.now - 90.days), "Supa3").order("created_at DESC")
-      supa5_tickets = Ticket.where("phone_number = ? and created_at >= ? and game = ?", gamer.phone_number, (Time.now - 90.days), "Supa5").order("created_at DESC")
-      
-      if supa3_tickets.blank?
-        gamer.update_attributes(supa3_segment: "G")
-      else
-        ticket_time = supa3_tickets.first.created_at
-        segment = find_segment(ticket_time)
-        gamer.update_attributes(supa3_segment: segment)
-      end
+     gamer = Gamer.find(id)
+     tickets = gamer.tickets.select(:created_at, :game).where("created_at >= ?", (Time.now - 90.days)).order("created_at DESC")
 
-      if supa5_tickets.blank?
-        gamer.update_attributes(supa5_segment: "G")
-      else
-        ticket_time = supa5_tickets.first.created_at
-        segment = find_segment(ticket_time)
-        gamer.update_attributes(supa5_segment: segment)
-      end
+     ##Data manipulation
+     supa3 = tickets.where("game = ?",'supa3').first
+     supa5 = tickets.where("game = ?",'supa5').first
+
+     ##Work out segment for supa3
+     if supa3.blank?
+       gamer.update_attributes(supa3_segment: "G")
+     else
+       supa3_ticket_time = supa3.created_at
+       segment = find_segment(supa3_ticket_time)
+       gamer.update_attributes(supa3_segment: segment)
+     end
+
+     ##Work out segment for supa5
+     if supa5.blank?
+       gamer.update_attributes(supa5_segment: "G")
+     else
+       supa5_ticket_time = supa5.created_at
+       segment = find_segment(supa5_ticket_time)
+       gamer.update_attributes(supa5_segment: segment)
+     end
    end
+
 
    def find_segment(ticket_time)
       days = ((Time.now - ticket_time)/1.days).to_i
