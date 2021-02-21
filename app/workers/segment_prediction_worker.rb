@@ -4,12 +4,11 @@ class SegmentPredictionWorker
 
    sidekiq_throttle({
        # Allow maximum 10 concurrent jobs of this class at a time.
-       :concurrency => { :limit => 20 }
+       :concurrency => { :limit => 50 }
      })
 
    sidekiq_options queue: "low"
    sidekiq_options retry: 3
-   require "httparty"
 
    def perform(id)
      gamer = Gamer.find(id)

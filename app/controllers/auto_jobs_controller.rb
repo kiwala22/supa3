@@ -1,5 +1,5 @@
 class AutoJobsController < ApplicationController
-   before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :create_gamers, :update_tickets, :update_results, :update_user_info, :generate_daily_reports, :low_credit_notification, :extract_ggr_figures, :send_ggr_figures_mail]
+   before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :generate_daily_reports, :low_credit_notification, :extract_ggr_figures, :send_ggr_figures_mail]
    skip_before_action :verify_authenticity_token
    require 'send_sms'
 
@@ -50,27 +50,27 @@ class AutoJobsController < ApplicationController
       render body: nil
    end
 
-   def create_gamers
-      GamerWorker.perform_async
-      render body: nil
-   end
+   # def create_gamers
+   #    GamerWorker.perform_async
+   #    render body: nil
+   # end
 
-   def update_tickets
-      UpdateTicketsWorker.perform_async
-      render body: nil
-   end
+   # def update_tickets
+   #    UpdateTicketsWorker.perform_async
+   #    render body: nil
+   # end
 
-   def update_results
-      UpdateResultsWorker.perform_async
-      render body: nil
-   end
+   # def update_results
+   #    UpdateResultsWorker.perform_async
+   #    render body: nil
+   # end
 
-   def update_user_info
-      Gamer.find_each(batch_size: 1000) do |gamer|
-        UpdateGamerInfoWorker.perform_async(gamer.id)
-      end
-      render body: nil
-   end
+   # def update_user_info
+   #    Gamer.find_each(batch_size: 1000) do |gamer|
+   #      UpdateGamerInfoWorker.perform_async(gamer.id)
+   #    end
+   #    render body: nil
+   # end
 
    def generate_daily_reports
       Collection.send_daily_report
