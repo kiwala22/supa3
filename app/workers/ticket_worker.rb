@@ -6,6 +6,7 @@ class TicketWorker
 
    def perform(phone_number, message, amount)
       #Check if gamer exists or create with segment A and return gamer
+      # network = ticket_network(phone_number).gsub("Uganda", "").upcase.strip
       gamer = Gamer.create_with(supa3_segment: 'A', supa5_segment: 'A').find_or_create_by(phone_number: phone_number)
       message = message.gsub(/\s+/, '')
       data = message.scan(/\d/).join('')

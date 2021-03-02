@@ -28,6 +28,7 @@ class Gamer < ApplicationRecord
       case self.phone_number
       when /^(25678|25677|25639)/
          #update info
+         self.update_attributes(network: "MTN")
          result = MobileMoney::MtnEcw.get_account_info(self.phone_number)
          if result
             self.update_attributes(first_name: result[:first_name], last_name: result[:surname])
@@ -35,6 +36,7 @@ class Gamer < ApplicationRecord
 
       when /^(25675|25670)/
          #update user info
+         self.update_attributes(network: "AIRTEL")
       end
       #send welcome message
       message = "Welcome to SUPA3! Win up to 200x your amount every 10 minutes, 24hrs a day. Are you ready to get that Supa Feeling?"
