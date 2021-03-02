@@ -11,6 +11,16 @@ class Gamer < ApplicationRecord
    after_create :update_user_info
    #after_create :send_welcome_message
 
+
+   enum segments: {
+     "A" => "A",
+     "B" => "B",
+     "C" => "C",
+     "D" => "D",
+     "E" => "E",
+     "F" => "F"
+   }
+
    def self.to_csv
       CSV.generate do |csv|
         column_names = %w(first_name last_name phone_number supa3_segment supa5_segment)

@@ -22,7 +22,7 @@
               <div class="form-group">
                 <%= f.label :supa3_segment, "Segment SUPA3", class:"col-lg-4 control-label" %>
                 <div class="col-lg-8">
-                  <%= f.select :supa3_segment_eq, ('A'..'F').to_a, {:prompt => 'Select One'}, { include_blank: true, :class=>"form-control", id: "segment3"}%>
+                  <%= f.select :supa3_segment_eq, Gamer.segments.values, {:prompt => 'Select One'}, {:class=>"form-control", id: "segment3"}%>
                 </div>
               </div>
             </div>
@@ -33,7 +33,7 @@
 							<div class="form-group">
 								<%= f.label :supa5_segment, "Segment SUPA5", class:"col-lg-4 control-label" %>
 								<div class="col-lg-8">
-									<%= f.select :supa3_segment_eq, ('A'..'F').to_a, {:prompt => 'Select One'}, { include_blank: true, :class=>"form-control", id: "segment5"}%>
+									<%= f.select :supa5_segment_eq, Gamer.segments.values, {:prompt => 'Select One'}, {:class=>"form-control", id: "segment5"}%>
 								</div>
 							</div>
 						</div>
