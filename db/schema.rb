@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_28_095010) do
+ActiveRecord::Schema.define(version: 2021_02_25_123207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -195,6 +195,8 @@ ActiveRecord::Schema.define(version: 2021_01_28_095010) do
     t.string "last_name"
     t.string "supa3_segment"
     t.string "supa5_segment"
+    t.string "network"
+    t.index ["network"], name: "index_gamers_on_network"
     t.index ["phone_number"], name: "index_gamers_on_phone_number", unique: true
   end
 

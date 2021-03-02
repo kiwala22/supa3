@@ -16,22 +16,8 @@ class AutoJobsController < ApplicationController
    end
 
    def run_predictions
-     ##First check for gamers who have not played in the last 3 months
-     seg_g_gamers = Gamer.left_joins(:tickets).select(:id).where("tickets.created_at < ?", (Date.today.beginning_of_day - 90.days)).distinct
-
-     ##Update them all to have segment G for the respective game types
-     seg_g_gamers.update_all(supa3_segment: "G", supa5_segment: "G")
-
-     sleep 10
-
-     ##Then check for gamers who have played in the last 3 months
-     seg_prediction_gamers = Gamer.left_joins(:tickets).select(:id).where("tickets.created_at >= ?", (Date.today.beginning_of_day - 90.days)).distinct
-
-     ##Start segmenting the remaining gamers
-     seg_prediction_gamers.find_each(batch_size: 1000) do |gamer|
-        SegmentPredictionWorker.perform_async(gamer.id)
-     end
-      render body: nil
+    PredictionWorker.perform_async
+    render body: nil
    end
 
    def update_segments

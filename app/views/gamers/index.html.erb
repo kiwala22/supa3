@@ -3,7 +3,6 @@
 	<%= "Gamers" %>
 <small><%= "All Gamers" %></small>
 </h3>
-</h3>
 
 <div class="row">
   <div class="col-sm-12">
@@ -11,27 +10,38 @@
     <%= search_form_for @q, url: gamers_path, html: { method: :get } do |f| %>
       <div class="panel-body">
         <fieldset>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
               <div class="form-group">
-              <%= f.label :phone_number, "PhoneNumber", class:"col-lg-4 control-label" %>
+              <%= f.label :phone_number, "Phone Number", class:"col-lg-4 control-label" %>
                 <div class="col-lg-8">
                   <%= f.search_field :phone_number_eq, { include_blank: true, :class=>"form-control", id: "phone_number"}%>
                 </div>
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
               <div class="form-group">
-                <%= f.label :supa3_segment, "Segment", class:"col-lg-4 control-label" %>
+                <%= f.label :supa3_segment, "Segment SUPA3", class:"col-lg-4 control-label" %>
                 <div class="col-lg-8">
-                  <%= f.select :supa3_segment_eq, ('A'..'F').to_a, {:prompt => 'Select One'}, { include_blank: true, :class=>"form-control", id: "segment"}%>
+                  <%= f.select :supa3_segment_eq, ('A'..'F').to_a, {:prompt => 'Select One'}, { include_blank: true, :class=>"form-control", id: "segment3"}%>
                 </div>
               </div>
             </div>
-            <div class="col-sm-4">
+				</fieldset>
+
+				<fieldset>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<%= f.label :supa5_segment, "Segment SUPA5", class:"col-lg-4 control-label" %>
+								<div class="col-lg-8">
+									<%= f.select :supa3_segment_eq, ('A'..'F').to_a, {:prompt => 'Select One'}, { include_blank: true, :class=>"form-control", id: "segment5"}%>
+								</div>
+							</div>
+						</div>
+            <div class="col-sm-6">
               <div class="form-group">
-                <%= f.label :phone_number, "Network", class:"col-lg-4 control-label" %>
+                <%= f.label :network, "Network", class:"col-lg-4 control-label" %>
                 <div class="col-lg-8">
-                  <%= f.select :phone_number_start, options_for_select([["Airtel", "25675 25670"], ["MTN", "25677 25678 25639"]]), {:prompt => 'Select One'}, {:class=>"form-control", id: "segment"}%>
+                  <%= f.select :network_eq, options_for_select([["AIRTEL"], ["MTN"]]), {:prompt => 'Select One'}, {:class=>"form-control", id: "network"}%>
                 </div>
               </div>
             </div>
@@ -58,8 +68,9 @@
 					<th>First Name</th>
 					<th>Last Name</th>
           <th>Phone Number</th>
-          <th>Segment</th>
-					<th>Predicted Revenue</th>
+          <th>Segment Supa 3</th>
+					<th>Segment Supa 5</th>
+					<th>Network</th>
           <th>Create Time</th>
         </tr>
       </thead>
@@ -70,8 +81,9 @@
 							<td><%= gamer.first_name %></td>
 							<td><%= gamer.last_name %></td>
               <td><%= gamer.phone_number %></td>
-              <td><%= gamer.segment %></td>
-							<td><%= gamer.predicted_revenue %></td>
+              <td><%= gamer.supa3_segment %></td>
+							<td><%= gamer.supa5_segment %></td>
+							<td><%= gamer.network %></td>
               <td><%= (gamer.created_at.to_datetime.strftime("%b %d, %Y %I:%M%P")) %></td>
 
             </tr>
