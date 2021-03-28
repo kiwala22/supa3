@@ -94,7 +94,7 @@ class TicketWorker
             else
               message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the BIG 5."
             end
-            if SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID']) == true
+            if SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
                ticket.update_attributes(confirmation: true)
             end
          end
@@ -163,7 +163,7 @@ class TicketWorker
             else
               message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{bonus_reference}. You have a BONUS Ticket into the Supa5 Game Show."
             end
-            if SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['SUPA5_SENDER_ID']) == true
+            if SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
                ticket.update_attributes(confirmation: true)
             end
          end

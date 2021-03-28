@@ -25,7 +25,7 @@
               <i class="fa fa-fw fa-plus"></i><%= "Segments" %>
             </a>
           <div id="all_user_lists" class="col-sm-12 form-group">
-              <%= f.collection_check_boxes :segment, ('A'..'F').to_a, :first, :first, include_hidden: false do |element| %>
+              <%= f.collection_check_boxes :segment, ('A'..'G').to_a, :first, :first, include_hidden: false do |element| %>
                 <%= element.label class: "checkbox-inline" %>
                 <%= element.check_box({required: true, class: "checkbox checkbox-inline"})%>
               <% end %>
