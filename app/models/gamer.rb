@@ -8,6 +8,7 @@ class Gamer < ApplicationRecord
    paginates_per 50
 
    has_many :tickets
+   has_one :prediction
    after_create :update_user_info
    #after_create :send_welcome_message
 

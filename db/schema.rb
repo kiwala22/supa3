@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_123207) do
+ActiveRecord::Schema.define(version: 2021_03_31_201956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,6 +237,16 @@ ActiveRecord::Schema.define(version: 2021_02_25_123207) do
     t.string "status"
   end
 
+  create_table "predictions", force: :cascade do |t|
+    t.decimal "tickets", precision: 5, scale: 2
+    t.decimal "probability", precision: 5, scale: 2
+    t.integer "target"
+    t.bigint "gamer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gamer_id"], name: "index_predictions_on_gamer_id", unique: true
+  end
+
   create_table "push_pay_broadcasts", force: :cascade do |t|
     t.string "phone_number"
     t.integer "amount"
@@ -364,6 +374,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_123207) do
   end
 
   add_foreign_key "broadcasts", "users"
+  add_foreign_key "predictions", "gamers"
   add_foreign_key "tickets", "draws"
   add_foreign_key "tickets", "gamers"
 end

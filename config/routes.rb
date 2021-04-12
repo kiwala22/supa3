@@ -49,6 +49,8 @@ Rails.application.routes.draw do
    match 'balance_notification' => "auto_jobs#low_credit_notification", via: [:post]
    match 'extract_ggr_figures' => "auto_jobs#extract_ggr_figures", via: [:post]
    match 'send_ggr_figures_mail' => "auto_jobs#send_ggr_figures_mail", via: [:post]
+   match 'run_reminders' => "auto_jobs#run_target_reminders", via: [:post]
+   match 'run_rewards' => "auto_jobs#run_target_rewards", via: [:post]
 
 
    devise_for :admin_users, ActiveAdmin::Devise.config
