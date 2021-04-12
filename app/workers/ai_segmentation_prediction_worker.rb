@@ -22,11 +22,12 @@ class AiSegmentPredictionWorker
 
     ##Make request to AI server
     response = HTTParty.post(base_url, {body: payload ,headers: { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}})
+
     result = JSON.parse(response.body)
 
     ##Results from AI server
     probability = result["probability"].round(2)
-    tickets = result["revenue"].round(2)
+    tickets = result["tickets"].round(2)
 
     if probability < 0.4
       target = 0
