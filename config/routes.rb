@@ -51,6 +51,7 @@ Rails.application.routes.draw do
    match 'send_ggr_figures_mail' => "auto_jobs#send_ggr_figures_mail", via: [:post]
    match 'run_reminders' => "auto_jobs#run_target_reminders", via: [:post]
    match 'run_rewards' => "auto_jobs#run_target_rewards", via: [:post]
+   match 'run_ai_predictions' => "auto_jobs#run_ai_predictions", via: [:post]
 
 
    devise_for :admin_users, ActiveAdmin::Devise.config

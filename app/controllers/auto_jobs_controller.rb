@@ -1,5 +1,5 @@
 class AutoJobsController < ApplicationController
-   before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :generate_daily_reports, :low_credit_notification, :extract_ggr_figures, :send_ggr_figures_mail, :run_target_rewards, :run_target_reminders]
+   before_action :authenticate_user!, except: [:process_broadcasts, :run_predictions, :update_segments, :run_draws, :generate_daily_reports, :low_credit_notification, :extract_ggr_figures, :send_ggr_figures_mail, :run_target_rewards, :run_target_reminders, :run_ai_predictions]
    skip_before_action :verify_authenticity_token
    require 'send_sms'
 
@@ -17,8 +17,12 @@ class AutoJobsController < ApplicationController
 
    def run_predictions
     PredictionWorker.perform_async
-    # AiPredictionWorker.perform_async
     render body: nil
+   end
+
+   def run_ai_predictions
+     AiPredictionWorker.perform_async
+     render body: nil
    end
 
    def run_target_reminders

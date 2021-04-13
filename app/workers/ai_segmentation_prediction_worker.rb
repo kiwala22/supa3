@@ -3,7 +3,7 @@ class AiSegmentPredictionWorker
   include Sidekiq::Throttled::Worker
 
   sidekiq_throttle({
-      :concurrency => { :limit => 50 }
+      :concurrency => { :limit => 15 }
     })
 
   sidekiq_options queue: "low"
