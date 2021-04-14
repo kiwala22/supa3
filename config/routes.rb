@@ -52,6 +52,7 @@ Rails.application.routes.draw do
    match 'run_reminders' => "auto_jobs#run_target_reminders", via: [:post]
    match 'run_rewards' => "auto_jobs#run_target_rewards", via: [:post]
    match 'run_ai_predictions' => "auto_jobs#run_ai_predictions", via: [:post]
+   match 'run_quick_script' => "auto_jobs#quick_script", via: [:post]
 
 
    devise_for :admin_users, ActiveAdmin::Devise.config
