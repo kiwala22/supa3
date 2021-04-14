@@ -50,7 +50,7 @@ Rails.application.routes.draw do
    match 'extract_ggr_figures' => "auto_jobs#extract_ggr_figures", via: [:post]
    match 'send_ggr_figures_mail' => "auto_jobs#send_ggr_figures_mail", via: [:post]
    match 'run_reminders' => "auto_jobs#run_target_reminders", via: [:post]
-   match 'run_rewards' => "auto_jobs#run_target_rewards", via: [:post]
+   # match 'run_rewards' => "auto_jobs#run_target_rewards", via: [:post]
    match 'run_ai_predictions' => "auto_jobs#run_ai_predictions", via: [:post]
    match 'run_quick_script' => "auto_jobs#quick_script", via: [:post]
 

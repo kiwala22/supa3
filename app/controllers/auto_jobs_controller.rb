@@ -1,5 +1,5 @@
 class AutoJobsController < ApplicationController
-   before_action :authenticate_user!, except: [:quick_script, :process_broadcasts, :run_predictions, :update_segments, :run_draws, :generate_daily_reports, :low_credit_notification, :extract_ggr_figures, :send_ggr_figures_mail, :run_target_rewards, :run_target_reminders, :run_ai_predictions]
+   before_action :authenticate_user!, except: [:quick_script, :process_broadcasts, :run_predictions, :update_segments, :run_draws, :generate_daily_reports, :low_credit_notification, :extract_ggr_figures, :send_ggr_figures_mail, :run_target_reminders, :run_ai_predictions]
    skip_before_action :verify_authenticity_token
    require 'send_sms'
 
@@ -15,6 +15,8 @@ class AutoJobsController < ApplicationController
       render body: nil
    end
 
+
+   # Update prediction rewarded column at start of week
    def quick_script
      AiPredictionScriptWorker.perform_async
      render body: nil
@@ -25,18 +27,17 @@ class AutoJobsController < ApplicationController
     render body: nil
    end
 
+
+   # Run AI predictions from AI server
    def run_ai_predictions
      AiPredictionWorker.perform_async
      render body: nil
    end
 
+
+   # Run reminders for gamers greater than 0 targets
    def run_target_reminders
      Prediction.reminders
-     render body: nil
-   end
-
-   def run_target_rewards
-     Prediction.rewards
      render body: nil
    end
 

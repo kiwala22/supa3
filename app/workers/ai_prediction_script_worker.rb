@@ -6,9 +6,11 @@ class AiPredictionScriptWorker
 
   def perform
 
-    Gamer.left_outer_joins(:prediction).select(:id).where( predictions: { gamer_id: nil } ).find_each(batch_size: 5000) do |gamer|
-      AiSegmentPredictionWorker.perform_async(gamer.id)
-    end
+    Prediction.select(:id).where("rewarded = ?", "Yes").in_batches(of: 5000).update_all(rewarded: "No")
+
+    # Gamer.left_outer_joins(:prediction).select(:id).where( predictions: { gamer_id: nil } ).find_each(batch_size: 5000) do |gamer|
+    #   AiSegmentPredictionWorker.perform_async(gamer.id)
+    # end
 
   end
 end

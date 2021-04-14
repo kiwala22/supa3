@@ -4,6 +4,8 @@ class Ticket < ApplicationRecord
    belongs_to :gamer
    require "send_sms"
 
+   after_create :process_rewards
+
    def self.to_csv
      CSV.generate do |csv|
        column_names = %w(first_name last_name phone_number reference data amount number_matches win_amount keyword created_at)
@@ -13,4 +15,17 @@ class Ticket < ApplicationRecord
        end
      end
    end
+
+
+   ##Method to check if a gamer has hit the target and get their reward
+
+   def process_rewards
+     gamer = Gamer.find(self.gamer_id)
+     number_tickets_in_week = gamer.tickets.where("created_at >= ?", Time.now.beginning_of_week).count()
+
+     if ((number_tickets_in_week >= gamer.prediction.target) && gamer.prediction.rewarded != "Yes")
+       RewardsWorker.perform_async(gamer.id)
+     end
+   end
+
 end
