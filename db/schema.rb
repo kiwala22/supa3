@@ -244,6 +244,7 @@ ActiveRecord::Schema.define(version: 2021_04_14_082345) do
     t.bigint "gamer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "rewarded"
     t.index ["gamer_id"], name: "index_predictions_on_gamer_id", unique: true
   end
 
