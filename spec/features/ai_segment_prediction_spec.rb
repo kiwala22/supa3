@@ -91,9 +91,9 @@ describe "AI-Segment Prediction", type: "request" do
     }.to change(:size).by(0)
 
     expect(Prediction.count).to eq(1)
-    expect(Prediction.last.target).to be eq(0)
-    expect(Prediction.last.probability).to be eg(0)
-    expect(Prediction.last.tickets).to be eq(0)
+    expect(Prediction.last.target).to eq(0)
+    expect(Prediction.last.probability).to eq(0)
+    expect(Prediction.last.tickets).to eq(0)
     
     puts("Success")
     
