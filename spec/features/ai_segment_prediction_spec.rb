@@ -7,7 +7,7 @@ def last_3_months_gamer
   Gamer.create(first_name:Faker::Name.first_name, last_name:Faker::Name.last_name, phone_number:"256703452234", supa3_segment:"A", supa5_segment:"B", network:"AIRTEL")
   gamer = Gamer.last.id
 
-  Prediction.create(tickets: 0.37 , probability: 0.58,  target: 10, gamer_id:gamer, created_at: Date.today-12.days, updated_at: Date.today-12.days, rewarded: "Yes")
+  Prediction.create(tickets: 0.37 , probability: 0.58,  target: 10, gamer_id:gamer, created_at: Date.today-12.days, updated_at: Date.today-12.days, rewarded: "No")
   4.times do |index|
    Ticket.create({
     phone_number: "256703452234", amount: 1000, time: Date.today-(12+index).days,
