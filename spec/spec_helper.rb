@@ -44,8 +44,10 @@ RSpec.configure do |config|
   config.include Capybara::DSL
 
   config.before(:each) do
+    prob = rand()
+    tickets = rand(0.0..7.0)
     stub_request(:any, "http://35.239.55.28/predict").
-      to_return(status: 200, body: "stubbed response", headers: {})
+      to_return(status: 200, body: %{{"probability": "#{prob}", "tickets": "#{tickets}"}}, headers: {})
   end
 
 end
@@ -53,5 +55,3 @@ end
 Capybara.register_driver :selenium do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
-
-

@@ -26,8 +26,8 @@ class AiSegmentPredictionWorker
     result = JSON.parse(response.body)
 
     ##Results from AI server
-    probability = result["probability"].round(2)
-    tickets = result["tickets"].round(2)
+    probability = result["probability"].to_f.round(2)
+    tickets = result["tickets"].to_f.round(2)
 
     if probability < 0.4
       target = 0

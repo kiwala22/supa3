@@ -21,9 +21,9 @@ class RemindersWorker
     ##If not, process the reminder sms
     if target.to_i > tickets_count_in_week
       if gamer.first_name != nil
-        message_content = gamer.first_name + ", Reminder to hit your target of #{target} this week to win a bonus of 20% your total ticket spend. Thank you for playing #{ENV['GAME']}"
+        message_content = gamer.first_name + ", Reminder to hit your target of #{target} this week to win a bonus of 20% your total ticket spend, current tickets total this week is still at #{tickets_count_in_week}. Thank you for playing #{ENV['GAME']}"
       else
-        message_content = "Hi, Reminder to hit your target of #{target} this week to win a bonus of 20% your total ticket spend. Thank you for playing #{ENV['GAME']}"
+        message_content = "Hi, Reminder to hit your target of #{target} this week to win a bonus of 20% your total ticket spend, current tickets total this week is still at #{tickets_count_in_week}. Thank you for playing #{ENV['GAME']}"
       end
       SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
 
