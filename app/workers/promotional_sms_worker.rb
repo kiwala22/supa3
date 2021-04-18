@@ -18,13 +18,14 @@ class PromotionalSmsWorker
     phone_number = gamer.phone_number
     sender_id = ENV['DEFAULT_SENDER_ID']
 
-    message_content = "Play a total of #{target} tickets this week and win a bonus of 20% your total amount played. Thank you for playing #{ENV['GAME']}"
+    message_content = "play #{target} tickets this week and get back an instant reward of 20% of amount played. Thank you for playing #{ENV['GAME']}."
 
     if !gamer.first_name.nil?
       message = gamer.first_name + ", " + message_content
     else
       message = "Hi, " + message_content
     end
+
 
     SmsWorker.perform_async(phone_number, message, sender_id)
 
