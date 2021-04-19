@@ -7,7 +7,7 @@ def this_week_gamer
   Gamer.create(first_name:Faker::Name.first_name, last_name:Faker::Name.last_name, phone_number:"256703452234", supa3_segment:"A", supa5_segment:"B", network:"AIRTEL")
   gamer = Gamer.last.id
 
-  Prediction.create(tickets: 0.37 , probability: 0.58,  target: 10, gamer_id:gamer, created_at: Date.today-1.days, updated_at: Date.today-1.days, rewarded: "No")
+  Prediction.create(tickets: 0.37 , probability: 0.58,  target: 4, gamer_id:gamer, created_at: Date.today-1.days, updated_at: Date.today-1.days, rewarded: "No")
   4.times do |index|
    Ticket.create({
     phone_number: "256703452234", amount: 1000, time: Date.today-(12+index).days,
@@ -46,10 +46,11 @@ describe "Reward", type: "request" do
   it "is successful if a gamer played this week." do
 
     this_week_gamer()
-    gamer = Gamer.last.id
+    gamer = Gamer.last.id,
+    target = Prediction.last.target
 
     expect{
-      RewardsWorker.perform_async(gamer)
+      RewardsWorker.perform_async(gamer, target)
     }.to change(RewardsWorker.jobs, :size).by(1)
 
     Sidekiq::Testing.inline! do
@@ -67,9 +68,10 @@ describe "Reward", type: "request" do
 
     last_week_gamer()
     gamer = Gamer.last.id
+    target = Prediction.last.target
 
     expect{
-      RewardsWorker.perform_async(gamer)
+      RewardsWorker.perform_async(gamer, target)
     }.to change(RewardsWorker.jobs, :size).by(1)
 
     Sidekiq::Testing.inline! do
