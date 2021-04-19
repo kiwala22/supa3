@@ -23,7 +23,7 @@ class Ticket < ApplicationRecord
      gamer = Gamer.find(self.gamer_id)
      number_tickets_in_week = gamer.tickets.where("created_at >= ?", Time.now.beginning_of_week).count()
 
-     if (gamer.prediction.present? && gamer.prediction.target > 0)
+     if (gamer.prediction.present? && gamer.prediction.target >= 3)
        if ((number_tickets_in_week >= gamer.prediction.target) && gamer.prediction.rewarded != "Yes")
          RewardsWorker.perform_async(gamer.id, gamer.prediction.target)
        end
