@@ -33,6 +33,7 @@ class RewardDisbursementWorker
     				if result[:status] == '200'
 						#update attributes for disbusement such as the network and ticket confirmation
 	    				@disbursement.update_attributes(status: "SUCCESS", ext_transaction_id: result[:ext_transaction_id], network: "Airtel Uganda")
+							@gamer.prediction.update(rewarded: "Yes")
 	    			else
 	    				@disbursement.update_attributes(status: "FAILED", ext_transaction_id: result[:ext_transaction_id], network: "Airtel Uganda")
 	    			end
