@@ -10,7 +10,7 @@ class RewardsWorker
   sidekiq_options queue: "low"
   sidekiq_options retry: 3
 
-  def perform(gamer_id)
+  def perform(gamer_id, target)
     gamer = Gamer.find(gamer_id)
 
     ##Find amount the past 7 days
