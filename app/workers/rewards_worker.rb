@@ -8,7 +8,7 @@ class RewardsWorker
     })
 
   sidekiq_options queue: "low"
-  sidekiq_options retry: 3
+  sidekiq_options retry: false
 
   def perform(gamer_id, target)
     gamer = Gamer.find(gamer_id)
