@@ -20,15 +20,8 @@ class RewardsWorker
     win = (amount_in_week * 0.20)
 
     ##Call the reward disbursement
-    RewardDisbursementWorker.perform_async(gamer_id, win)
+    RewardDisbursementWorker.perform_async(gamer_id, win, target)
 
-    ##Process the sms
-    if gamer.first_name != nil
-      message_content = gamer.first_name + ", CONGRATS you have been rewarded with #{win} for hitting your weekly target of #{target} tickets. Thank you for playing #{ENV['GAME']}"
-    else
-      message_content = "Hi, CONGRATS you have been rewarded with #{win} for hitting your weekly target of #{target} tickets. Thank you for playing #{ENV['GAME']}"
-    end
-    SendSMS.process_sms_now(receiver: gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
   end
 
 end

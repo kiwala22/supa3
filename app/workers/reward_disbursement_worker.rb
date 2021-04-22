@@ -5,8 +5,9 @@ class RewardDisbursementWorker
 
 	require "mobile_money/mtn_ecw"
 	require "mobile_money/airtel_uganda"
+	require "send_sms"
 
-	def perform(gamer_id, amount)
+	def perform(gamer_id, amount, target)
 		@gamer = Gamer.find(gamer_id)
 		@disbursement = Disbursement.new(phone_number: @gamer.phone_number, currency: "UGX", amount: amount, status: "PENDING", message: "Reward")
 		if @gamer && @disbursement.save
@@ -15,11 +16,17 @@ class RewardDisbursementWorker
 			when /^(25678|25677|25639)/
 				#process mtn disbursement
 				result = MobileMoney::MtnEcw.make_disbursement(@gamer.first_name, @gamer.last_name, @gamer.phone_number, amount, @disbursement.transaction_id)
+				puts result
 				if result
 					if result[:status] == '200'
 						#update attributes for disbusement such as the network and ticket confirmation
 	    				@disbursement.update_attributes(status: "SUCCESS", ext_transaction_id: result[:ext_transaction_id], network: "MTN Uganda")
 							@gamer.prediction.update(rewarded: "Yes")
+
+							##Process the sms
+					    message_content = @gamer.first_name + ", CONGRATS you have been rewarded with #{amount} for hitting your weekly target of #{target} tickets. Thank you for playing #{ENV['GAME']}"
+					    SendSMS.process_sms_now(receiver: @gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+
 	    			else
 	    				@disbursement.update_attributes(status: "FAILED", ext_transaction_id: result[:ext_transaction_id], network: "MTN Uganda")
 	    			end
@@ -34,6 +41,11 @@ class RewardDisbursementWorker
 						#update attributes for disbusement such as the network and ticket confirmation
 	    				@disbursement.update_attributes(status: "SUCCESS", ext_transaction_id: result[:ext_transaction_id], network: "Airtel Uganda")
 							@gamer.prediction.update(rewarded: "Yes")
+
+							##Process the sms
+							message_content = "Hi, CONGRATS you have been rewarded with #{amount} for hitting your weekly target of #{target} tickets. Thank you for playing #{ENV['GAME']}"
+							SendSMS.process_sms_now(receiver: @gamer.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
+
 	    			else
 	    				@disbursement.update_attributes(status: "FAILED", ext_transaction_id: result[:ext_transaction_id], network: "Airtel Uganda")
 	    			end

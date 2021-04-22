@@ -72,12 +72,30 @@ class TicketWorker
          game = "Supa3"
          ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: game, supa3_segment: supa3_segment, supa5_segment: supa5_segment)
          if ticket.save
-            #Send SMS with confirmation and add gamer name if number is for MTN
-            if first_name != nil
-              message_content = first_name + ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
-            else
-              message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
+            # Sleep 2 seconds then check if it necessary to add the target reminder in confirmation sms
+            sleep(2)
+            target_check = check_ticket_target(gamer_id)
+
+            if target_check > 0
+              message = ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. Play #{target_check} more tickets to hit your weekly target and win a 20% bonus of amount played. Thank you for playing #{ENV['GAME']}"
+              #Send SMS with confirmation and add gamer name if number is for MTN
+              if first_name != nil
+                message_content = first_name + message
+              else
+                message_content = message
+              end
             end
+
+            if target_check <= 0
+              message = ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the Supa Jackpot. Thank you for playing #{ENV['GAME']}"
+              #Send SMS with confirmation and add gamer name if number is for MTN
+              if first_name != nil
+                message_content = first_name + message
+              else
+                message_content = message
+              end
+            end
+
             if SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
                ticket.update_attributes(confirmation: true)
             end
@@ -88,12 +106,30 @@ class TicketWorker
          max_win = amount.to_i * 500
          ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: game, supa3_segment: supa3_segment, supa5_segment: supa5_segment)
          if ticket.save
-            #Send SMS with confirmation
-            if first_name != nil
-              message_content = first_name + ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the BIG 5."
-            else
-              message_content = "Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the BIG 5."
+            # Sleep 2 seconds then check if it necessary to add the target reminder in confirmation sms
+            sleep(2)
+            target_check = check_ticket_target(gamer_id)
+
+            if target_check > 0
+              message = ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. Play #{target_check} more tickets to hit your weekly target and win a 20% bonus of amount played. You have been entered into the BIG 5."
+              #Send SMS with confirmation and add gamer name if number is for MTN
+              if first_name != nil
+                message_content = first_name + message
+              else
+                message_content = message
+              end
             end
+
+            if target_check <= 0
+              message = ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. You have been entered into the BIG 5."
+              #Send SMS with confirmation and add gamer name if number is for MTN
+              if first_name != nil
+                message_content = first_name + message
+              else
+                message_content = message
+              end
+            end
+
             if SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
                ticket.update_attributes(confirmation: true)
             end
@@ -104,12 +140,31 @@ class TicketWorker
          random_data = generate_random_data
          ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa3", supa3_segment: supa3_segment, supa5_segment: supa5_segment)
          if ticket.save
-            #Send SMS with the confirmation and random number and add gamer name if number is for MTN
-            if first_name != nil
-              message_content = first_name + ", We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}, Ticket ID: #{reference} Thank you for playing #{ENV['GAME']}."
-            else
-              message_content = "We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}, Ticket ID: #{reference} Thank you for playing #{ENV['GAME']}."
+            # Sleep 2 seconds then check if it necessary to add the target reminder in confirmation sms
+            sleep(2)
+
+            target_check = check_ticket_target(gamer_id)
+
+            if target_check > 0
+              message = ", We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}! Ticket ID: #{reference}.  Play #{target_check} more tickets to hit your weekly target and win a 20% bonus of amount played. Thank you for playing #{ENV['GAME']}."
+              #Send SMS with confirmation and add gamer name if number is for MTN
+              if first_name != nil
+                message_content = first_name + message
+              else
+                message_content = message
+              end
             end
+
+            if target_check <= 0
+              message = ", We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}! Ticket ID: #{reference}. Thank you for playing #{ENV['GAME']}."
+              #Send SMS with confirmation and add gamer name if number is for MTN
+              if first_name != nil
+                message_content = first_name + message
+              else
+                message_content = message
+              end
+            end
+
             if SendSMS.process_sms_now(receiver: phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) == true
                ticket.update_attributes(confirmation: true)
             end
@@ -169,6 +224,24 @@ class TicketWorker
          end
        end
      end
+   end
+
+   def check_ticket_target(gamer_id)
+     gamer = Gamer.find(gamer_id)
+
+     number_of_week_tickets = gamer.tickets.select(:id).where("created_at >= ?", (Time.now.beginning_of_week)).count()
+
+     if gamer.prediction.present?
+       if gamer.prediction.target > number_of_week_tickets
+         tickets_left = (gamer.prediction.target - number_of_week_tickets).to_i
+       else
+         tickets_left = 0
+       end
+     else
+       tickets_left = 0
+     end
+
+     return tickets_left
    end
 
    def generate_supa5_random_data()

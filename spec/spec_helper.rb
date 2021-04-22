@@ -44,6 +44,12 @@ RSpec.configure do |config|
   config.include Capybara::DSL
 
   config.before(:each) do
+    stub_request(:any, /skylinesms.com/).
+      to_return(status: 200, body: "Success", headers: {})
+
+    stub_request(:any, /f5.mtn.co.ug/).
+      to_return(status: "200", body: '{"status": "200", "ext_transaction_id": "36782873099"}', headers: {})
+
     prob = rand()
     tickets = rand(0.0..7.0)
     stub_request(:any, "http://35.239.55.28/predict").

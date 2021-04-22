@@ -1,88 +1,84 @@
 require 'rails_helper'
 require 'sidekiq/testing'
 
+def gamer_prediction_creation
 
-def this_week_gamer
-#create a gamer and tickets that were played in the last 3 months
-  Gamer.create(first_name:Faker::Name.first_name, last_name:Faker::Name.last_name, phone_number:"256703452234", supa3_segment:"A", supa5_segment:"B", network:"AIRTEL")
-  gamer = Gamer.last.id
+  Gamer.create({
+    first_name:"KYASI",
+    last_name: Faker::Name.last_name,
+    phone_number: "256786481312",
+    supa3_segment: "A",
+    supa5_segment: "A",
+    network: "MTN"
+  })
 
-  Prediction.create(tickets: 0.37 , probability: 0.58,  target: 4, gamer_id:gamer, created_at: Date.today-1.days, updated_at: Date.today-1.days, rewarded: "No")
-  4.times do |index|
-   Ticket.create({
-    phone_number: "256703452234", amount: 1000, time: Date.today-(12+index).days,
-     number_matches: 2, gamer_id: gamer, win_amount: 200, paid: true,
-     data: "214", network:"AIRTEL", confirmation: true,
-     first_name: Gamer.last.first_name, last_name: Gamer.last.last_name,
-     winning_number:"941",  game: "supa3", supa3_segment:"A", supa5_segment:"B",
-     created_at: Date.today-(index).days, updated_at: Date.today-(index).days
-     })
+  gamer_id = Gamer.last.id
 
+  probability = rand()
+  tickets = rand(0.0..20.0)
 
- end
+  Prediction.create({
+    tickets: tickets,
+    probability: probability,
+    target: 3,
+    gamer_id: gamer_id,
+    rewarded: "No"
+  })
+
 end
 
-def last_week_gamer
-  #create a gamer and tickets that were played more than 3 months back.
-  Gamer.create(first_name:Faker::Name.first_name, last_name:Faker::Name.last_name, phone_number:"256703452234", supa3_segment:"A", supa5_segment:"B", network:"AIRTEL")
-  gamer = Gamer.last.id
+# def gamer_tickets_creation(gamer_id)
+#   2.times {
+#     Ticket.create({
+#
+#       })
+#   }
+# end
 
-  Prediction.create(tickets: 0.37 , probability: 0.58,  target: 10, gamer_id:gamer, created_at: Date.today-8.days, updated_at: Date.today-8.days, rewarded: "No")
-  2.times do |index|
-     Ticket.create({
-      phone_number: "256703452234", amount: 1000, time: Date.today-(8+index).days,
-       number_matches: 2, gamer_id: gamer, win_amount: 200, paid: true,
-       data: "396", network:"AIRTEL", confirmation: true,
-       first_name: Gamer.last.first_name, last_name: Gamer.last.last_name,
-       winning_number:"943",  game: "supa3", supa3_segment:"A",
-       supa5_segment:"B", created_at: Date.today-(8+index).days,
-       updated_at: Date.today-(8+index).days
-       })
-    end
+
+def generate_random_data
+  random_numbers = []
+  while random_numbers.length != 3
+     random_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(3).map(&:to_i)
+  end
+  return random_numbers.join("")
+end
+
+
+describe "Ticket Worker" do
+  before(:each) do
+    Gamer.skip_callback(:create, :after, :update_user_info)
   end
 
-describe "Reward", type: "request" do
-
-  it "is successful if a gamer played this week." do
-
-    this_week_gamer()
-    gamer = Gamer.last.id,
-    target = Prediction.last.target
-
-    expect{
-      RewardsWorker.perform_async(gamer, target)
-    }.to change(RewardsWorker.jobs, :size).by(1)
-
-    Sidekiq::Testing.inline! do
-      RewardsWorker.drain
-    end
-
-    sleep(2)
-    expect(Disbursement.count).to eq(1)
-    expect(Disbursement.last.message).to be("Reward")
-    expect(Prediction.last.rewarded).to be("Yes")
-    puts("Process Completed")
+  after(:each) do
+    Gamer.set_callback(:create, :after, :update_user_info)
   end
 
-  it "is not successful if A Gamer hasnt Played this week" do
+  ## Scenario gamer receives a reward on hitting prediction target
 
-    last_week_gamer()
-    gamer = Gamer.last.id
-    target = Prediction.last.target
+  it "processes reward for gamer on hitting prediction target" do
 
-    expect{
-      RewardsWorker.perform_async(gamer, target)
-    }.to change(RewardsWorker.jobs, :size).by(1)
+    ## Create the gamer and the corresponding prediction
+    gamer_prediction_creation()
 
-    Sidekiq::Testing.inline! do
-      RewardsWorker.drain
+    ##Variables for ticket creation
+    phone_number = Gamer.last.phone_number
+    amount = '1000'
+
+    ## Since gamer has prediction target of 3, we create 3 tickets inorder to hit the target
+    3.times do
+      data = generate_random_data()
+      TicketWorker.perform_async(phone_number, data, amount)
+
+      Sidekiq::Testing.inline! do
+        TicketWorker.drain
+      end
     end
 
-    expect(Disbursement.count).to eq(0)
-    expect(Prediction.last.rewarded).to be("No")
+    # expect(RewardDisbursementWorker.jobs.size).to eq(1)
 
+    ## expect gamer prediction to have rewarded "Yes"
+    # expect(Prediction.last.rewarded).to eq("Yes")
 
-    puts("Success")
   end
-
 end
