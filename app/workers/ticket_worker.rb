@@ -82,7 +82,7 @@ class TicketWorker
               if first_name != nil
                 message_content = first_name + message
               else
-                message_content = message
+                message_content = "Hi" + message
               end
             end
 
@@ -92,7 +92,7 @@ class TicketWorker
               if first_name != nil
                 message_content = first_name + message
               else
-                message_content = message
+                message_content = "Hi" + message
               end
             end
 
@@ -116,7 +116,7 @@ class TicketWorker
               if first_name != nil
                 message_content = first_name + message
               else
-                message_content = message
+                message_content = "Hi" + message
               end
             end
 
@@ -126,7 +126,7 @@ class TicketWorker
               if first_name != nil
                 message_content = first_name + message
               else
-                message_content = message
+                message_content = "Hi" + message
               end
             end
 
@@ -151,7 +151,7 @@ class TicketWorker
               if first_name != nil
                 message_content = first_name + message
               else
-                message_content = message
+                message_content = "Hi" + message
               end
             end
 
@@ -161,7 +161,7 @@ class TicketWorker
               if first_name != nil
                 message_content = first_name + message
               else
-                message_content = message
+                message_content = "Hi" + message
               end
             end
 
