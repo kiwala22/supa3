@@ -9,9 +9,10 @@ def generate_random_data
   return random_numbers.join("")
 end
 
+
 def last_week_gamer
   #create a gamer and tickets that were played more than 3 months back.
-  Gamer.create(first_name:Faker::Name.first_name, last_name:Faker::Name.last_name, 
+  Gamer.create(first_name:Faker::Name.first_name, last_name:Faker::Name.last_name,
     phone_number:"256703452234", supa3_segment:"A", supa5_segment:"B", network:"AIRTEL")
 
   gamer = Gamer.last.id
@@ -33,32 +34,25 @@ def last_week_gamer
     end
   end
 
+
 describe "Reminder", type: "request" do
-
+  
   it "is successfully sent to a gamer that has not played this week." do
-
     last_week_gamer()
     gamer = Gamer.last
     target = Prediction.last.target
-
+    puts gamer.id
     expect{
-      RemindersWorker.perform_async(gamer.id, target)
+      RemindersWorker.perform_async(target, gamer.id)
     }.to change(RemindersWorker.jobs, :size).by(1)
-
     Sidekiq::Testing.inline! do
       RemindersWorker.drain
     end
-
     sleep(2)
-
     reminder_sms = CGI.unescape(Message.last.message)
-
-    message = ", Reminder to hit your target of #{target} ticketsthis week to win a bonus of 20% amount played. You have not yet played any tickets this week. Thank you for playing #{ENV['GAME']}"
-
-    expect(reminder_sms).to have(gamer.first_name + message)
-   
+    message = ", Reminder to hit your target of #{target} tickets this week to win a bonus of 20% amount played. You have not yet played any tickets this week. Thank you for playing #{ENV['GAME']}"
+    expect(reminder_sms).to eq(gamer.first_name + message)
     puts("Process Completed")
   end
-
 
 end
