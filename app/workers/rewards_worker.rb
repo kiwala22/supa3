@@ -17,7 +17,7 @@ class RewardsWorker
     amount_in_week = gamer.tickets.where("created_at >= ?", (Time.now.beginning_of_week)).sum(:amount).to_i
 
     #Run reward functionality here
-    win = (amount_in_week * 0.20)
+    win = (amount_in_week * 0.20).to_i
 
     ##Call the reward disbursement
     RewardDisbursementWorker.perform_async(gamer_id, win, target)
