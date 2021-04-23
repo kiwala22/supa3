@@ -14,7 +14,7 @@ def gamer_prediction_creation
 
   gamer_id = Gamer.last.id
 
-  probability = rand()
+  probability = rand(0.0..1.0)
   tickets = rand(0.0..20.0)
 
   Prediction.create({
@@ -27,13 +27,6 @@ def gamer_prediction_creation
 
 end
 
-# def gamer_tickets_creation(gamer_id)
-#   2.times {
-#     Ticket.create({
-#
-#       })
-#   }
-# end
 
 
 def generate_random_data
@@ -64,9 +57,11 @@ describe "Ticket Worker" do
     ##Variables for ticket creation
     phone_number = Gamer.last.phone_number
     amount = '1000'
+    gamer = Gamer.last.id
+    target = Prediction.last.target
 
     ## Since gamer has prediction target of 3, we create 3 tickets inorder to hit the target
-    3.times do
+    4.times do
       data = generate_random_data()
       TicketWorker.perform_async(phone_number, data, amount)
 
@@ -75,10 +70,17 @@ describe "Ticket Worker" do
       end
     end
 
-    # expect(RewardDisbursementWorker.jobs.size).to eq(1)
+   expect{
+      RewardsWorker.perform_async(gamer, target)
+    }.to change(RewardsWorker.jobs, :size).by(1)
 
-    ## expect gamer prediction to have rewarded "Yes"
-    # expect(Prediction.last.rewarded).to eq("Yes")
+    expect(RewardDisbursementWorker.jobs).to change(:size).by(1)
+        
+    expect(Disbursement.count).to eq(1)
+    expect(Disbursement.last.message).to be("Reward")
+    expect(Prediction.last.rewarded).to eq("Yes")
 
   end
 end
+
+
