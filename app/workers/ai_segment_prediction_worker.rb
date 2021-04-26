@@ -3,11 +3,11 @@ class AiSegmentPredictionWorker
   include Sidekiq::Throttled::Worker
 
   sidekiq_throttle({
-      :concurrency => { :limit => 15 }
+      :concurrency => { :limit => 40 }
     })
 
   sidekiq_options queue: "low"
-  sidekiq_options retry: 3
+  # sidekiq_options retry: 3
   require "httparty"
 
   def perform(gamer_id)
