@@ -74,7 +74,7 @@ class TicketWorker
          if ticket.save
             # Sleep 2 seconds then check if it necessary to add the target reminder in confirmation sms
             sleep(2)
-            target_check = check_ticket_target(gamer_id)
+            target_check = 0#check_ticket_target(gamer_id)
 
             if target_check > 0
               message = ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. Play #{target_check} more tickets to hit your weekly target and win a 20% bonus of amount played. Thank you for playing #{ENV['GAME']}"
@@ -108,7 +108,7 @@ class TicketWorker
          if ticket.save
             # Sleep 2 seconds then check if it necessary to add the target reminder in confirmation sms
             sleep(2)
-            target_check = check_ticket_target(gamer_id)
+            target_check = 0#check_ticket_target(gamer_id)
 
             if target_check > 0
               message = ", Your lucky numbers: #{data} are entered in the next draw at #{draw_time}. You could win UGX.#{max_win}! Ticket ID: #{reference}. Play #{target_check} more tickets to hit your weekly target and win a 20% bonus of amount played. You have been entered into the BIG 5."
@@ -143,7 +143,7 @@ class TicketWorker
             # Sleep 2 seconds then check if it necessary to add the target reminder in confirmation sms
             sleep(2)
 
-            target_check = check_ticket_target(gamer_id)
+            target_check = 0#check_ticket_target(gamer_id)
 
             if target_check > 0
               message = ", We didn't recognise your numbers so we bought you a LUCKY PICK ticket #{random_data} entered in to #{draw_time} draw. You could win UGX.#{max_win}! Ticket ID: #{reference}.  Play #{target_check} more tickets to hit your weekly target and win a 20% bonus of amount played. Thank you for playing #{ENV['GAME']}."

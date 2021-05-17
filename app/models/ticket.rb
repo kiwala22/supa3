@@ -4,7 +4,7 @@ class Ticket < ApplicationRecord
    belongs_to :gamer
    require "send_sms"
 
-   after_create :process_rewards
+  #  after_create :process_rewards
 
    def self.to_csv
      CSV.generate do |csv|
