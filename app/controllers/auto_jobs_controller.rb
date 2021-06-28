@@ -1,5 +1,5 @@
 class AutoJobsController < ApplicationController
-   before_action :authenticate_user!, except: [:promotional_sms, :quick_script, :process_broadcasts, :run_predictions, :update_segments, :run_draws, :generate_daily_reports, :low_credit_notification, :extract_ggr_figures, :send_ggr_figures_mail, :run_target_reminders, :run_ai_predictions]
+   before_action :authenticate_user!, except: [:promotional_sms, :quick_script, :process_broadcasts, :run_predictions, :update_segments, :run_draws, :generate_daily_reports, :low_credit_notification, :extract_ggr_figures, :send_ggr_figures_mail, :run_target_reminders, :run_ai_predictions, :update_user_info]
    skip_before_action :verify_authenticity_token
    require 'send_sms'
 
@@ -89,12 +89,12 @@ class AutoJobsController < ApplicationController
    #    render body: nil
    # end
 
-   # def update_user_info
-   #    Gamer.find_each(batch_size: 1000) do |gamer|
-   #      UpdateGamerInfoWorker.perform_async(gamer.id)
-   #    end
-   #    render body: nil
-   # end
+   def update_user_info
+      Gamer.where("phone_number ~* ?", "^(25676)").find_each(batch_size: 10) do |gamer|
+        UpdateGamerInfoWorker.perform_async(gamer.id)
+      end
+      render body: nil
+   end
 
    def generate_daily_reports
       Collection.send_daily_report

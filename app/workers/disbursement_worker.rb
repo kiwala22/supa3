@@ -14,7 +14,7 @@ class DisbursementWorker
 			@ticket.update_attributes(disbursement_reference: @disbursement.transaction_id)
 			case @gamer.phone_number
 
-			when /^(25678|25677|25639)/
+			when /^(25678|25677|25639|25676)/
 				#process mtn disbursement
 				result = MobileMoney::MtnEcw.make_disbursement(@gamer.first_name, @gamer.last_name, @gamer.phone_number, amount, @disbursement.transaction_id)
 				if result

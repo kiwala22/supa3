@@ -12,23 +12,23 @@ class UpdateGamerInfoWorker
 
    require "mobile_money/mtn_ecw"
 
-   def perform(id)
-      # Gamer.where(first_name: nil, last_name: nil).find_in_batches(batch_size: 500) do |gamers|
-      #    Gamer.transaction do
-      #       gamers.each do |gamer|
-      #          if gamer.phone_number =~ /^(25678|25677|25639)/
-      #             info = MobileMoney::MtnEcw.get_account_info(gamer.phone_number)
-      #             if info
-      #                gamer.update_attributes(first_name: info[:first_name], last_name: info[:surname])
-      #             end
-      #          end
-      #       end
-      #    end
-      # end
-    Ticket.transaction do
-      (Ticket.where.not(time: nil) && Ticket.where("time != created_at and gamer_id = #{id}")).each do |ticket|
-         ticket.update_attributes(created_at: ticket.time)
-      end
+   def perform(gamer_id)
+    ## Find the gamer to be updated
+    gamer = Gamer.find(gamer_id)
+
+    ## First update gamer names and network
+    result = MobileMoney::MtnEcw.get_account_info(self.phone_number)
+    if result
+      gamer.update_attributes(network: "MTN", first_name: result[:first_name], last_name: result[:surname])
     end
+
+    ## Find all gamer tickets and update network field
+    tickets = gamer.tickets.update_all(network: "MTN Uganda")
+
+    ## Find gamer pending Disbursements and process re-payments for them
+    Disbursement.where("phone_number = ? and status = ?", "256760012192", "PENDING").each do |payment|
+      RepaymentWorker.perform_async(gamer_id, payment.amount)
+    end
+
    end
 end

@@ -66,6 +66,7 @@ class DrawWorker
       payout = Ticket.where(draw_id: draw_id).sum(:win_amount)
       mtn_tickets = Ticket.where("network = ? AND draw_id = ?", mtn, draw_id).count()
       airtel_tickets = Ticket.where("network = ? AND draw_id = ?", airtel, draw_id).count()
+      undefined_tickets = Ticket.where("network = ? AND draw_id = ?", other, draw_id).count()
       rtp = revenue > 0 ? ((payout / revenue) * 100) : 0
       unique_users = Ticket.where(draw_id: draw_id).select('DISTINCT gamer_id').count()
       no_match = Ticket.where(draw_id: draw_id, number_matches: 0).count()
@@ -76,7 +77,7 @@ class DrawWorker
       winning_number = draw_numbers.join("")
 
       @draw.update_attributes(revenue:revenue, payout: payout, no_match: no_match, one_match: one_match, two_match: two_match, three_match: three_match, ticket_count: ticket_count, mtn_tickets: mtn_tickets,
-      airtel_tickets: airtel_tickets, users: unique_users, rtp: rtp, winning_number: winning_number, new_users: new_users, game: "Supa3")
+      airtel_tickets: airtel_tickets, undefined_tickets: undefined_tickets, users: unique_users, rtp: rtp, winning_number: winning_number, new_users: new_users, game: "Supa3")
 
    end
 

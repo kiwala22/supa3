@@ -37,7 +37,7 @@ class Gamer < ApplicationRecord
 
    def update_user_info
       case self.phone_number
-      when /^(25678|25677|25639)/
+      when /^(25678|25677|25639|25676)/
          #update info
          self.update_attributes(network: "MTN")
          result = MobileMoney::MtnEcw.get_account_info(self.phone_number)

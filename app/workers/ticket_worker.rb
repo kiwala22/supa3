@@ -254,7 +254,7 @@ class TicketWorker
 
    def ticket_network(phone_number)
       case phone_number
-      when /^(25677|25678|25639)/
+      when /^(25677|25678|25639|25676)/
          return "MTN Uganda"
       when /^(25670|25675)/
          return "Airtel Uganda"
