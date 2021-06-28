@@ -17,7 +17,7 @@ class UpdateGamerInfoWorker
     gamer = Gamer.find(gamer_id)
 
     ## First update gamer names and network
-    result = MobileMoney::MtnEcw.get_account_info(self.phone_number)
+    result = MobileMoney::MtnEcw.get_account_info(gamer.phone_number)
     if result
       gamer.update_attributes(network: "MTN", first_name: result[:first_name], last_name: result[:surname])
     end
