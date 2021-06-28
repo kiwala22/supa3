@@ -26,7 +26,7 @@ class UpdateGamerInfoWorker
     tickets = gamer.tickets.update_all(network: "MTN Uganda")
 
     ## Find gamer pending Disbursements and process re-payments for them
-    Disbursement.where("phone_number = ? and status = ?", "256760012192", "PENDING").each do |payment|
+    Disbursement.where("phone_number = ? and status = ?", gamer.phone_number, "PENDING").each do |payment|
       RepaymentWorker.perform_async(gamer_id, payment.amount)
     end
 
