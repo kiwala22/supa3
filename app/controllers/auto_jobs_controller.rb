@@ -90,7 +90,7 @@ class AutoJobsController < ApplicationController
    # end
 
    def update_user_info
-      Gamer.where("phone_number ~* ?", "^(25676)").find_each(batch_size: 10) do |gamer|
+      Gamer.where("phone_number ~* ?", "^(25674)").find_each(batch_size: 10) do |gamer|
         UpdateGamerInfoWorker.perform_async(gamer.id)
       end
       render body: nil

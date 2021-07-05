@@ -17,13 +17,14 @@ class UpdateGamerInfoWorker
     gamer = Gamer.find(gamer_id)
 
     ## First update gamer names and network
-    result = MobileMoney::MtnEcw.get_account_info(gamer.phone_number)
-    if result
-      gamer.update_attributes(network: "MTN", first_name: result[:first_name], last_name: result[:surname])
-    end
+    gamer.update_attributes(network: "AIRTEL")
+    # result = MobileMoney::MtnEcw.get_account_info(gamer.phone_number)
+    # if result
+    #   gamer.update_attributes(network: "AIRTEL", first_name: result[:first_name], last_name: result[:surname])
+    # end
 
     ## Find all gamer tickets and update network field
-    tickets = gamer.tickets.update_all(network: "MTN Uganda")
+    tickets = gamer.tickets.update_all(network: "Airtel Uganda")
 
     ## Find gamer pending Disbursements and process re-payments for them
     Disbursement.where("phone_number = ? and status = ?", gamer.phone_number, "PENDING").each do |payment|

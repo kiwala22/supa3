@@ -28,7 +28,7 @@ class PaymentWorker
 					@disbursement.update_attributes(status: "FAILED", network: "MTN Uganda")
 					@payment.update_attributes(status: "FAILED")
 				end
-			when /^(25675|25670)/
+			when /^(25675|25670|25674)/
 				#Airtel disbursement
 				result = MobileMoney::AirtelUganda.make_disbursement(@payment.phone_number, amount, @disbursement.transaction_id)
 				if result

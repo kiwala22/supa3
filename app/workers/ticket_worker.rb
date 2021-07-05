@@ -256,7 +256,7 @@ class TicketWorker
       case phone_number
       when /^(25677|25678|25639|25676)/
          return "MTN Uganda"
-      when /^(25670|25675)/
+      when /^(25670|25675|25674)/
          return "Airtel Uganda"
       else
          return "UNDEFINED"

@@ -45,7 +45,7 @@ class Gamer < ApplicationRecord
             self.update_attributes(first_name: result[:first_name], last_name: result[:surname])
          end
 
-      when /^(25675|25670)/
+      when /^(25675|25670|25674)/
          #update user info
          self.update_attributes(network: "AIRTEL")
       end
