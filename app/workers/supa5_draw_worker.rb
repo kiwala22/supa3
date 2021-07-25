@@ -20,14 +20,13 @@ class Supa5DrawWorker
 
       #extract draw id
       draw_id = @draw.id
-      #generate random number for winnings
-      draw_numbers = []
-      while (draw_numbers.length != 5 || draw_numbers == [1,2,3,4,5] || Draw.where("winning_number = ? AND created_at >= ?", draw_numbers.join(""), Time.now-24.hours).exists?)
-           draw_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(5).map(&:to_i)
-      end
+      #@draw = Draw.find(draw_id)
 
-      #update with draw ID
+      ## Update all tickets in that range with the draw ID
       Ticket.where("created_at <= ? AND created_at >= ? AND game = ?", end_time, start_time, "Supa5").update_all(draw_id: draw_id)
+      
+      #generate random number for winnings
+      draw_numbers = draw_sequencer(draw_id)
 
 
       # check if the there is an existing offer or bonus
@@ -174,4 +173,40 @@ class Supa5DrawWorker
 
       end
    end
+
+   ## Draw sequencer
+   def draw_sequencer(draw_id)
+      draw_numbers = []
+
+      # First check if Draw ID is capable of a win
+      if (draw_id % 3) != 0
+         while (draw_numbers.length != 5 || draw_numbers == [1,2,3,4,5] || Draw.where("winning_number = ? AND created_at >= ? AND game = ?", draw_numbers.join(""), Time.now - 24.hours, "Supa5").exists?)
+            draw_numbers = random_number_generator()
+         end
+
+         return draw_numbers
+         
+      else
+         # Start the Draw winning number generation
+         while (draw_numbers.length != 5 || draw_numbers == [1,2,3,4,5] || Draw.where("winning_number = ? AND created_at >= ? AND game = ?", draw_numbers.join(""), Time.now - 24.hours, "Supa5").exists?)
+            loop do
+               draw_numbers = random_number_generator()
+               if Ticket.where("draw_id = ? AND data = ? ", draw_id, draw_numbers.join(",")).empty?
+                  break
+               end
+            end 
+         end
+
+         return draw_numbers
+      end
+      
+   end
+
+   def random_number_generator
+      random_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(5).map(&:to_i)
+
+      return random_numbers
+   end
+
+
 end

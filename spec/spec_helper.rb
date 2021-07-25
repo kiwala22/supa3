@@ -50,6 +50,9 @@ RSpec.configure do |config|
     stub_request(:any, /f5.mtn.co.ug/).
       to_return(status: "200", body: '{"status": "200", "ext_transaction_id": "36782873099"}', headers: {})
 
+    stub_request(:any, /172.27.77.145/).
+      to_return(status: "200", body: '{"status": "200", "ext_transaction_id": "36782873099"}', headers: {})
+
     prob = rand()
     tickets = rand(0.0..7.0)
     stub_request(:any, "http://35.239.55.28/predict").

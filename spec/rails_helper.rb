@@ -1,6 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
-#require 'support/factory_girl'
+require 'factory_bot'
 # require 'webmock/rspec'
 # WebMock.disable_net_connect!(allow_localhost: true)
 

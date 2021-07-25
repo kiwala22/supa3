@@ -13,7 +13,7 @@ class TicketsController < ApplicationController
       @search_params = params[:q]
       respond_to do |format|
         format.html { @tickets = @tickets.page params[:page] }
-        format.csv { send_data @tickets.to_csv, filename: "Tickets-#{DateTime.now.strftime("%d%m%Y%H%M")}" }
+        format.csv { send_data @tickets.to_csv, filename: "Tickets-#{DateTime.now.strftime("%d%m%Y%H%M")}.csv" }
       end
    end
 

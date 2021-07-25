@@ -137,7 +137,7 @@ class TicketWorker
 
       else
          #generate random numbers
-         random_data = generate_random_data
+         random_data = generate_random_data(3)
          ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: random_data, amount: amount.to_i, reference: reference, network: network, first_name: first_name, last_name: last_name, keyword: keyword, game: "Supa3", supa3_segment: supa3_segment, supa5_segment: supa5_segment)
          if ticket.save
             # Sleep 2 seconds then check if it necessary to add the target reminder in confirmation sms
@@ -187,7 +187,7 @@ class TicketWorker
        ##If the bonus if a SUPA3 bonus, check if its segment is similar to supa3_segment of gamer/ticket
        if bonus.game == "Supa3" && bonus.segment == supa3_segment
          max_win = amount.to_i * 200
-         data = generate_random_data()
+         data = generate_random_data(3)
 
          #Create the bonus ticket
          ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: bonus_reference, network: network, first_name: first_name, last_name: last_name, game: game, supa3_segment: supa3_segment, supa5_segment: supa5_segment, ticket_type: "Bonus Ticket-##{reference}")
@@ -207,7 +207,7 @@ class TicketWorker
        ##If the bonus if a SUPA5 bonus, check if its segment is similar to supa5_segment of gamer/ticket
        if bonus.game == "Supa5" && bonus.segment == supa5_segment
          max_win = amount.to_i * 500
-         data = generate_supa5_random_data()
+         data = generate_random_data(5)
 
          #Create the bonus ticket
          ticket = Ticket.new(gamer_id: gamer_id ,phone_number: phone_number, data: data, amount: amount.to_i, reference: bonus_reference, network: network, first_name: first_name, last_name: last_name, game: game, supa3_segment: supa3_segment, supa5_segment: supa5_segment, ticket_type: "Bonus Ticket-##{reference}")
@@ -244,14 +244,6 @@ class TicketWorker
      return tickets_left
    end
 
-   def generate_supa5_random_data()
-     random_numbers = []
-     while random_numbers.length != 5
-        random_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(5).map(&:to_i)
-     end
-     return random_numbers.join("")
-   end
-
    def ticket_network(phone_number)
       case phone_number
       when /^(25677|25678|25639|25676)/
@@ -263,10 +255,10 @@ class TicketWorker
       end
    end
 
-   def generate_random_data()
+   def generate_random_data(number)
       random_numbers = []
-      while random_numbers.length != 3
-         random_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(3).map(&:to_i)
+      while random_numbers.length != number
+         random_numbers = SecureRandom.hex(50).scan(/\d/).uniq.sample(number).map(&:to_i)
       end
       return random_numbers.join("")
    end

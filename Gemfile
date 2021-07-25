@@ -61,10 +61,12 @@ group :test, :development do
   gem 'rspec-rails'
   gem "shoulda-matchers"
   gem 'capybara-email'
-  gem 'factory_girl_rails'
+  gem 'factory_bot'
+  gem 'factory_bot_rails'
+  # gem 'factory_girl_rails'
   gem 'timecop'
   gem 'simplecov'
-  gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+  gem 'faker'#, :git => 'https://github.com/stympy/faker.git', :branch => 'master'
   gem 'webmock'
 end
 
