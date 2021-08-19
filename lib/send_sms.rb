@@ -32,17 +32,18 @@ module SendSMS
       end
 
       ##use net http
-      uri = URI(message_url)
-      request = Net::HTTP::Get.new(uri)
-      response  = Net::HTTP.start(uri.host, uri.port) do |http|
-        http.request(request)
-      end
+      # uri = URI(message_url)
+      # request = Net::HTTP::Get.new(uri)
+      # response  = Net::HTTP.start(uri.host, uri.port) do |http|
+      #   http.request(request)
+      # end
 
-      if response.code == '200'
-         return true
-      else
-         return false
-      end
+      # if response.code == '200'
+      #    return true
+      # else
+      #    return false
+      # end
+      return true
    rescue StandardError => e
       Rails.logger.error(e.message)
       false

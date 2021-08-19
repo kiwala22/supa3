@@ -1,5 +1,5 @@
 class AutoJobsController < ApplicationController
-   before_action :authenticate_user!, except: [:promotional_sms, :quick_script, :process_broadcasts, :run_predictions, :update_segments, :run_draws, :generate_daily_reports, :low_credit_notification, :extract_ggr_figures, :send_ggr_figures_mail, :run_target_reminders, :run_ai_predictions, :update_user_info]
+   before_action :authenticate_user!, except: [:promotional_sms, :quick_script, :process_broadcasts, :run_predictions, :update_segments, :run_draws, :generate_daily_reports, :low_credit_notification, :extract_ggr_figures, :send_ggr_figures_mail, :run_target_reminders, :run_ai_predictions, :update_user_info, :create_random_tickets]
    skip_before_action :verify_authenticity_token
    require 'send_sms'
 
@@ -72,6 +72,15 @@ class AutoJobsController < ApplicationController
       DrawWorker.perform_async(start_time, end_time)
       Supa5DrawWorker.perform_async(start_time, end_time)
       render body: nil
+   end
+
+   def create_random_tickets
+    phone_number = params[:phone_number]
+    amount = params[:amount]
+    message = params[:data]
+
+    TicketWorker.perform_async(phone_number, message, amount)
+    render body: nil
    end
 
    # def create_gamers
