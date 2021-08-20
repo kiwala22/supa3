@@ -98,7 +98,7 @@ class DrawWorker
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payments
          win_after_taxes = (win.to_i * 0.85)
-         DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
+         #DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
       elsif number_matches == 3 && draw_numbers != ticket_numbers
          win = (ticket.amount).to_i * matched_two
@@ -111,7 +111,7 @@ class DrawWorker
          end
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
-         DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
+         #DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
 
       elsif number_matches == 2
          win = (ticket.amount).to_i * matched_two
@@ -124,7 +124,7 @@ class DrawWorker
          end
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
-         DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
+         #DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
 
       elsif number_matches == 1
          win = (ticket.amount).to_i * matched_one
@@ -138,7 +138,7 @@ class DrawWorker
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
          if win > 0
-            DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
+            #DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
          end
 
       else

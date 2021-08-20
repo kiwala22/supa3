@@ -107,7 +107,7 @@ class Supa5DrawWorker
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) #change this
          #process payments
          win_after_taxes = (win.to_i * 0.85)
-         DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
+         #DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
       elsif (number_matches == 5) && (ticket_numbers != draw_numbers)
          win = (ticket.amount).to_i * matched_five_any
@@ -117,7 +117,7 @@ class Supa5DrawWorker
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) #change this
          #process payments
          win_after_taxes = (win.to_i * 0.85)
-         DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
+         #DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
       elsif (ticket_numbers[0..3] == draw_numbers[0..3]) &&  (ticket_numbers[0..4] != draw_numbers[0..4])
          win = (ticket.amount).to_i * matched_four
@@ -127,7 +127,7 @@ class Supa5DrawWorker
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
          win_after_taxes = (win.to_i * 0.85)
-         DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
+         #DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
       elsif (number_matches == 4) && (ticket_numbers[0..3] != draw_numbers[0..3])
          win = (ticket.amount).to_i * matched_four_any
@@ -137,7 +137,7 @@ class Supa5DrawWorker
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID']) #change this
          #process payments
          win_after_taxes = (win.to_i * 0.85)
-         DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
+         #DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
       elsif (ticket_numbers[0..2] == draw_numbers[0..2]) &&  (ticket_numbers[0..3] != draw_numbers[0..3])
          win = (ticket.amount).to_i * matched_three
@@ -147,7 +147,7 @@ class Supa5DrawWorker
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
          win_after_taxes = (win.to_i * 0.85)
-         DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
+         #DisbursementWorker.perform_async(ticket.gamer_id, win_after_taxes, ticket.id)
 
       elsif (ticket_numbers[0..1] == draw_numbers[0..1]) &&  (ticket_numbers[0..2] != draw_numbers[0..2])
          win = (ticket.amount).to_i * matched_two
@@ -157,7 +157,7 @@ class Supa5DrawWorker
          SendSMS.process_sms_now(receiver: ticket.phone_number, content: message_content, sender_id: ENV['DEFAULT_SENDER_ID'])
          #process payment
          if win > 0
-            DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
+            #DisbursementWorker.perform_async(ticket.gamer_id, win, ticket.id)
          end
       else
          win = (ticket.amount).to_i * matched_one
