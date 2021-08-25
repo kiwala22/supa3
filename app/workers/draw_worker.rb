@@ -22,7 +22,8 @@ class DrawWorker
       Ticket.where("created_at <= ? AND created_at >= ? AND game = ?", end_time, start_time, "Supa3").update_all(draw_id: draw_id)
       
       #generate random number for winnings
-      draw_numbers = draw_sequencer(draw_id)
+      minute = end_time.min
+      draw_numbers = draw_sequencer(minute)
 
       # check if the there is an existing offer or bonus
       if DrawOffer.where("expiry_time > ? ",Time.now).exists?
@@ -157,11 +158,12 @@ class DrawWorker
    end
 
    ## Draw sequencer
-   def draw_sequencer(draw_id)
+   def draw_sequencer(minute)
       draw_numbers = []
+      non_winning_minutes = [10, 30, 50]
 
       # First check if Draw ID is capable of winning or not
-      if (draw_id % 3) != 0
+      unless non_winning_minutes.include?(minute)
          while (draw_numbers.length != 3 || draw_numbers == [1,2,3] || Draw.where("winning_number = ? AND created_at >= ? AND game = ?", draw_numbers.join(""), Time.now - 24.hours, "Supa3").exists?)
             draw_numbers = random_number_generator()
          end

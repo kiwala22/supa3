@@ -26,7 +26,8 @@ class Supa5DrawWorker
       Ticket.where("created_at <= ? AND created_at >= ? AND game = ?", end_time, start_time, "Supa5").update_all(draw_id: draw_id)
       
       #generate random number for winnings
-      draw_numbers = draw_sequencer(draw_id)
+      minute = end_time.min
+      draw_numbers = draw_sequencer(minute)
 
 
       # check if the there is an existing offer or bonus
@@ -175,11 +176,12 @@ class Supa5DrawWorker
    end
 
    ## Draw sequencer
-   def draw_sequencer(draw_id)
+   def draw_sequencer(minute)
       draw_numbers = []
+      non_winning_minutes = [0, 20, 40]
 
       # First check if Draw ID is capable of a win
-      if (draw_id % 3) != 0
+      unless non_winning_minutes.include?(minute)
          while (draw_numbers.length != 5 || draw_numbers == [1,2,3,4,5] || Draw.where("winning_number = ? AND created_at >= ? AND game = ?", draw_numbers.join(""), Time.now - 24.hours, "Supa5").exists?)
             draw_numbers = random_number_generator()
          end
