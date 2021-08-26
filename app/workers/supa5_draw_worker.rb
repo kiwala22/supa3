@@ -181,7 +181,7 @@ class Supa5DrawWorker
       non_winning_minutes = [0, 20, 40]
 
       # First check if Draw ID is capable of a win
-      unless non_winning_minutes.include?(minute)
+      unless non_winning_minutes.include?(minute.to_i)
          while (draw_numbers.length != 5 || draw_numbers == [1,2,3,4,5] || Draw.where("winning_number = ? AND created_at >= ? AND game = ?", draw_numbers.join(""), Time.now - 24.hours, "Supa5").exists?)
             draw_numbers = random_number_generator()
          end
