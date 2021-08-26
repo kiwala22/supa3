@@ -193,7 +193,7 @@ class Supa5DrawWorker
          while (draw_numbers.length != 5 || draw_numbers == [1,2,3,4,5] || Draw.where("winning_number = ? AND created_at >= ? AND game = ?", draw_numbers.join(""), Time.now - 24.hours, "Supa5").exists?)
             loop do
                draw_numbers = random_number_generator()
-               if Ticket.where("draw_id = ? AND data = ? ", draw_id, draw_numbers.join(",")).empty?
+               if Ticket.where("draw_id = ? AND data = ? ", draw_id, draw_numbers.join("")).empty?
                   break
                end
             end 
