@@ -5,4 +5,8 @@ class User < ApplicationRecord
 
   validates :first_name, :last_name, :email, presence: true
   validates :password, :password_confirmation, presence: true, on: :create
+
+  def active_for_authentication?
+    super && approved?
+  end
 end
