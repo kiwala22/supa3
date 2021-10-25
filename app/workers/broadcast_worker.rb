@@ -19,24 +19,24 @@ class BroadcastWorker
       if @broadcast.network == "MTN"
         if !@broadcast.segment.nil?
           if @broadcast.game == "Supa3"
-            @gamers = Gamer.where("supa3_segment IN (?) and phone_number ~* ?",  @broadcast.segment.split(","), "^(25677|25678|25639)")
+            @gamers = Gamer.where("supa3_segment IN (?) and phone_number ~* ?",  @broadcast.segment.split(","), "^(25677|25678|25639|25676)")
             sender_id = ENV['DEFAULT_SENDER_ID']
           end
           if @broadcast.game == "Supa5"
-            @gamers = Gamer.where("supa5_segment IN (?) and phone_number ~* ?",  @broadcast.segment.split(","), "^(25677|25678|25639)")
+            @gamers = Gamer.where("supa5_segment IN (?) and phone_number ~* ?",  @broadcast.segment.split(","), "^(25677|25678|25639|25676)")
             sender_id = ENV['DEFAULT_SENDER_ID']
           end
         end
 
         if !@broadcast.predicted_revenue_lower.nil? && @broadcast.predicted_revenue_upper.nil?
           lower = @broadcast.predicted_revenue_lower
-          @gamers = Gamer.where("predicted_revenue >= ? and phone_number ~* ?",lower, "^(25677|25678|25639)")
+          @gamers = Gamer.where("predicted_revenue >= ? and phone_number ~* ?",lower, "^(25677|25678|25639|25676)")
           sender_id = ENV['DEFAULT_SENDER_ID']
         end
         if !@broadcast.predicted_revenue_lower.nil? && !@broadcast.predicted_revenue_upper.nil?
           lower = @broadcast.predicted_revenue_lower
           upper = @broadcast.predicted_revenue_upper
-          @gamers = Gamer.where("predicted_revenue >= ? and predicted_revenue <= ? and phone_number ~* ?",lower, upper, "^(25677|25678|25639)")
+          @gamers = Gamer.where("predicted_revenue >= ? and predicted_revenue <= ? and phone_number ~* ?",lower, upper, "^(25677|25678|25639|25676)")
           sender_id = ENV['DEFAULT_SENDER_ID']
         end
         contacts = 0
@@ -58,24 +58,24 @@ class BroadcastWorker
       if @broadcast.network == "AIRTEL"
         if !@broadcast.segment.nil?
           if @broadcast.game == "Supa3"
-            @gamers = Gamer.where("supa3_segment IN (?) and phone_number ~* ?",  @broadcast.segment.split(","), "^(25670|25675)")
+            @gamers = Gamer.where("supa3_segment IN (?) and phone_number ~* ?",  @broadcast.segment.split(","), "^(25670|25675|25674)")
             sender_id = ENV['DEFAULT_SENDER_ID']
           end
           if @broadcast.game == "Supa5"
-            @gamers = Gamer.where("supa5_segment IN (?) and phone_number ~* ?",  @broadcast.segment.split(","), "^(25670|25675)")
+            @gamers = Gamer.where("supa5_segment IN (?) and phone_number ~* ?",  @broadcast.segment.split(","), "^(25670|25675|25674)")
             sender_id = ENV['DEFAULT_SENDER_ID']
           end
         end
 
         if !@broadcast.predicted_revenue_lower.nil? && @broadcast.predicted_revenue_upper.nil?
           lower = @broadcast.predicted_revenue_lower
-          @gamers = Gamer.where("predicted_revenue >= ? and phone_number ~* ?",lower, "^(25670|25675)")
+          @gamers = Gamer.where("predicted_revenue >= ? and phone_number ~* ?",lower, "^(25670|25675|25674)")
           sender_id = ENV['DEFAULT_SENDER_ID']
         end
         if !@broadcast.predicted_revenue_lower.nil? && !@broadcast.predicted_revenue_upper.nil?
           lower = @broadcast.predicted_revenue_lower
           upper = @broadcast.predicted_revenue_upper
-          @gamers = Gamer.where("predicted_revenue >= ? and predicted_revenue <= ? and phone_number ~* ?",lower, upper, "^(25670|25675)")
+          @gamers = Gamer.where("predicted_revenue >= ? and predicted_revenue <= ? and phone_number ~* ?",lower, upper, "^(25670|25675|25674)")
           sender_id = ENV['DEFAULT_SENDER_ID']
         end
         contacts = 0

@@ -48,7 +48,7 @@ class Confirmation::MtnUgandaController < ApplicationController
 	protected
 
     def authenticate_source
-      @accepted_ips = ["10.156.144.21", "10.156.191.21"] #test ips removed "212.88.97.59", "129.205.27.35", "10.156.145.219"
+      @accepted_ips = ["10.156.144.21", "10.156.191.21", "212.88.125.189"] #test ips removed "212.88.97.59", "129.205.27.35", "10.156.145.219"
       unauthourized_source unless @accepted_ips.include? source_ip
     end
 
