@@ -103,4 +103,3 @@ gem "brakeman"
 gem "sentry-raven"
 gem 'rack-attack'
 gem 'rubyzip'
-gem 'rack-attack', "~> 6.4.0"
