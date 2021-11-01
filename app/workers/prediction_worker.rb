@@ -10,6 +10,11 @@ class PredictionWorker
 
     sleep 5
 
+    ##Check for gamers who do not have any tickets
+    Gamer.left_outer_joins(:tickets).where(tickets: { gamer_id: nil }, gamers: {supa3_segment: "A"}).update_all(supa3_segment: "G", supa5_segment: "G")
+
+    sleep 5
+
     ##Then check for gamers who have played in the last 3 months
     Gamer.left_outer_joins(:tickets).select(:id).where("tickets.created_at >= ?", (Date.today.beginning_of_day - 90.days)).distinct.find_each(batch_size: 5000) do |gamer|
       SegmentPredictionWorker.perform_async(gamer.id)
